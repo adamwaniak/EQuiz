@@ -18,6 +18,7 @@ import { EQuizAccountModule } from './account/account.module';
 import { EQuizEntityModule } from './entities/entity.module';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ErrorComponent } from './layouts';
+import { EQuizFeatureModule } from 'app/features/feature.module';
 
 @NgModule({
     imports: [
@@ -28,7 +29,8 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
         EQuizCoreModule,
         EQuizHomeModule,
         EQuizAccountModule,
-        EQuizEntityModule
+        EQuizEntityModule,
+        EQuizFeatureModule
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
