@@ -1,0 +1,44 @@
+{
+    "name": "Task",
+    "fields": [
+        {
+            "fieldName": "question",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "correctnessFactor",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "image",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "answers",
+            "otherEntityName": "answer",
+            "otherEntityRelationshipName": "task"
+        },
+        {
+            "relationshipName": "taskSet",
+            "otherEntityName": "taskSet",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20180819164734",
+    "entityTableName": "task",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

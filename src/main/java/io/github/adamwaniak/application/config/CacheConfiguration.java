@@ -38,6 +38,17 @@ public class CacheConfiguration {
             cm.createCache(io.github.adamwaniak.application.domain.User.class.getName(), jcacheConfiguration);
             cm.createCache(io.github.adamwaniak.application.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(io.github.adamwaniak.application.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            cm.createCache(io.github.adamwaniak.application.domain.Quiz.class.getName(), jcacheConfiguration);
+            cm.createCache(io.github.adamwaniak.application.domain.Quiz.class.getName() + ".taskSets", jcacheConfiguration);
+            cm.createCache(io.github.adamwaniak.application.domain.Quiz.class.getName() + ".students", jcacheConfiguration);
+            cm.createCache(io.github.adamwaniak.application.domain.Task.class.getName(), jcacheConfiguration);
+            cm.createCache(io.github.adamwaniak.application.domain.Task.class.getName() + ".answers", jcacheConfiguration);
+            cm.createCache(io.github.adamwaniak.application.domain.TaskSet.class.getName(), jcacheConfiguration);
+            cm.createCache(io.github.adamwaniak.application.domain.TaskSet.class.getName() + ".tasks", jcacheConfiguration);
+            cm.createCache(io.github.adamwaniak.application.domain.Answer.class.getName(), jcacheConfiguration);
+            cm.createCache(io.github.adamwaniak.application.domain.Student.class.getName(), jcacheConfiguration);
+            cm.createCache(io.github.adamwaniak.application.domain.Student.class.getName() + ".studentAnswers", jcacheConfiguration);
+            cm.createCache(io.github.adamwaniak.application.domain.StudentAnswer.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }
