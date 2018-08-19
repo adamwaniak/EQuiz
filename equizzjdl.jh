@@ -1,0 +1,59 @@
+
+
+entity Quiz {
+    name String required,
+    startDate Instant required,
+    endDate Instant required,
+    password String,
+    edition Integer required,
+    url String,
+    maxTimeInMinutes Integer required min(1)
+}
+
+entity Task {
+	question String required,
+    corectnessFactor Double,
+}
+
+entity TaskSet {
+	name String,
+	requiredTaskAmount Integer min(0) required,
+	maxPoint Integer min(0) required,
+	artificialSelection Boolean required
+}
+
+entity Answer {
+ 	name String required minlength(0),
+ 	isCorrect Boolean required
+}
+
+entity Student {
+	name String minlength(0) required,
+    score Double min(0),
+    grade String minlength(0)
+}
+
+entity StudentAnswer {
+}
+
+relationship OneToMany{
+    Quiz{taskSets} to TaskSet,
+    TaskSet{tasks} to Task,
+    Task{answers} to Answer,
+    Quiz{students} to Student,
+    Student{studentAnswers} to StudentAnswer,
+   	User{quizes} to Quiz{owner} 
+}
+relationship ManyToOne{
+	StudentAnswer{answer} to Answer,
+    StudentAnswer{task} to Task
+ //   Quiz{owner} to User
+}
+
+
+paginate * with pagination
+dto * with mapstruct
+service all with serviceClass
+
+
+
