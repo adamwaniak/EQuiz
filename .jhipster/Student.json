@@ -1,0 +1,53 @@
+{
+    "name": "Student",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "minlength",
+                "required"
+            ],
+            "fieldValidateRulesMinlength": 0
+        },
+        {
+            "fieldName": "score",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "grade",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "minlength"
+            ],
+            "fieldValidateRulesMinlength": 0
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "quiz",
+            "otherEntityName": "quiz",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "studentAnswers",
+            "otherEntityName": "studentAnswer",
+            "otherEntityRelationshipName": "student"
+        }
+    ],
+    "changelogDate": "20180819161158",
+    "entityTableName": "student",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}
