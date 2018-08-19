@@ -1,0 +1,45 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-student-answer-heading">Create or edit a Student Answer</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!studentAnswer.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="studentAnswer.id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_student">Student</label>
+                    <select class="form-control" id="field_student" name="student" [(ngModel)]="studentAnswer.studentId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="studentOption.id" *ngFor="let studentOption of students; trackBy: trackStudentById">{{studentOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_answer">Answer</label>
+                    <select class="form-control" id="field_answer" name="answer" [(ngModel)]="studentAnswer.answerId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="answerOption.id" *ngFor="let answerOption of answers; trackBy: trackAnswerById">{{answerOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_task">Task</label>
+                    <select class="form-control" id="field_task" name="task" [(ngModel)]="studentAnswer.taskId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="taskOption.id" *ngFor="let taskOption of tasks; trackBy: trackTaskById">{{taskOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

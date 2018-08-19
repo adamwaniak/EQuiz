@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="studentAnswer">
+            <h2><span>Student Answer</span> {{studentAnswer.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Student</span></dt>
+                <dd>
+                    <div *ngIf="studentAnswer.studentId">
+                        <a [routerLink]="['/student', studentAnswer.studentId, 'view']">{{studentAnswer.studentId}}</a>
+                    </div>
+                </dd>
+                <dt><span>Answer</span></dt>
+                <dd>
+                    <div *ngIf="studentAnswer.answerId">
+                        <a [routerLink]="['/answer', studentAnswer.answerId, 'view']">{{studentAnswer.answerId}}</a>
+                    </div>
+                </dd>
+                <dt><span>Task</span></dt>
+                <dd>
+                    <div *ngIf="studentAnswer.taskId">
+                        <a [routerLink]="['/task', studentAnswer.taskId, 'view']">{{studentAnswer.taskId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/student-answer', studentAnswer.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
