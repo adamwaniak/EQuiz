@@ -1,0 +1,37 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="answer">
+            <h2><span>Answer</span> {{answer.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Name</span></dt>
+                <dd>
+                    <span>{{answer.name}}</span>
+                </dd>
+                <dt><span>Is Correct</span></dt>
+                <dd>
+                    <span>{{answer.isCorrect}}</span>
+                </dd>
+                <dt><span>Task</span></dt>
+                <dd>
+                    <div *ngIf="answer.taskId">
+                        <a [routerLink]="['/task', answer.taskId, 'view']">{{answer.taskId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/answer', answer.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
