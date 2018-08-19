@@ -1,0 +1,45 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="taskSet">
+            <h2><span>Task Set</span> {{taskSet.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Name</span></dt>
+                <dd>
+                    <span>{{taskSet.name}}</span>
+                </dd>
+                <dt><span>Required Task Amount</span></dt>
+                <dd>
+                    <span>{{taskSet.requiredTaskAmount}}</span>
+                </dd>
+                <dt><span>Max Point</span></dt>
+                <dd>
+                    <span>{{taskSet.maxPoint}}</span>
+                </dd>
+                <dt><span>Artificial Selection</span></dt>
+                <dd>
+                    <span>{{taskSet.artificialSelection}}</span>
+                </dd>
+                <dt><span>Quiz</span></dt>
+                <dd>
+                    <div *ngIf="taskSet.quizId">
+                        <a [routerLink]="['/quiz', taskSet.quizId, 'view']">{{taskSet.quizId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/task-set', taskSet.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

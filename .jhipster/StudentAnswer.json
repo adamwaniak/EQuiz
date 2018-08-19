@@ -1,0 +1,33 @@
+{
+    "name": "StudentAnswer",
+    "fields": [],
+    "relationships": [
+        {
+            "relationshipName": "student",
+            "otherEntityName": "student",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "answer",
+            "otherEntityName": "answer",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "task",
+            "otherEntityName": "task",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20180819114924",
+    "entityTableName": "student_answer",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}
