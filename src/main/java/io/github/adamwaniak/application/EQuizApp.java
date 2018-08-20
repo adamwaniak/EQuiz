@@ -3,6 +3,8 @@ package io.github.adamwaniak.application;
 import io.github.adamwaniak.application.config.ApplicationProperties;
 import io.github.adamwaniak.application.config.DefaultProfileUtil;
 
+
+
 import io.github.jhipster.config.JHipsterConstants;
 
 import org.slf4j.Logger;
