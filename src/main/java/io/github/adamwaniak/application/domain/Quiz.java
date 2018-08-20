@@ -72,8 +72,9 @@ public class Quiz implements Serializable {
         return id;
     }
 
-    public void setId(Long id) {
+    public Quiz setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {

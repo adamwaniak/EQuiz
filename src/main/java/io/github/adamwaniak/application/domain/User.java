@@ -98,8 +98,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
         return id;
     }
 
-    public void setId(Long id) {
+    public User setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getLogin() {
@@ -107,96 +108,108 @@ public class User extends AbstractAuditingEntity implements Serializable {
     }
 
     // Lowercase the login before saving it in database
-    public void setLogin(String login) {
+    public User setLogin(String login) {
         this.login = StringUtils.lowerCase(login, Locale.ENGLISH);
+        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public User setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public User setFirstName(String firstName) {
         this.firstName = firstName;
+        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public User setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public User setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
+    public User setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+        return this;
     }
 
     public boolean getActivated() {
         return activated;
     }
 
-    public void setActivated(boolean activated) {
+    public User setActivated(boolean activated) {
         this.activated = activated;
+        return this;
     }
 
     public String getActivationKey() {
         return activationKey;
     }
 
-    public void setActivationKey(String activationKey) {
+    public User setActivationKey(String activationKey) {
         this.activationKey = activationKey;
+        return this;
     }
 
     public String getResetKey() {
         return resetKey;
     }
 
-    public void setResetKey(String resetKey) {
+    public User setResetKey(String resetKey) {
         this.resetKey = resetKey;
+        return this;
     }
 
     public Instant getResetDate() {
         return resetDate;
     }
 
-    public void setResetDate(Instant resetDate) {
+    public User setResetDate(Instant resetDate) {
         this.resetDate = resetDate;
+        return this;
     }
 
     public String getLangKey() {
         return langKey;
     }
 
-    public void setLangKey(String langKey) {
+    public User setLangKey(String langKey) {
         this.langKey = langKey;
+        return this;
     }
 
     public Set<Authority> getAuthorities() {
         return authorities;
     }
 
-    public void setAuthorities(Set<Authority> authorities) {
+    public User setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+        return this;
     }
 
     @Override
