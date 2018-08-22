@@ -1,14 +1,12 @@
 package io.github.adamwaniak.application.web.rest;
 
 import io.github.adamwaniak.application.EQuizApp;
-
 import io.github.adamwaniak.application.domain.Quiz;
 import io.github.adamwaniak.application.repository.QuizRepository;
 import io.github.adamwaniak.application.service.QuizService;
 import io.github.adamwaniak.application.service.dto.QuizDTO;
 import io.github.adamwaniak.application.service.mapper.QuizMapper;
 import io.github.adamwaniak.application.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +25,6 @@ import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-
 
 import static io.github.adamwaniak.application.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -71,7 +68,7 @@ public class QuizResourceIntTest {
 
     @Autowired
     private QuizMapper quizMapper;
-    
+
 
     @Autowired
     private QuizService quizService;
@@ -277,15 +274,15 @@ public class QuizResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(quiz.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
-            .andExpect(jsonPath("$.[*].password").value(hasItem(DEFAULT_PASSWORD.toString())))
+            .andExpect(jsonPath("$.[*].password").value(hasItem(DEFAULT_PASSWORD)))
             .andExpect(jsonPath("$.[*].edition").value(hasItem(DEFAULT_EDITION)))
-            .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL.toString())))
+            .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL)))
             .andExpect(jsonPath("$.[*].maxTimeInMinutes").value(hasItem(DEFAULT_MAX_TIME_IN_MINUTES)));
     }
-    
+
 
     @Test
     @Transactional
@@ -298,12 +295,12 @@ public class QuizResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(quiz.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()))
             .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
-            .andExpect(jsonPath("$.password").value(DEFAULT_PASSWORD.toString()))
+            .andExpect(jsonPath("$.password").value(DEFAULT_PASSWORD))
             .andExpect(jsonPath("$.edition").value(DEFAULT_EDITION))
-            .andExpect(jsonPath("$.url").value(DEFAULT_URL.toString()))
+            .andExpect(jsonPath("$.url").value(DEFAULT_URL))
             .andExpect(jsonPath("$.maxTimeInMinutes").value(DEFAULT_MAX_TIME_IN_MINUTES));
     }
     @Test
@@ -362,7 +359,7 @@ public class QuizResourceIntTest {
         // Create the Quiz
         QuizDTO quizDTO = quizMapper.toDto(quiz);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restQuizMockMvc.perform(put("/api/quizzes")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(quizDTO)))

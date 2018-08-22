@@ -4,6 +4,7 @@ import { errorRoute, navbarRoute } from './layouts';
 import { DEBUG_INFO_ENABLED } from 'app/app.constants';
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
+const ROUTES = [{ path: 'quiz-manager', loadChildren: './features/quiz-manager/quiz-manager.module#QuizManagerModule' }];
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
                 }
             ],
             { useHash: true, enableTracing: DEBUG_INFO_ENABLED }
-        )
+        ),
+        RouterModule.forRoot(ROUTES)
     ],
     exports: [RouterModule]
 })

@@ -1,9 +1,9 @@
 import './vendor.ts';
 
-import { NgModule, Injector } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { Ng2Webstorage, LocalStorageService, SessionStorageService } from 'ngx-webstorage';
+import { LocalStorageService, Ng2Webstorage, SessionStorageService } from 'ngx-webstorage';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
@@ -17,8 +17,8 @@ import { EQuizHomeModule } from './home/home.module';
 import { EQuizAccountModule } from './account/account.module';
 import { EQuizEntityModule } from './entities/entity.module';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
-import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ErrorComponent } from './layouts';
-import { EQuizFeatureModule } from 'app/features/feature.module';
+import { ErrorComponent, FooterComponent, JhiMainComponent, NavbarComponent, PageRibbonComponent } from './layouts';
+import { QuizManagerModule } from 'app/features/quiz-manager/quiz-manager.module';
 
 @NgModule({
     imports: [
@@ -30,7 +30,7 @@ import { EQuizFeatureModule } from 'app/features/feature.module';
         EQuizHomeModule,
         EQuizAccountModule,
         EQuizEntityModule,
-        EQuizFeatureModule
+        QuizManagerModule
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],

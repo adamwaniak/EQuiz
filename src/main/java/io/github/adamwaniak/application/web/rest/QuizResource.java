@@ -2,10 +2,10 @@ package io.github.adamwaniak.application.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import io.github.adamwaniak.application.service.QuizService;
+import io.github.adamwaniak.application.service.dto.QuizDTO;
 import io.github.adamwaniak.application.web.rest.errors.BadRequestAlertException;
 import io.github.adamwaniak.application.web.rest.util.HeaderUtil;
 import io.github.adamwaniak.application.web.rest.util.PaginationUtil;
-import io.github.adamwaniak.application.service.dto.QuizDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,12 +14,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -67,11 +67,10 @@ public class QuizResource {
      * @return the ResponseEntity with status 200 (OK) and with body the updated quizDTO,
      * or with status 400 (Bad Request) if the quizDTO is not valid,
      * or with status 500 (Internal Server Error) if the quizDTO couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/quizzes")
     @Timed
-    public ResponseEntity<QuizDTO> updateQuiz(@Valid @RequestBody QuizDTO quizDTO) throws URISyntaxException {
+    public ResponseEntity<QuizDTO> updateQuiz(@Valid @RequestBody QuizDTO quizDTO) {
         log.debug("REST request to update Quiz : {}", quizDTO);
         if (quizDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -123,5 +122,14 @@ public class QuizResource {
         log.debug("REST request to delete Quiz : {}", id);
         quizService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("api/current-user/quizzes")
+    @Timed
+    public ResponseEntity<List<QuizDTO>> getCurrentUserQuizzes(Authentication authentication, Pageable pageable) {
+        log.debug("REST request to get current user {} quizzes", authentication.getPrincipal());
+        Page<QuizDTO> page = quizService.getQuizzesByOwner(authentication, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/current-user/quizzes");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 }

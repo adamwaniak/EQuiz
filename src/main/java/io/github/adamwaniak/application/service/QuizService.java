@@ -6,14 +6,14 @@ import io.github.adamwaniak.application.service.dto.QuizDTO;
 import io.github.adamwaniak.application.service.mapper.QuizMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import java.util.Optional;
+
 /**
  * Service Implementation for managing Quiz.
  */
@@ -80,5 +80,12 @@ public class QuizService {
     public void delete(Long id) {
         log.debug("Request to delete Quiz : {}", id);
         quizRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<QuizDTO> getQuizzesByOwner(Authentication authentication, Pageable pageable) {
+        log.debug("Request to get all {} user quizzes", authentication.getPrincipal().toString());
+        return quizRepository.findByOwnerIsCurrentUser(pageable)
+            .map(quizMapper::toDto);
     }
 }
