@@ -18,7 +18,7 @@ const ROUTES = [{ path: 'quiz-manager', loadChildren: './features/quiz-manager/q
             ],
             { useHash: true, enableTracing: DEBUG_INFO_ENABLED }
         ),
-        RouterModule.forRoot(ROUTES)
+        RouterModule.forRoot(ROUTES, { useHash: true, enableTracing: DEBUG_INFO_ENABLED })
     ],
     exports: [RouterModule]
 })
