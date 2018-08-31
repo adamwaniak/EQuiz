@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface QuizRepository extends JpaRepository<Quiz, Long> {
 
-    @Query("select quiz from Quiz quiz where quiz.owner.login = ?#{principal.username}")
-    Page<Quiz> findByOwnerIsCurrentUser(Pageable pageable);
+    Page<Quiz> findByOwnerLogin(String ownerLogin, Pageable pageable);
 
 }

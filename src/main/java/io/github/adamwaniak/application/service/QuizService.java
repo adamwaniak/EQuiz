@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -83,9 +82,9 @@ public class QuizService {
     }
 
     @Transactional(readOnly = true)
-    public Page<QuizDTO> getQuizzesByOwner(Authentication authentication, Pageable pageable) {
-        log.debug("Request to get all {} user quizzes", authentication.getPrincipal().toString());
-        return quizRepository.findByOwnerIsCurrentUser(pageable)
+    public Page<QuizDTO> getQuizzesByOwner(String ownerLogin, Pageable pageable) {
+        log.debug("Request to get all {} user quizzes", ownerLogin);
+        return quizRepository.findByOwnerLogin(ownerLogin, pageable)
             .map(quizMapper::toDto);
     }
 }

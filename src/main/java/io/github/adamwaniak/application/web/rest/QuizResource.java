@@ -128,7 +128,7 @@ public class QuizResource {
     @Timed
     public ResponseEntity<List<QuizDTO>> getCurrentUserQuizzes(Authentication authentication, Pageable pageable) {
         log.debug("REST request to get current user {} quizzes", authentication.getPrincipal());
-        Page<QuizDTO> page = quizService.getQuizzesByOwner(authentication, pageable);
+        Page<QuizDTO> page = quizService.getQuizzesByOwner(authentication.getName(), pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/current-user/quizzes");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
