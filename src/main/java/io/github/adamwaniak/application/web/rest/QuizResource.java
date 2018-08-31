@@ -124,7 +124,7 @@ public class QuizResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
-    @GetMapping("api/current-user/quizzes")
+    @GetMapping("/quizzes/current-user")
     @Timed
     public ResponseEntity<List<QuizDTO>> getCurrentUserQuizzes(Authentication authentication, Pageable pageable) {
         log.debug("REST request to get current user {} quizzes", authentication.getPrincipal());

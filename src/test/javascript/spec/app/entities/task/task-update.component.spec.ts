@@ -1,12 +1,11 @@
 /* tslint:disable max-line-length */
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 
 import { EQuizTestModule } from '../../../test.module';
-import { TaskUpdateComponent } from 'app/entities/task/task-update.component';
-import { TaskService } from 'app/entities/task/task.service';
 import { Task } from 'app/shared/model/task.model';
+import { TaskService, TaskUpdateComponent } from 'app/features/entities/task';
 
 describe('Component Tests', () => {
     describe('Task Management Update Component', () => {

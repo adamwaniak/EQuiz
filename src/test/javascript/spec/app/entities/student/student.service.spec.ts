@@ -1,9 +1,10 @@
 /* tslint:disable max-line-length */
-import { TestBed, getTestBed } from '@angular/core/testing';
+import { getTestBed, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { StudentService } from 'app/entities/student/student.service';
+
 import { Student } from 'app/shared/model/student.model';
 import { SERVER_API_URL } from 'app/app.constants';
+import { StudentService } from 'app/features/services/student.service';
 
 describe('Service Tests', () => {
     describe('Student Service', () => {

@@ -4,8 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
 import { EQuizTestModule } from '../../../test.module';
-import { QuizDetailComponent } from 'app/entities/quiz/quiz-detail.component';
+
 import { Quiz } from 'app/shared/model/quiz.model';
+import { QuizDetailComponent } from 'app/features/entities/quiz';
 
 describe('Component Tests', () => {
     describe('Quiz Management Detail Component', () => {

@@ -1,13 +1,12 @@
 /* tslint:disable max-line-length */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Data } from '@angular/router';
 
 import { EQuizTestModule } from '../../../test.module';
-import { TaskSetComponent } from 'app/entities/task-set/task-set.component';
-import { TaskSetService } from 'app/entities/task-set/task-set.service';
 import { TaskSet } from 'app/shared/model/task-set.model';
+import { TaskSetComponent, TaskSetService } from 'app/features/entities/task-set';
 
 describe('Component Tests', () => {
     describe('TaskSet Management Component', () => {

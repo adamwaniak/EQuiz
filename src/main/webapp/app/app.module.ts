@@ -15,10 +15,10 @@ import { EQuizCoreModule } from 'app/core';
 import { EQuizAppRoutingModule } from './app-routing.module';
 import { EQuizHomeModule } from './home/home.module';
 import { EQuizAccountModule } from './account/account.module';
-import { EQuizEntityModule } from './entities/entity.module';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { ErrorComponent, FooterComponent, JhiMainComponent, NavbarComponent, PageRibbonComponent } from './layouts';
 import { QuizManagerModule } from 'app/features/quiz-manager/quiz-manager.module';
+import { EQuizEntityModule } from 'app/features/entities/entity.module';
 
 @NgModule({
     imports: [

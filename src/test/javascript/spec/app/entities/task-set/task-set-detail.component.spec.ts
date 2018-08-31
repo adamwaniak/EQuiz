@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
 import { EQuizTestModule } from '../../../test.module';
-import { TaskSetDetailComponent } from 'app/entities/task-set/task-set-detail.component';
 import { TaskSet } from 'app/shared/model/task-set.model';
+import { TaskSetDetailComponent } from 'app/features/entities/task-set';
 
 describe('Component Tests', () => {
     describe('TaskSet Management Detail Component', () => {

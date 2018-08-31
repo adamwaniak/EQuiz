@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
 import { EQuizTestModule } from '../../../test.module';
-import { TaskDetailComponent } from 'app/entities/task/task-detail.component';
 import { Task } from 'app/shared/model/task.model';
+import { TaskDetailComponent } from 'app/features/entities/task';
 
 describe('Component Tests', () => {
     describe('Task Management Detail Component', () => {

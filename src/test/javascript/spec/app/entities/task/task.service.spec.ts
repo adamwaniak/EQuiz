@@ -1,9 +1,9 @@
 /* tslint:disable max-line-length */
-import { TestBed, getTestBed } from '@angular/core/testing';
+import { getTestBed, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { TaskService } from 'app/entities/task/task.service';
 import { Task } from 'app/shared/model/task.model';
 import { SERVER_API_URL } from 'app/app.constants';
+import { TaskService } from 'app/features/services/task.service';
 
 describe('Service Tests', () => {
     describe('Task Service', () => {

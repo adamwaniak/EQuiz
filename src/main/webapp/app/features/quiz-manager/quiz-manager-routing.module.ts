@@ -11,8 +11,7 @@ const routes: Routes = [
         component: QuizManagerContainerComponent,
         data: {
             authorities: ['ROLE_USER'],
-            defaultSort: 'id,asc',
-            pageTitle: 'Quizzes'
+            pageTitle: 'Quiz Manager'
         },
         canActivate: [UserRouteAccessService],
         children: [

@@ -1,13 +1,13 @@
 /* tslint:disable max-line-length */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Data } from '@angular/router';
 
 import { EQuizTestModule } from '../../../test.module';
-import { AnswerComponent } from 'app/entities/answer/answer.component';
-import { AnswerService } from 'app/entities/answer/answer.service';
+
 import { Answer } from 'app/shared/model/answer.model';
+import { AnswerComponent, AnswerService } from 'app/features/entities/answer';
 
 describe('Component Tests', () => {
     describe('Answer Management Component', () => {

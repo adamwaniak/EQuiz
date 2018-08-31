@@ -1,13 +1,13 @@
 /* tslint:disable max-line-length */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Data } from '@angular/router';
 
 import { EQuizTestModule } from '../../../test.module';
-import { StudentComponent } from 'app/entities/student/student.component';
-import { StudentService } from 'app/entities/student/student.service';
+
 import { Student } from 'app/shared/model/student.model';
+import { StudentComponent, StudentService } from 'app/features/entities/student';
 
 describe('Component Tests', () => {
     describe('Student Management Component', () => {
