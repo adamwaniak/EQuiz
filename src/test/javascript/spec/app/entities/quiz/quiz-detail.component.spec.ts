@@ -1,12 +1,12 @@
 /* tslint:disable max-line-length */
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {ActivatedRoute} from '@angular/router';
+import {of} from 'rxjs';
 
-import { EQuizTestModule } from '../../../test.module';
+import {EQuizTestModule} from '../../../test.module';
 
-import { Quiz } from 'app/shared/model/quiz.model';
-import { QuizDetailEntityComponent } from 'app/features/entities/quiz';
+import {Quiz} from 'app/shared/model/quiz.model';
+import {QuizDetailEntityComponent} from 'app/features/entities/quiz';
 
 describe('Component Tests', () => {
     describe('Quiz Management Detail Component', () => {

@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-import { JhiAlertService } from 'ng-jhipster';
+import {DATE_TIME_FORMAT} from 'app/shared/constants/input.constants';
+import {JhiAlertService} from 'ng-jhipster';
 
-import { IQuiz } from 'app/shared/model/quiz.model';
+import {IQuiz} from 'app/shared/model/quiz.model';
 
-import { IUser, UserService } from 'app/core';
-import { QuizService } from 'app/features/services/quiz.service';
+import {IUser, UserService} from 'app/core';
+import {QuizService} from 'app/features/services/quiz.service';
 
 @Component({
     selector: 'jhi-quiz-update',
@@ -20,16 +20,13 @@ export class QuizUpdateComponent implements OnInit {
     users: IUser[];
     startDate: string;
     endDate: string;
-
+    private _quiz: IQuiz;
     constructor(
         private jhiAlertService: JhiAlertService,
         private quizService: QuizService,
         private userService: UserService,
         private activatedRoute: ActivatedRoute
     ) {}
-
-    private _quiz: IQuiz;
-
     get quiz() {
         return this._quiz;
     }

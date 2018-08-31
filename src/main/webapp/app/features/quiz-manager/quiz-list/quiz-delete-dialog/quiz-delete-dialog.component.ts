@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 
-import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
+import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {JhiEventManager} from 'ng-jhipster';
 
-import { IQuiz } from 'app/shared/model/quiz.model';
-import { QuizService } from 'app/features/services/quiz.service';
+import {IQuiz} from 'app/shared/model/quiz.model';
+import {QuizService} from 'app/features/services/quiz.service';
 
 @Component({
     selector: 'jhi-quiz-delete-dialog',

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
-import { IQuiz } from 'app/shared/model/quiz.model';
+import {IQuiz} from 'app/shared/model/quiz.model';
 
 @Component({
     selector: 'jhi-quiz-detail',

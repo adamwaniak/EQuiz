@@ -1,5 +1,5 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { QuizModule } from 'app/features/quiz-manager/quiz-list/quiz.module';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+import {QuizModule} from 'app/features/quiz-manager/quiz-list/quiz.module';
 
 @NgModule({
     imports: [QuizModule],

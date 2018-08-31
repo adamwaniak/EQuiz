@@ -1,15 +1,15 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+import {RouterModule} from '@angular/router';
 
-import { EQuizSharedModule } from 'app/shared';
-import { EQuizAdminModule } from 'app/admin/admin.module';
+import {EQuizSharedModule} from 'app/shared';
+import {EQuizAdminModule} from 'app/admin/admin.module';
 import {
-    QuizEntityComponent,
     QuizDeleteDialogEntityComponent,
-    QuizEntityDeletePopupComponent,
     QuizDetailEntityComponent,
-    quizPopupRoute,
+    QuizEntityComponent,
+    QuizEntityDeletePopupComponent,
     quizEntityRoute,
+    quizPopupRoute,
     QuizUpdateEntityComponent
 } from './index';
 

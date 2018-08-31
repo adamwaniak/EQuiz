@@ -1,11 +1,11 @@
 /* tslint:disable max-line-length */
-import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { of } from 'rxjs';
-import { JhiEventManager } from 'ng-jhipster';
+import {ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {of} from 'rxjs';
+import {JhiEventManager} from 'ng-jhipster';
 
-import { EQuizTestModule } from '../../../test.module';
-import { QuizDeleteDialogEntityComponent, QuizService } from 'app/features/entities/quiz';
+import {EQuizTestModule} from '../../../test.module';
+import {QuizDeleteDialogEntityComponent, QuizService} from 'app/features/entities/quiz';
 
 describe('Component Tests', () => {
     describe('Quiz Management Delete Component', () => {
