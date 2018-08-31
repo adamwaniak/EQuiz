@@ -1,0 +1,55 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="quiz">
+            <h2><span>Quiz</span> {{quiz.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Name</span></dt>
+                <dd>
+                    <span>{{quiz.name}}</span>
+                </dd>
+                <dt><span>Start Date</span></dt>
+                <dd>
+                    <span>{{quiz.startDate}}</span>
+                </dd>
+                <dt><span>End Date</span></dt>
+                <dd>
+                    <span>{{quiz.endDate}}</span>
+                </dd>
+                <dt><span>Password</span></dt>
+                <dd>
+                    <span>{{quiz.password}}</span>
+                </dd>
+                <dt><span>Edition</span></dt>
+                <dd>
+                    <span>{{quiz.edition}}</span>
+                </dd>
+                <dt><span>Url</span></dt>
+                <dd>
+                    <span>{{quiz.url}}</span>
+                </dd>
+                <dt><span>Max Time In Minutes</span></dt>
+                <dd>
+                    <span>{{quiz.maxTimeInMinutes}}</span>
+                </dd>
+                <dt><span>Owner</span></dt>
+                <dd>
+                    {{quiz.ownerId}}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/quiz', quiz.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

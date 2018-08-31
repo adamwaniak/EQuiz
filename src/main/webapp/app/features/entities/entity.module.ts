@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
-import { EQuizQuizModule } from './quiz/quiz.module';
+import { EQuizEntityModule } from './quiz/quiz.entity.module';
 import { EQuizTaskModule } from './task/task.module';
 import { EQuizTaskSetModule } from './task-set/task-set.module';
 import { EQuizAnswerModule } from './answer/answer.module';
@@ -12,7 +12,7 @@ import { EQuizStudentAnswerModule } from './student-answer/student-answer.module
 @NgModule({
     // prettier-ignore
     imports: [
-        EQuizQuizModule,
+        EQuizEntityModule,
         EQuizTaskModule,
         EQuizTaskSetModule,
         EQuizAnswerModule,
@@ -25,4 +25,4 @@ import { EQuizStudentAnswerModule } from './student-answer/student-answer.module
     providers: [],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class EQuizEntityModule {}
+export class EntityModule {}

@@ -5,12 +5,12 @@ import { of } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { EQuizTestModule } from '../../../test.module';
-import { QuizDeleteDialogComponent, QuizService } from 'app/features/entities/quiz';
+import { QuizDeleteDialogEntityComponent, QuizService } from 'app/features/entities/quiz';
 
 describe('Component Tests', () => {
     describe('Quiz Management Delete Component', () => {
-        let comp: QuizDeleteDialogComponent;
-        let fixture: ComponentFixture<QuizDeleteDialogComponent>;
+        let comp: QuizDeleteDialogEntityComponent;
+        let fixture: ComponentFixture<QuizDeleteDialogEntityComponent>;
         let service: QuizService;
         let mockEventManager: any;
         let mockActiveModal: any;
@@ -18,11 +18,11 @@ describe('Component Tests', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [EQuizTestModule],
-                declarations: [QuizDeleteDialogComponent]
+                declarations: [QuizDeleteDialogEntityComponent]
             })
-                .overrideTemplate(QuizDeleteDialogComponent, '')
+                .overrideTemplate(QuizDeleteDialogEntityComponent, '')
                 .compileComponents();
-            fixture = TestBed.createComponent(QuizDeleteDialogComponent);
+            fixture = TestBed.createComponent(QuizDeleteDialogEntityComponent);
             comp = fixture.componentInstance;
             service = fixture.debugElement.injector.get(QuizService);
             mockEventManager = fixture.debugElement.injector.get(JhiEventManager);

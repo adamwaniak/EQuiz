@@ -13,12 +13,12 @@ import { NotificationInterceptor } from './blocks/interceptor/notification.inter
 import { EQuizSharedModule } from 'app/shared';
 import { EQuizCoreModule } from 'app/core';
 import { EQuizAppRoutingModule } from './app-routing.module';
-import { EQuizHomeModule } from './home/home.module';
+import { EQuizHomeModule } from 'app/home';
 import { EQuizAccountModule } from './account/account.module';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { ErrorComponent, FooterComponent, JhiMainComponent, NavbarComponent, PageRibbonComponent } from './layouts';
 import { QuizManagerModule } from 'app/features/quiz-manager/quiz-manager.module';
-import { EQuizEntityModule } from 'app/features/entities/entity.module';
+import { EntityModule } from 'app/features/entities/entity.module';
 
 @NgModule({
     imports: [
@@ -29,7 +29,7 @@ import { EQuizEntityModule } from 'app/features/entities/entity.module';
         EQuizCoreModule,
         EQuizHomeModule,
         EQuizAccountModule,
-        EQuizEntityModule,
+        EntityModule,
         QuizManagerModule
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],

@@ -6,23 +6,23 @@ import { of } from 'rxjs';
 import { EQuizTestModule } from '../../../test.module';
 
 import { Quiz } from 'app/shared/model/quiz.model';
-import { QuizDetailComponent } from 'app/features/entities/quiz';
+import { QuizDetailEntityComponent } from 'app/features/entities/quiz';
 
 describe('Component Tests', () => {
     describe('Quiz Management Detail Component', () => {
-        let comp: QuizDetailComponent;
-        let fixture: ComponentFixture<QuizDetailComponent>;
+        let comp: QuizDetailEntityComponent;
+        let fixture: ComponentFixture<QuizDetailEntityComponent>;
         const route = ({ data: of({ quiz: new Quiz(123) }) } as any) as ActivatedRoute;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [EQuizTestModule],
-                declarations: [QuizDetailComponent],
+                declarations: [QuizDetailEntityComponent],
                 providers: [{ provide: ActivatedRoute, useValue: route }]
             })
-                .overrideTemplate(QuizDetailComponent, '')
+                .overrideTemplate(QuizDetailEntityComponent, '')
                 .compileComponents();
-            fixture = TestBed.createComponent(QuizDetailComponent);
+            fixture = TestBed.createComponent(QuizDetailEntityComponent);
             comp = fixture.componentInstance;
         });
 

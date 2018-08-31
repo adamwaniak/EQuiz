@@ -1,14 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-import { QuizManagerRoutingModule } from './quiz-manager-routing.module';
-import { QuizListComponent } from 'app/features/quiz-manager/quiz-list/quiz-list.component';
-import { QuizManagerContainerComponent } from './container/quiz-manager-container.component';
-import { QuizTaskSetListComponent } from './quiz-task-set-list/quiz-task-set-list.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { QuizModule } from 'app/features/quiz-manager/quiz-list/quiz.module';
 
 @NgModule({
-    imports: [CommonModule, QuizManagerRoutingModule],
-    declarations: [QuizListComponent, QuizManagerContainerComponent, QuizTaskSetListComponent],
-    exports: [QuizManagerContainerComponent]
+    imports: [QuizModule],
+    declarations: [],
+    exports: [],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class QuizManagerModule {}

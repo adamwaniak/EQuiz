@@ -12,9 +12,9 @@ import { QuizService } from '../../services/quiz.service';
 
 @Component({
     selector: 'jhi-quiz',
-    templateUrl: './quiz.component.html'
+    templateUrl: './quiz.entity.component.html'
 })
-export class QuizComponent implements OnInit, OnDestroy {
+export class QuizEntityComponent implements OnInit, OnDestroy {
     currentAccount: any;
     quizzes: IQuiz[];
     error: any;

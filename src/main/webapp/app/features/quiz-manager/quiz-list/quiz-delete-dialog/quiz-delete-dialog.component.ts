@@ -5,7 +5,7 @@ import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstra
 import { JhiEventManager } from 'ng-jhipster';
 
 import { IQuiz } from 'app/shared/model/quiz.model';
-import { QuizService } from '../../services/quiz.service';
+import { QuizService } from 'app/features/services/quiz.service';
 
 @Component({
     selector: 'jhi-quiz-delete-dialog',
@@ -43,15 +43,24 @@ export class QuizDeletePopupComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ quiz }) => {
             setTimeout(() => {
-                this.ngbModalRef = this.modalService.open(QuizDeleteDialogComponent as Component, { size: 'lg', backdrop: 'static' });
+                this.ngbModalRef = this.modalService.open(QuizDeleteDialogComponent as Component, {
+                    size: 'lg',
+                    backdrop: 'static'
+                });
                 this.ngbModalRef.componentInstance.quiz = quiz;
                 this.ngbModalRef.result.then(
                     result => {
-                        this.router.navigate([{ outlets: { popup: null } }], { replaceUrl: true, queryParamsHandling: 'merge' });
+                        this.router.navigate([{ outlets: { popup: null } }], {
+                            replaceUrl: true,
+                            queryParamsHandling: 'merge'
+                        });
                         this.ngbModalRef = null;
                     },
                     reason => {
-                        this.router.navigate([{ outlets: { popup: null } }], { replaceUrl: true, queryParamsHandling: 'merge' });
+                        this.router.navigate([{ outlets: { popup: null } }], {
+                            replaceUrl: true,
+                            queryParamsHandling: 'merge'
+                        });
                         this.ngbModalRef = null;
                     }
                 );

@@ -6,18 +6,18 @@ import { ActivatedRoute, Data } from '@angular/router';
 
 import { EQuizTestModule } from '../../../test.module';
 import { Quiz } from 'app/shared/model/quiz.model';
-import { QuizComponent, QuizService } from 'app/features/entities/quiz';
+import { QuizEntityComponent, QuizService } from 'app/features/entities/quiz';
 
 describe('Component Tests', () => {
     describe('Quiz Management Component', () => {
-        let comp: QuizComponent;
-        let fixture: ComponentFixture<QuizComponent>;
+        let comp: QuizEntityComponent;
+        let fixture: ComponentFixture<QuizEntityComponent>;
         let service: QuizService;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [EQuizTestModule],
-                declarations: [QuizComponent],
+                declarations: [QuizEntityComponent],
                 providers: [
                     {
                         provide: ActivatedRoute,
@@ -36,10 +36,10 @@ describe('Component Tests', () => {
                     }
                 ]
             })
-                .overrideTemplate(QuizComponent, '')
+                .overrideTemplate(QuizEntityComponent, '')
                 .compileComponents();
 
-            fixture = TestBed.createComponent(QuizComponent);
+            fixture = TestBed.createComponent(QuizEntityComponent);
             comp = fixture.componentInstance;
             service = fixture.debugElement.injector.get(QuizService);
         });

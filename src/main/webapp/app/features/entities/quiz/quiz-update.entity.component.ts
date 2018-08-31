@@ -12,9 +12,9 @@ import { IUser, UserService } from 'app/core';
 
 @Component({
     selector: 'jhi-quiz-update',
-    templateUrl: './quiz-update.component.html'
+    templateUrl: './quiz-update.entity.component.html'
 })
-export class QuizUpdateComponent implements OnInit {
+export class QuizUpdateEntityComponent implements OnInit {
     private _quiz: IQuiz;
     isSaving: boolean;
 

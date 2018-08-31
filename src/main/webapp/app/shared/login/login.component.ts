@@ -69,7 +69,7 @@ export class JhiLoginModalComponent implements AfterViewInit {
                 //     this.stateStorageService.storeUrl(null);
                 //     this.router.navigate([redirect]);
                 // }
-                this.router.navigate(['/feature']);
+                this.router.navigate(['/quiz-manager']);
             })
             .catch(() => {
                 this.authenticationError = true;

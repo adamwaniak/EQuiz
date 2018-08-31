@@ -7,10 +7,10 @@ import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IQuiz, Quiz } from 'app/shared/model/quiz.model';
 import { QuizService } from '../../services/quiz.service';
-import { QuizComponent } from './quiz.component';
-import { QuizDetailComponent } from './quiz-detail.component';
-import { QuizUpdateComponent } from './quiz-update.component';
-import { QuizDeletePopupComponent } from './quiz-delete-dialog.component';
+import { QuizEntityComponent } from './quiz.entity.component';
+import { QuizDetailEntityComponent } from './quiz-detail.entity.component';
+import { QuizUpdateEntityComponent } from './quiz-update.entity.component';
+import { QuizEntityDeletePopupComponent } from './quiz-delete-dialog.entity.component';
 
 @Injectable({ providedIn: 'root' })
 export class QuizResolve implements Resolve<IQuiz> {
@@ -25,10 +25,10 @@ export class QuizResolve implements Resolve<IQuiz> {
     }
 }
 
-export const quizRoute: Routes = [
+export const quizEntityRoute: Routes = [
     {
         path: 'quiz',
-        component: QuizComponent,
+        component: QuizEntityComponent,
         resolve: {
             pagingParams: JhiResolvePagingParams
         },
@@ -41,7 +41,7 @@ export const quizRoute: Routes = [
     },
     {
         path: 'quiz/:id/view',
-        component: QuizDetailComponent,
+        component: QuizDetailEntityComponent,
         resolve: {
             quiz: QuizResolve
         },
@@ -53,7 +53,7 @@ export const quizRoute: Routes = [
     },
     {
         path: 'quiz/new',
-        component: QuizUpdateComponent,
+        component: QuizUpdateEntityComponent,
         resolve: {
             quiz: QuizResolve
         },
@@ -65,7 +65,7 @@ export const quizRoute: Routes = [
     },
     {
         path: 'quiz/:id/edit',
-        component: QuizUpdateComponent,
+        component: QuizUpdateEntityComponent,
         resolve: {
             quiz: QuizResolve
         },
@@ -80,7 +80,7 @@ export const quizRoute: Routes = [
 export const quizPopupRoute: Routes = [
     {
         path: 'quiz/:id/delete',
-        component: QuizDeletePopupComponent,
+        component: QuizEntityDeletePopupComponent,
         resolve: {
             quiz: QuizResolve
         },

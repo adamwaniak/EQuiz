@@ -6,23 +6,23 @@ import { of } from 'rxjs';
 import { EQuizTestModule } from '../../../test.module';
 
 import { Quiz } from 'app/shared/model/quiz.model';
-import { QuizService, QuizUpdateComponent } from 'app/features/entities/quiz';
+import { QuizService, QuizUpdateEntityComponent } from 'app/features/entities/quiz';
 
 describe('Component Tests', () => {
     describe('Quiz Management Update Component', () => {
-        let comp: QuizUpdateComponent;
-        let fixture: ComponentFixture<QuizUpdateComponent>;
+        let comp: QuizUpdateEntityComponent;
+        let fixture: ComponentFixture<QuizUpdateEntityComponent>;
         let service: QuizService;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [EQuizTestModule],
-                declarations: [QuizUpdateComponent]
+                declarations: [QuizUpdateEntityComponent]
             })
-                .overrideTemplate(QuizUpdateComponent, '')
+                .overrideTemplate(QuizUpdateEntityComponent, '')
                 .compileComponents();
 
-            fixture = TestBed.createComponent(QuizUpdateComponent);
+            fixture = TestBed.createComponent(QuizUpdateEntityComponent);
             comp = fixture.componentInstance;
             service = fixture.debugElement.injector.get(QuizService);
         });
