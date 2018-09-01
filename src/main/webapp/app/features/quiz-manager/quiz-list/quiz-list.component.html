@@ -21,22 +21,31 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
                 <th jhiSortBy="id"><span>ID</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
                 </th>
                 <th jhiSortBy="name"><span>Name</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
                 </th>
-                <th><span>Start Date</span>
+                <th jhiSortBy="startDate"><span>Start Date</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
                 </th>
                 <th jhiSortBy="endDate"><span>End Date</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
                 </th>
                 <th jhiSortBy="password"><span>Password</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
                 </th>
                 <th jhiSortBy="edition"><span>Edition</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
                 </th>
                 <th jhiSortBy="url"><span>Url</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
                 </th>
                 <th jhiSortBy="maxTimeInMinutes"><span>Max Time In Minutes</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
                 </th>
                 <th jhiSortBy="ownerId"><span>Owner</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
                 </th>
                 <th></th>
             </tr>
