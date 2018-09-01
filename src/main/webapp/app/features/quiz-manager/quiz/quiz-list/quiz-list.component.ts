@@ -11,7 +11,7 @@ import { ITEMS_PER_PAGE } from 'app/shared';
 @Component({
     selector: 'jhi-quiz-list',
     templateUrl: './quiz-list.component.html',
-    styles: []
+    styleUrls: ['../quiz.scss']
 })
 export class QuizListComponent implements OnInit, OnDestroy {
     currentAccount: any;

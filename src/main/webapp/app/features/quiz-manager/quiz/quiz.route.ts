@@ -1,16 +1,16 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes} from '@angular/router';
-import {QuizListComponent} from 'app/features/quiz-manager/quiz-list/quiz-list.component';
-import {UserRouteAccessService} from 'app/core';
-import {JhiResolvePagingParams} from 'ng-jhipster';
-import {map} from 'rxjs/operators';
-import {HttpResponse} from '@angular/common/http';
-import {IQuiz, Quiz} from 'app/shared/model/quiz.model';
-import {QuizService} from 'app/features/services/quiz.service';
-import {of} from 'rxjs/index';
-import {QuizDetailComponent} from 'app/features/quiz-manager/quiz-list/quiz-detail/quiz-detail.component';
-import {QuizUpdateComponent} from 'app/features/quiz-manager/quiz-list/quiz-update/quiz-update.component';
-import {QuizDeletePopupComponent} from 'app/features/quiz-manager/quiz-list/quiz-delete-dialog/quiz-delete-dialog.component';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes } from '@angular/router';
+import { QuizListComponent } from 'app/features/quiz-manager/quiz/quiz-list/quiz-list.component';
+import { UserRouteAccessService } from 'app/core';
+import { JhiResolvePagingParams } from 'ng-jhipster';
+import { map } from 'rxjs/operators';
+import { HttpResponse } from '@angular/common/http';
+import { IQuiz, Quiz } from 'app/shared/model/quiz.model';
+import { QuizService } from 'app/features/services/quiz.service';
+import { of } from 'rxjs/index';
+import { QuizDetailComponent } from 'app/features/quiz-manager/quiz/quiz-detail/quiz-detail.component';
+import { QuizUpdateComponent } from 'app/features/quiz-manager/quiz/quiz-update/quiz-update.component';
+import { QuizDeletePopupComponent } from 'app/features/quiz-manager/quiz/quiz-delete-dialog/quiz-delete-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class QuizResolve implements Resolve<IQuiz> {
