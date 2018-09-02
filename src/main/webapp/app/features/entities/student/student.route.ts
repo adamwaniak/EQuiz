@@ -33,7 +33,7 @@ export const studentRoute: Routes = [
             pagingParams: JhiResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             defaultSort: 'id,asc',
             pageTitle: 'Students'
         },
@@ -46,7 +46,7 @@ export const studentRoute: Routes = [
             student: StudentResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Students'
         },
         canActivate: [UserRouteAccessService]
@@ -58,7 +58,7 @@ export const studentRoute: Routes = [
             student: StudentResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Students'
         },
         canActivate: [UserRouteAccessService]
@@ -70,7 +70,7 @@ export const studentRoute: Routes = [
             student: StudentResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Students'
         },
         canActivate: [UserRouteAccessService]
@@ -85,7 +85,7 @@ export const studentPopupRoute: Routes = [
             student: StudentResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Students'
         },
         canActivate: [UserRouteAccessService],

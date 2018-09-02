@@ -1,11 +1,14 @@
 <!--<jhi-page-ribbon></jhi-page-ribbon>-->
 
 <jhi-navbar></jhi-navbar>
-
+<main [@routerTransition]="getState(o)">
 <div class="container-fluid">
     <div class="card jh-card">
-        <router-outlet></router-outlet>
+
+        <router-outlet #o="outlet"></router-outlet>
+
         <router-outlet name="popup"></router-outlet>
     </div>
     <jhi-footer></jhi-footer>
 </div>
+</main>

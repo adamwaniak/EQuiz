@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { QuizService } from 'app/features/services/quiz.service';
 import { IQuiz } from 'app/shared/model/quiz.model';
 import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
@@ -11,7 +11,7 @@ import { ITEMS_PER_PAGE } from 'app/shared';
 @Component({
     selector: 'jhi-quiz-list',
     templateUrl: './quiz-list.component.html',
-    styleUrls: ['../quiz.scss']
+    styleUrls: ['./quiz-list.scss']
 })
 export class QuizListComponent implements OnInit, OnDestroy {
     currentAccount: any;

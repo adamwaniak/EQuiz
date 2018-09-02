@@ -33,7 +33,7 @@ export const taskSetRoute: Routes = [
             pagingParams: JhiResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             defaultSort: 'id,asc',
             pageTitle: 'TaskSets'
         },
@@ -46,7 +46,7 @@ export const taskSetRoute: Routes = [
             taskSet: TaskSetResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'TaskSets'
         },
         canActivate: [UserRouteAccessService]
@@ -58,7 +58,7 @@ export const taskSetRoute: Routes = [
             taskSet: TaskSetResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'TaskSets'
         },
         canActivate: [UserRouteAccessService]
@@ -70,7 +70,7 @@ export const taskSetRoute: Routes = [
             taskSet: TaskSetResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'TaskSets'
         },
         canActivate: [UserRouteAccessService]
@@ -85,7 +85,7 @@ export const taskSetPopupRoute: Routes = [
             taskSet: TaskSetResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'TaskSets'
         },
         canActivate: [UserRouteAccessService],

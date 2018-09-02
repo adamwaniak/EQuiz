@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, NavigationEnd } from '@angular/router';
 
 import { Title } from '@angular/platform-browser';
+import { routerTransition } from 'app/shared/animation/routerTransition.animation';
 
 @Component({
     selector: 'jhi-main',
-    templateUrl: './main.component.html'
+    templateUrl: './main.component.html',
+    animations: [routerTransition]
 })
 export class JhiMainComponent implements OnInit {
     constructor(private titleService: Title, private router: Router) {}
@@ -24,5 +26,9 @@ export class JhiMainComponent implements OnInit {
                 this.titleService.setTitle(this.getPageTitle(this.router.routerState.snapshot.root));
             }
         });
+    }
+
+    getState(outlet) {
+        return outlet.activatedRouteData.state;
     }
 }

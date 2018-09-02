@@ -31,7 +31,8 @@ export const QUIZ_ROUTES: Routes = [
         component: QuizListComponent,
         data: {
             authorities: ['ROLE_USER'],
-            defaultSort: 'startDate,desc'
+            defaultSort: 'startDate,desc',
+            state: 'quiz-manager'
         },
         canActivate: [UserRouteAccessService],
         resolve: {
@@ -46,7 +47,8 @@ export const QUIZ_ROUTES: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Quizzes'
+            pageTitle: 'Quizzes',
+            state: 'quiz-manager-quiz-details'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -58,7 +60,8 @@ export const QUIZ_ROUTES: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Quizzes'
+            pageTitle: 'Quizzes',
+            state: 'quiz-manager-new-quiz'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -70,7 +73,8 @@ export const QUIZ_ROUTES: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Quizzes'
+            pageTitle: 'Quizzes',
+            state: 'quiz-manager-edit-quiz'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -82,7 +86,8 @@ export const QUIZ_ROUTES: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Quizzes'
+            pageTitle: 'Quizzes',
+            state: 'quiz-manager-delete-quiz'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

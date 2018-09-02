@@ -1,14 +1,9 @@
-<p>
-    quiz-list works!
-</p>
-<a class="nav-link" routerLink="/quiz-manager/1/task-set-list"><span>Quiz manager</span> </a>
-
-
-<div>
-    <h2 id="page-heading">
-        <span>Quizzes</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-quiz"
-                [routerLink]="['/quiz/new']">
+<div class="min-list-height">
+    <div *ngIf="quizzes && quizzes.length; else noAvaliableQuiz">
+        <h2 id="page-heading" class="display-4">
+            <span>Your Quizzes</span>
+            <button [id]="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-quiz"
+                    [routerLink]="['/quiz-manager/new']">
             <span>
                 Create new Quiz
             </span>
@@ -16,119 +11,80 @@
     </h2>
     <jhi-alert></jhi-alert>
     <br/>
-    <!--<div class="d-flex w-100 justify-content-between">-->
-    <!--<h5 class="mb-1">List group item heading</h5>-->
-    <!--</div>-->
-    <div href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-        <div class="row">
-            <div class="col-sm">
-                One of three columns
-            </div>
-            <div class="col-sm">
-                One of three columns
-            </div>
-            <div class="col-sm">
-                One of three columns
-            </div>
-            <div class="col-sm">
-                One of three columns
-            </div>
-        </div>
-    </div>
-
-    <div href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-        <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">List group item heading</h5>
-            <small class="text-muted">3 days ago</small>
-        </div>
-        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius
-            blandit.</p>
-        <small class="text-muted">Donec id elit non mi porta.</small>
-    </div>
-    <div href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-        <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">List group item heading</h5>
-            <small class="text-muted">3 days ago</small>
-        </div>
-        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius
-            blandit.</p>
-        <small class="text-muted">Donec id elit non mi porta.</small>
-    </div>
-
-
-    <div class="table-responsive" *ngIf="quizzes">
-        <table class="table table-striped">
-            <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-                <th jhiSortBy="id"><span>ID</span>
-                    <fa-icon [icon]="'sort'"></fa-icon>
-                </th>
-                <th jhiSortBy="name"><span>Name</span>
-                    <fa-icon [icon]="'sort'"></fa-icon>
-                </th>
-                <th jhiSortBy="startDate"><span>Start Date</span>
-                    <fa-icon [icon]="'sort'"></fa-icon>
-                </th>
-                <th jhiSortBy="endDate"><span>End Date</span>
-                    <fa-icon [icon]="'sort'"></fa-icon>
-                </th>
-                <th jhiSortBy="password"><span>Password</span>
-                    <fa-icon [icon]="'sort'"></fa-icon>
-                </th>
-                <th jhiSortBy="edition"><span>Edition</span>
-                    <fa-icon [icon]="'sort'"></fa-icon>
-                </th>
-                <th jhiSortBy="url"><span>Url</span>
-                    <fa-icon [icon]="'sort'"></fa-icon>
-                </th>
-                <th jhiSortBy="maxTimeInMinutes"><span>Max Time In Minutes</span>
-                    <fa-icon [icon]="'sort'"></fa-icon>
-                </th>
-                <th jhiSortBy="ownerId"><span>Owner</span>
-                    <fa-icon [icon]="'sort'"></fa-icon>
-                </th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let quiz of quizzes ;trackBy: trackId">
-                <td><a [routerLink]="['/quiz', quiz.id, 'view' ]">{{quiz.id}}</a></td>
-                <td>{{quiz.name}}</td>
-                <td>{{quiz.startDate | date:'medium'}}</td>
-                <td>{{quiz.endDate | date:'medium'}}</td>
-                <td>{{quiz.password}}</td>
-                <td>{{quiz.edition}}</td>
-                <td>{{quiz.url}}</td>
-                <td>{{quiz.maxTimeInMinutes}}</td>
-                <td>
-                    {{quiz.ownerId}}
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['/quiz-manager', quiz.id, 'view' ]"
-                                class="btn btn-info btn-sm">
-                            <span class="d-none d-md-inline">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/quiz-manager', quiz.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'quiz-manager/'+ quiz.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <span class="d-none d-md-inline">Delete</span>
+        <div class="list-group" *ngIf="quizzes">
+            <div href="#" class="list-group-item list-group-item-action align-items-start container-fluid form-group"
+                 *ngFor="let quiz of quizzes ;trackBy: trackId">
+                <div class="row">
+                    <div class="col col-md">
+                        <div class="text-justify display-4">
+                            {{quiz.name}}
+                        </div>
+                    </div>
+                    <div class="col col-md align-self-center">
+                        <button class="btn btn-info float-right" [routerLink]="['/quiz-manager/new']">
+                            <span>Go to task sets</span>
                         </button>
                     </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                </div>
+                <div class="row">
+                    <div class="col col-md align-self-center">
+                        <h4>
+                            <span>Edition {{quiz.edition}}</span>
+                        </h4>
+                    </div>
+                    <div class="col col-md align-self-center">
+                        <h4><span>Start date: </span>
+                            <small class="text-muted">{{quiz.startDate | date: 'medium'}}</small>
+                        </h4>
+                    </div>
+                    <div class="col col-md align-self-center">
+                        <h4><span>End date: </span>
+                            <small class="text-muted">{{quiz.endDate | date: 'medium'}}</small>
+                        </h4>
+                    </div>
+                    <div class="col col-md">
+                        One of three columns
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md">
+                        One of three columns
+                    </div>
+                    <div class="col-md">
+                        One of three columns
+                    </div>
+                    <div class="col-md">
+                        One of three columns
+                    </div>
+                    <div class="col-md">
+                        One of three columns
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-md align-self-center">
+                        <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['/quiz-manager/new']">
+                            <span>Check results</span>
+                        </button>
+                    </div>
+                    <div class="col col-md align-self-center">
+                        <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['/quiz-manager/new']">
+                            <span>Edit</span>
+                        </button>
+                    </div>
+                    <div class="col col-md align-self-center">
+                        <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['/quiz-manager/new']">
+                            <span>Publish</span>
+                        </button>
+                    </div>
+                    <div class="col col-md align-self-center">
+                        <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['/quiz-manager/new']">
+                            <span>Copy</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
     </div>
-    <div *ngIf="quizzes">
+        <div *ngIf="quizzes && quizzes.length">
         <div class="row justify-content-center">
             <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5"
                             [itemsPerPage]="itemsPerPage"></jhi-item-count>
@@ -139,3 +95,22 @@
         </div>
     </div>
 </div>
+</div>
+<ng-template #noAvaliableQuiz>
+    <div class="grid">
+        <div class="row d-flex justify-content-center ">
+            <span class="display-4">You don't have any quizzes yet.</span>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <span>Click button below and create a new one!</span>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-quiz"
+                    [routerLink]="['/quiz-manager/new']">
+            <span>
+                Create new Quiz
+            </span>
+            </button>
+        </div>
+    </div>
+</ng-template>
