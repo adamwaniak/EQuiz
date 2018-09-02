@@ -1,8 +1,7 @@
-<div class="min-list-height">
-    <div *ngIf="quizzes && quizzes.length; else noAvaliableQuiz">
-        <h2 id="page-heading" class="display-4">
-            <span>Your Quizzes</span>
-            <button [id]="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-quiz"
+<div *ngIf="quizzes && quizzes.length; else noAvaliableQuiz">
+    <h2 id="page-heading" class="display-4">
+        <span>Your Quizzes</span>
+        <button [id]="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-quiz"
                     [routerLink]="['/quiz-manager/new']">
             <span>
                 Create new Quiz
@@ -95,7 +94,7 @@
         </div>
     </div>
 </div>
-</div>
+
 <ng-template #noAvaliableQuiz>
     <div class="grid">
         <div class="row d-flex justify-content-center ">
