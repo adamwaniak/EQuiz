@@ -7,10 +7,11 @@ import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ITaskSet, TaskSet } from 'app/shared/model/task-set.model';
 import { TaskSetService } from '../../services/task-set.service';
-import { TaskSetComponent } from './task-set.component';
-import { TaskSetDetailComponent } from './task-set-detail.component';
-import { TaskSetUpdateComponent } from './task-set-update.component';
-import { TaskSetDeletePopupComponent } from './task-set-delete-dialog.component';
+
+import { TaskSetDetailComponent } from './task-set-detail/task-set-detail.component';
+import { TaskSetUpdateComponent } from './task-set-update/task-set-update.component';
+import { TaskSetDeletePopupComponent } from './task-set-delete-dialog/task-set-delete-dialog.component';
+import { TaskSetListComponent } from 'app/features/quiz-manager/task-set/task-set-list/task-set-list.component';
 
 @Injectable({ providedIn: 'root' })
 export class TaskSetResolve implements Resolve<ITaskSet> {
@@ -27,51 +28,55 @@ export class TaskSetResolve implements Resolve<ITaskSet> {
 
 export const taskSetRoute: Routes = [
     {
-        path: 'task-set',
-        component: TaskSetComponent,
+        path: 'quiz-manager/:quiz-id/task-set',
+        component: TaskSetListComponent,
         resolve: {
             pagingParams: JhiResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_ADMIN'],
+            authorities: ['ROLE_USER'],
             defaultSort: 'id,asc',
-            pageTitle: 'TaskSets'
+            pageTitle: 'TaskSets',
+            state: 'task-set'
         },
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'task-set/:id/view',
+        path: 'quiz-manager/:quiz-id/task-set/:id/view',
         component: TaskSetDetailComponent,
         resolve: {
             taskSet: TaskSetResolve
         },
         data: {
-            authorities: ['ROLE_ADMIN'],
-            pageTitle: 'TaskSets'
+            authorities: ['ROLE_USER'],
+            pageTitle: 'TaskSets',
+            state: 'task-set-details'
         },
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'task-set/new',
+        path: 'quiz-manager/:quiz-id/task-set/new',
         component: TaskSetUpdateComponent,
         resolve: {
             taskSet: TaskSetResolve
         },
         data: {
-            authorities: ['ROLE_ADMIN'],
-            pageTitle: 'TaskSets'
+            authorities: ['ROLE_USER'],
+            pageTitle: 'TaskSets',
+            state: 'task-set-new'
         },
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'task-set/:id/edit',
+        path: 'quiz-manager/:quiz-id/task-set/:id/edit',
         component: TaskSetUpdateComponent,
         resolve: {
             taskSet: TaskSetResolve
         },
         data: {
-            authorities: ['ROLE_ADMIN'],
-            pageTitle: 'TaskSets'
+            authorities: ['ROLE_USER'],
+            pageTitle: 'TaskSets',
+            state: 'task-set-edit'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -79,14 +84,15 @@ export const taskSetRoute: Routes = [
 
 export const taskSetPopupRoute: Routes = [
     {
-        path: 'task-set/:id/delete',
+        path: 'quiz-manager/:quiz-id/task-set/:id/delete',
         component: TaskSetDeletePopupComponent,
         resolve: {
             taskSet: TaskSetResolve
         },
         data: {
-            authorities: ['ROLE_ADMIN'],
-            pageTitle: 'TaskSets'
+            authorities: ['ROLE_USER'],
+            pageTitle: 'TaskSets',
+            state: 'task-set-delete'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

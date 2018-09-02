@@ -9,9 +9,9 @@ import { TaskSetService } from '../../services/task-set.service';
 
 @Component({
     selector: 'jhi-task-set-delete-dialog',
-    templateUrl: './task-set-delete-dialog.component.html'
+    templateUrl: './task-set-delete-dialog.entity.component.html'
 })
-export class TaskSetDeleteDialogComponent {
+export class TaskSetDeleteDialogEntityComponent {
     taskSet: ITaskSet;
 
     constructor(private taskSetService: TaskSetService, public activeModal: NgbActiveModal, private eventManager: JhiEventManager) {}
@@ -35,7 +35,7 @@ export class TaskSetDeleteDialogComponent {
     selector: 'jhi-task-set-delete-popup',
     template: ''
 })
-export class TaskSetDeletePopupComponent implements OnInit, OnDestroy {
+export class TaskSetDeletePopupEntityComponent implements OnInit, OnDestroy {
     private ngbModalRef: NgbModalRef;
 
     constructor(private activatedRoute: ActivatedRoute, private router: Router, private modalService: NgbModal) {}
@@ -43,7 +43,10 @@ export class TaskSetDeletePopupComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ taskSet }) => {
             setTimeout(() => {
-                this.ngbModalRef = this.modalService.open(TaskSetDeleteDialogComponent as Component, { size: 'lg', backdrop: 'static' });
+                this.ngbModalRef = this.modalService.open(TaskSetDeleteDialogEntityComponent as Component, {
+                    size: 'lg',
+                    backdrop: 'static'
+                });
                 this.ngbModalRef.componentInstance.taskSet = taskSet;
                 this.ngbModalRef.result.then(
                     result => {

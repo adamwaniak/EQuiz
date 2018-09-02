@@ -6,18 +6,18 @@ import { ActivatedRoute, Data } from '@angular/router';
 
 import { EQuizTestModule } from '../../../test.module';
 import { TaskSet } from 'app/shared/model/task-set.model';
-import { TaskSetComponent, TaskSetService } from 'app/features/entities/task-set';
+import { TaskSetEntityComponent, TaskSetService } from 'app/features/entities/task-set';
 
 describe('Component Tests', () => {
     describe('TaskSet Management Component', () => {
-        let comp: TaskSetComponent;
-        let fixture: ComponentFixture<TaskSetComponent>;
+        let comp: TaskSetEntityComponent;
+        let fixture: ComponentFixture<TaskSetEntityComponent>;
         let service: TaskSetService;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [EQuizTestModule],
-                declarations: [TaskSetComponent],
+                declarations: [TaskSetEntityComponent],
                 providers: [
                     {
                         provide: ActivatedRoute,
@@ -36,10 +36,10 @@ describe('Component Tests', () => {
                     }
                 ]
             })
-                .overrideTemplate(TaskSetComponent, '')
+                .overrideTemplate(TaskSetEntityComponent, '')
                 .compileComponents();
 
-            fixture = TestBed.createComponent(TaskSetComponent);
+            fixture = TestBed.createComponent(TaskSetEntityComponent);
             comp = fixture.componentInstance;
             service = fixture.debugElement.injector.get(TaskSetService);
         });

@@ -12,10 +12,10 @@ import {
 } from 'app/features/quiz-manager/quiz/quiz-delete-dialog/quiz-delete-dialog.component';
 import { QUIZ_ROUTES } from 'app/features/quiz-manager/quiz/quiz.route';
 
-const ENTITY_STATES = [...QUIZ_ROUTES];
+const ROUTES = [...QUIZ_ROUTES];
 
 @NgModule({
-    imports: [EQuizSharedModule, EQuizAdminModule, RouterModule.forChild(ENTITY_STATES)],
+    imports: [EQuizSharedModule, EQuizAdminModule, RouterModule.forChild(ROUTES)],
     declarations: [QuizListComponent, QuizDetailComponent, QuizUpdateComponent, QuizDeleteDialogComponent, QuizDeletePopupComponent],
     entryComponents: [QuizListComponent, QuizUpdateComponent, QuizDeleteDialogComponent, QuizDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

@@ -12,9 +12,9 @@ import { TaskSetService } from '../../services/task-set.service';
 
 @Component({
     selector: 'jhi-task-set',
-    templateUrl: './task-set.component.html'
+    templateUrl: './task-set.entity.component.html'
 })
-export class TaskSetComponent implements OnInit, OnDestroy {
+export class TaskSetEntityComponent implements OnInit, OnDestroy {
     currentAccount: any;
     taskSets: ITaskSet[];
     error: any;

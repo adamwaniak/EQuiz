@@ -5,12 +5,12 @@ import { of } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { EQuizTestModule } from '../../../test.module';
-import { TaskSetDeleteDialogComponent, TaskSetService } from 'app/features/entities/task-set';
+import { TaskSetDeleteDialogEntityComponent, TaskSetService } from 'app/features/entities/task-set';
 
 describe('Component Tests', () => {
     describe('TaskSet Management Delete Component', () => {
-        let comp: TaskSetDeleteDialogComponent;
-        let fixture: ComponentFixture<TaskSetDeleteDialogComponent>;
+        let comp: TaskSetDeleteDialogEntityComponent;
+        let fixture: ComponentFixture<TaskSetDeleteDialogEntityComponent>;
         let service: TaskSetService;
         let mockEventManager: any;
         let mockActiveModal: any;
@@ -18,11 +18,11 @@ describe('Component Tests', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [EQuizTestModule],
-                declarations: [TaskSetDeleteDialogComponent]
+                declarations: [TaskSetDeleteDialogEntityComponent]
             })
-                .overrideTemplate(TaskSetDeleteDialogComponent, '')
+                .overrideTemplate(TaskSetDeleteDialogEntityComponent, '')
                 .compileComponents();
-            fixture = TestBed.createComponent(TaskSetDeleteDialogComponent);
+            fixture = TestBed.createComponent(TaskSetDeleteDialogEntityComponent);
             comp = fixture.componentInstance;
             service = fixture.debugElement.injector.get(TaskSetService);
             mockEventManager = fixture.debugElement.injector.get(JhiEventManager);
