@@ -230,12 +230,13 @@ ui bootstrap tweaks
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
 
-@media screen and (min-height: 1080px) {
+@media screen and (min-device-width: 1366px) {
     .jh-card {
-        min-height: 1080px;
+        min-height: 900px;
     }
 }
-@media screen and (min-height: 720px) {
+
+@media screen and (max-device-width: 1366px) {
     .jh-card {
         min-height: 720px;
     }

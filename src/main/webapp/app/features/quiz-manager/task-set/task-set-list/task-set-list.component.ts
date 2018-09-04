@@ -1,14 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {JhiAlertService, JhiEventManager, JhiParseLinks} from 'ng-jhipster';
 
-import { ITaskSet } from 'app/shared/model/task-set.model';
-import { Principal } from 'app/core';
+import {ITaskSet} from 'app/shared/model/task-set.model';
+import {Principal} from 'app/core';
 
-import { ITEMS_PER_PAGE } from 'app/shared';
-import { TaskSetService } from '../../../services/task-set.service';
+import {ITEMS_PER_PAGE} from 'app/shared';
+import {TaskSetService} from '../../../services/task-set.service';
 
 @Component({
     selector: 'jhi-task-set',
@@ -29,6 +29,7 @@ export class TaskSetListComponent implements OnInit, OnDestroy {
     predicate: any;
     previousPage: any;
     reverse: any;
+    quizID: any;
 
     constructor(
         private taskSetService: TaskSetService,
@@ -40,6 +41,9 @@ export class TaskSetListComponent implements OnInit, OnDestroy {
         private eventManager: JhiEventManager
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
+        this.quizID = this.activatedRoute.data.subscribe(quizID => {
+            this.quizID = quizID;
+        });
         this.routeData = this.activatedRoute.data.subscribe(data => {
             this.page = data.pagingParams.page;
             this.previousPage = data.pagingParams.page;
@@ -50,7 +54,7 @@ export class TaskSetListComponent implements OnInit, OnDestroy {
 
     loadAll() {
         this.taskSetService
-            .query({
+            .findByQuizID(this.quizID, {
                 page: this.page - 1,
                 size: this.itemsPerPage,
                 sort: this.sort()
