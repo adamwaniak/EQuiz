@@ -1,11 +1,12 @@
 package io.github.adamwaniak.application.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import io.github.adamwaniak.application.service.QuizService;
 import io.github.adamwaniak.application.service.TaskSetService;
+import io.github.adamwaniak.application.service.dto.TaskSetDTO;
 import io.github.adamwaniak.application.web.rest.errors.BadRequestAlertException;
 import io.github.adamwaniak.application.web.rest.util.HeaderUtil;
 import io.github.adamwaniak.application.web.rest.util.PaginationUtil;
-import io.github.adamwaniak.application.service.dto.TaskSetDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,12 +15,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -36,8 +37,11 @@ public class TaskSetResource {
 
     private final TaskSetService taskSetService;
 
-    public TaskSetResource(TaskSetService taskSetService) {
+    private final QuizService quizService;
+
+    public TaskSetResource(TaskSetService taskSetService, QuizService quizService) {
         this.taskSetService = taskSetService;
+        this.quizService = quizService;
     }
 
     /**
@@ -67,11 +71,10 @@ public class TaskSetResource {
      * @return the ResponseEntity with status 200 (OK) and with body the updated taskSetDTO,
      * or with status 400 (Bad Request) if the taskSetDTO is not valid,
      * or with status 500 (Internal Server Error) if the taskSetDTO couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/task-sets")
     @Timed
-    public ResponseEntity<TaskSetDTO> updateTaskSet(@Valid @RequestBody TaskSetDTO taskSetDTO) throws URISyntaxException {
+    public ResponseEntity<TaskSetDTO> updateTaskSet(@Valid @RequestBody TaskSetDTO taskSetDTO) {
         log.debug("REST request to update TaskSet : {}", taskSetDTO);
         if (taskSetDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -93,6 +96,25 @@ public class TaskSetResource {
     public ResponseEntity<List<TaskSetDTO>> getAllTaskSets(Pageable pageable) {
         log.debug("REST request to get a page of TaskSets");
         Page<TaskSetDTO> page = taskSetService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/task-sets");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    /**
+     * GET  /task-sets/by-quiz-id/:quiz-id : get the taskSets by given quiz id.
+     *
+     * @param pageable the pagination information
+     * @param quizID   the quiz id
+     * @return the ResponseEntity with status 200 (OK) and the list of taskSets in body
+     */
+    @GetMapping("/task-sets/by-quiz-id/{quizID}")
+    @Timed
+    public ResponseEntity<List<TaskSetDTO>> getTaskSetsByQuizID(@PathVariable Long quizID, Pageable pageable, Authentication authentication) {
+        log.debug("REST request to get a page of TaskSets by quiz id {} by user {}", quizID, authentication.getName());
+        if (!quizService.isGivenQuizIdBelongToUser(quizID, authentication.getName())) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        Page<TaskSetDTO> page = taskSetService.findByQuizID(quizID, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/task-sets");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

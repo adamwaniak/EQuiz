@@ -124,13 +124,14 @@ public class DataLoader implements ApplicationRunner {
     }
 
     private void addTaskSets() {
-        Quiz quiz = quizRepository.getOne(1L);
         long taskSetId = 1;
         for (long i = 1; i < 11; i++) {
+            Quiz quiz = quizRepository.getOne(i);
             for (long j = 1; j < 6; j++) {
                 TaskSet taskSet = new TaskSet();
                 taskSet.setId(taskSetId++);
                 taskSet.requiredTaskAmount(2)
+                    .name("Task set " + j)
                     .maxPoint(1)
                     .artificialSelection(false)
                     .quiz(quiz);

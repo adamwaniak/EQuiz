@@ -87,4 +87,10 @@ public class QuizService {
         return quizRepository.findByOwnerLogin(ownerLogin, pageable)
             .map(quizMapper::toDto);
     }
+
+    public boolean isGivenQuizIdBelongToUser(Long quizID, String userLogin) {
+        Optional<Quiz> quiz = quizRepository.findById(quizID);
+        return quiz.map(quiz1 -> quiz1.getOwner().getLogin().equals(userLogin)).orElse(false);
+    }
+
 }

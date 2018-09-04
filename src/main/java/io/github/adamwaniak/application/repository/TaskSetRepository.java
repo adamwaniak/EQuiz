@@ -1,7 +1,9 @@
 package io.github.adamwaniak.application.repository;
 
 import io.github.adamwaniak.application.domain.TaskSet;
-import org.springframework.data.jpa.repository.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 
@@ -11,5 +13,7 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface TaskSetRepository extends JpaRepository<TaskSet, Long> {
+
+    Page<TaskSet> findByQuizId(Long quizID, Pageable pageable);
 
 }

@@ -1,14 +1,16 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Subscription} from 'rxjs';
-import {JhiAlertService, JhiEventManager, JhiParseLinks} from 'ng-jhipster';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 
-import {ITaskSet} from 'app/shared/model/task-set.model';
-import {Principal} from 'app/core';
+import { ITaskSet } from 'app/shared/model/task-set.model';
+import { Principal } from 'app/core';
 
-import {ITEMS_PER_PAGE} from 'app/shared';
-import {TaskSetService} from '../../../services/task-set.service';
+import { ITEMS_PER_PAGE } from 'app/shared';
+import { TaskSetService } from '../../../services/task-set.service';
+import { IQuiz } from 'app/shared/model/quiz.model';
+import { QuizService } from 'app/features/services/quiz.service';
 
 @Component({
     selector: 'jhi-task-set',
@@ -29,10 +31,12 @@ export class TaskSetListComponent implements OnInit, OnDestroy {
     predicate: any;
     previousPage: any;
     reverse: any;
-    quizID: any;
+    quizID: number;
+    quiz: IQuiz;
 
     constructor(
         private taskSetService: TaskSetService,
+        private quizService: QuizService,
         private parseLinks: JhiParseLinks,
         private jhiAlertService: JhiAlertService,
         private principal: Principal,
@@ -41,8 +45,8 @@ export class TaskSetListComponent implements OnInit, OnDestroy {
         private eventManager: JhiEventManager
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
-        this.quizID = this.activatedRoute.data.subscribe(quizID => {
-            this.quizID = quizID;
+        this.activatedRoute.params.subscribe(quizID => {
+            this.quizID = quizID['quiz-id'];
         });
         this.routeData = this.activatedRoute.data.subscribe(data => {
             this.page = data.pagingParams.page;
@@ -53,6 +57,9 @@ export class TaskSetListComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
+        this.quizService.find(this.quizID).subscribe(quiz => {
+            this.quiz = quiz;
+        });
         this.taskSetService
             .findByQuizID(this.quizID, {
                 page: this.page - 1,
@@ -124,6 +131,7 @@ export class TaskSetListComponent implements OnInit, OnDestroy {
     }
 
     private paginateTaskSets(data: ITaskSet[], headers: HttpHeaders) {
+        console.log('Data: ' + data);
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
         this.queryCount = this.totalItems;
