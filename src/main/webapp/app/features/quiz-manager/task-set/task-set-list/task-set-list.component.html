@@ -1,15 +1,46 @@
+<div *ngIf="quiz">
+    <button class="btn btn-outline-info" [routerLink]="['/quiz-manager']">
+        <fa-icon class="fa-1x" [icon]="'arrow-left'"></fa-icon>
+        {{quiz.name}}
+    </button>
+</div>
 <div *ngIf="taskSets && taskSets.length; else noAvaliableTaskSet">
-    <h2 id="page-heading" class="display-4">
-        <span>Task set for {{quiz.name}}</span>
-        <button [id]="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-quiz"
-                [routerLink]="['/quiz-manager/new']">
+    <div id="page-heading">
+        <h3>
+            <small class="text-muted">Task set list for quiz {{quiz.name}}</small>
+
+            <button [id]="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-quiz"
+                    [routerLink]="['/quiz-manager/new']">
             <span>
-                Create new Quiz
+                Create new task set
             </span>
-        </button>
-    </h2>
+            </button>
+        </h3>
+    </div>
     <jhi-alert></jhi-alert>
     <br/>
+    <div>
+        <div class="row">
+            <div class="col">
+                <span class="font-weight-light">Quiz information:</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-2">
+                Start date: {{quiz.startDate | date: 'medium'}}
+            </div>
+            <div class="col-md-2">
+                End date: {{quiz.endDate | date: 'medium'}}
+            </div>
+            <div class="col-md-2">
+                Time length: {{quiz.maxTimeInMinutes}} minutes
+            </div>
+            <div class="col-md-2">
+                Task sets number: {{taskSets.length}}
+            </div>
+        </div>
+    </div>
+
     <div class="list-group" *ngIf="taskSets">
         <div href="#" class="list-group-item list-group-item-action align-items-start container-fluid form-group"
              *ngFor="let taskSet of taskSets ;trackBy: trackId">
@@ -47,7 +78,7 @@
             </div>
             <div class="row">
                 <div class="col-md">
-                    One of three columns
+
                 </div>
                 <div class="col-md">
                     One of three columns

@@ -14,7 +14,8 @@ import { QuizService } from 'app/features/services/quiz.service';
 
 @Component({
     selector: 'jhi-task-set',
-    templateUrl: './task-set-list.component.html'
+    templateUrl: './task-set-list.component.html',
+    styleUrls: ['./task-set-list.component.scss']
 })
 export class TaskSetListComponent implements OnInit, OnDestroy {
     currentAccount: any;
@@ -57,8 +58,8 @@ export class TaskSetListComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
-        this.quizService.find(this.quizID).subscribe(quiz => {
-            this.quiz = quiz;
+        this.quizService.find(this.quizID).subscribe(res => {
+            this.quiz = res.body;
         });
         this.taskSetService
             .findByQuizID(this.quizID, {

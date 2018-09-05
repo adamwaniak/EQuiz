@@ -44,7 +44,7 @@ export const taskSetRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            defaultSort: 'id,asc',
+            defaultSort: 'id,desc',
             pageTitle: 'TaskSets',
             state: 'task-set'
         },

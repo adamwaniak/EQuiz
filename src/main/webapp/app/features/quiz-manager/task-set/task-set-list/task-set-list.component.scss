@@ -1,0 +1,37 @@
+.row {
+    margin-bottom: 15px;
+}
+
+.list-group-item {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+input {
+    border: none;
+    background-color: inherit;
+    outline: 0;
+}
+
+input:focus {
+    border: none;
+    outline: 0;
+}
+
+input:hover {
+    border: none;
+    background-color: #e4e5e6;
+}
+
+.vertical-center {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.btn-fixed-width {
+    width: 120px;
+}
+
+.btn-outline-info {
+    border: none;
+}

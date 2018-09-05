@@ -12,7 +12,7 @@
     <br/>
         <div class="list-group" *ngIf="quizzes">
             <div href="#" class="list-group-item list-group-item-action align-items-start container-fluid form-group"
-                 *ngFor="let quiz of quizzes ;trackBy: trackId">
+                 *ngFor="let quiz of quizzes ;trackBy: trackId" [id]="'quiz-manager-quiz-' + quiz.id">
                 <div class="row">
                     <div class="col col-md">
                         <div class="text-justify display-4">
@@ -42,26 +42,27 @@
                         </h4>
                     </div>
                     <div class="col col-md">
-                        One of three columns
+
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md">
-                        One of three columns
+                        <span>Resolved quizzes: {{ quiz.students?.length || '0' }}</span>
                     </div>
                     <div class="col-md">
-                        One of three columns
+                        <span>Number of task sets: {{ quiz.taskSets?.length || '0' }}</span>
                     </div>
                     <div class="col-md">
-                        One of three columns
+                        <span>Quiz length: {{quiz.maxTimeInMinutes}} minutes</span>
                     </div>
                     <div class="col-md">
-                        One of three columns
+
                     </div>
                 </div>
                 <div class="row">
                     <div class="col col-md align-self-center">
-                        <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['/quiz-manager/new']">
+                        <button class="btn btn-outline-primary btn-fixed-width" [disabled]="!quiz.students"
+                                [routerLink]="['/quiz-manager/new']">
                             <span>Check results</span>
                         </button>
                     </div>
