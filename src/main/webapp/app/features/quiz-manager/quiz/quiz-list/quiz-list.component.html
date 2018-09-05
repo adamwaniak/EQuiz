@@ -42,7 +42,14 @@
                         </h4>
                     </div>
                     <div class="col col-md">
-
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'quiz-manager/'+ quiz.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm float-right">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
                     </div>
                 </div>
                 <div class="row">

@@ -1,17 +1,16 @@
 package io.github.adamwaniak.application.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A TaskSet.
@@ -48,7 +47,7 @@ public class TaskSet implements Serializable {
     @JsonIgnoreProperties("taskSets")
     private Quiz quiz;
 
-    @OneToMany(mappedBy = "taskSet")
+    @OneToMany(mappedBy = "taskSet", cascade = CascadeType.REMOVE)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Task> tasks = new HashSet<>();
 
