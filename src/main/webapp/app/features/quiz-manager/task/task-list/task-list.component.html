@@ -1,3 +1,15 @@
+<div *ngIf="quiz && taskSet">
+    <fa-icon class="fa-1x text-info align-middle" [icon]="'arrow-left'"></fa-icon>
+    <button class="btn btn-outline-info" [routerLink]="['/quiz-manager']">
+
+        {{quiz.name}}
+    </button>
+    <span class="text-info">/</span>
+    <button class="btn btn-outline-info" [routerLink]="['/quiz-manager', quizID, 'task-set']">
+        {{taskSet.name}}
+    </button>
+</div>
+
 <div>
     <h2 id="page-heading">
         <span>Tasks</span>
@@ -35,34 +47,30 @@
             </thead>
             <tbody>
             <tr *ngFor="let task of tasks ;trackBy: trackId">
-                <td><a [routerLink]="['/task', task.id, 'view' ]">{{task.id}}</a></td>
+                <td><a [routerLink]="['/quiz-manager', quiz.id, 'task-set', taskSet.id,'task', task.id, 'view' ]">{{task.id}}</a>
+                </td>
                 <td>{{task.question}}</td>
                 <td>{{task.correctnessFactor}}</td>
                 <td>
                     <a *ngIf="task.image" (click)="openFile(task.imageContentType, task.image)">open</a>
                     <span *ngIf="task.image">{{task.imageContentType}}, {{byteSize(task.image)}}</span>
                 </td>
-                <td>
-                    <div *ngIf="task.taskSetId">
-                        <a [routerLink]="['../task-set', task.taskSetId , 'view' ]">{{task.taskSetId}}</a>
-                    </div>
-                </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
-                                [routerLink]="['/task', task.id, 'view' ]"
+                                [routerLink]="['/quiz-manager', quiz.id, 'task-set', taskSet.id,'task', task.id, 'view' ]"
                                 class="btn btn-info btn-sm">
                             <fa-icon [icon]="'eye'"></fa-icon>
                             <span class="d-none d-md-inline">View</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/task', task.id, 'edit']"
+                                [routerLink]="['/quiz-manager', quiz.id, 'task-set', taskSet.id,'task', task.id, 'edit']"
                                 class="btn btn-primary btn-sm">
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
                             <span class="d-none d-md-inline">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'task/'+ task.id + '/delete'} }]"
+                                [routerLink]="['/', { outlets: { popup:'quiz-manager' + quiz.id + '/task-set' + taskSet.id +'/task' + task.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">

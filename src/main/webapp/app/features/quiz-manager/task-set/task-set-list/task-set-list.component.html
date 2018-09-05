@@ -1,6 +1,6 @@
 <div *ngIf="quiz">
+    <fa-icon class="fa-1x text-info align-middle" [icon]="'arrow-left'"></fa-icon>
     <button class="btn btn-outline-info" [routerLink]="['/quiz-manager']">
-        <fa-icon class="fa-1x" [icon]="'arrow-left'"></fa-icon>
         {{quiz.name}}
     </button>
 </div>

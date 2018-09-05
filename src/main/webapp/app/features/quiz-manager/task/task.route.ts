@@ -35,7 +35,8 @@ export const taskRoute: Routes = [
         data: {
             authorities: ['ROLE_USER'],
             defaultSort: 'id,asc',
-            pageTitle: 'Tasks'
+            pageTitle: 'Tasks',
+            state: 'task'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -47,7 +48,8 @@ export const taskRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Tasks'
+            pageTitle: 'Tasks',
+            state: 'task-details'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -59,7 +61,8 @@ export const taskRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Tasks'
+            pageTitle: 'Tasks',
+            state: 'task-add'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -71,7 +74,8 @@ export const taskRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Tasks'
+            pageTitle: 'Tasks',
+            state: 'task-edit'
         },
         canActivate: [UserRouteAccessService]
     }

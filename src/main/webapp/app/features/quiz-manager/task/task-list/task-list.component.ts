@@ -6,8 +6,6 @@ import { JhiAlertService, JhiDataUtils, JhiEventManager, JhiParseLinks } from 'n
 
 import { ITask } from 'app/shared/model/task.model';
 import { Principal } from 'app/core';
-
-import { ITEMS_PER_PAGE } from 'app/shared';
 import { TaskService } from 'app/features/services/task.service';
 import { IQuiz } from 'app/shared/model/quiz.model';
 import { ITaskSet } from 'app/shared/model/task-set.model';
@@ -16,7 +14,8 @@ import { TaskSetService } from 'app/features/services/task-set.service';
 
 @Component({
     selector: 'jhi-task',
-    templateUrl: './task-list.component.html'
+    templateUrl: './task-list.component.html',
+    styleUrls: ['task-list.component.scss']
 })
 export class TaskListComponent implements OnInit, OnDestroy {
     currentAccount: any;
@@ -50,7 +49,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
         private router: Router,
         private eventManager: JhiEventManager
     ) {
-        this.itemsPerPage = ITEMS_PER_PAGE;
+        this.itemsPerPage = 20;
         this.activatedRoute.params.subscribe(params => {
             this.quizID = params['quiz-id'];
             this.taskSetID = params['task-set-id'];

@@ -16,7 +16,7 @@ import { TaskService } from 'app/features/services/task.service';
 export class TaskUpdateComponent implements OnInit {
     isSaving: boolean;
     tasksets: ITaskSet[];
-
+    private _task: ITask;
     constructor(
         private dataUtils: JhiDataUtils,
         private jhiAlertService: JhiAlertService,
@@ -24,8 +24,6 @@ export class TaskUpdateComponent implements OnInit {
         private taskSetService: TaskSetService,
         private activatedRoute: ActivatedRoute
     ) {}
-
-    private _task: ITask;
 
     get task() {
         return this._task;
