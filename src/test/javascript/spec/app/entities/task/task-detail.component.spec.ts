@@ -5,23 +5,23 @@ import { of } from 'rxjs';
 
 import { EQuizTestModule } from '../../../test.module';
 import { Task } from 'app/shared/model/task.model';
-import { TaskDetailComponent } from 'app/features/entities/task';
+import { TaskDetailEntityComponent } from 'app/features/entities/task';
 
 describe('Component Tests', () => {
     describe('Task Management Detail Component', () => {
-        let comp: TaskDetailComponent;
-        let fixture: ComponentFixture<TaskDetailComponent>;
+        let comp: TaskDetailEntityComponent;
+        let fixture: ComponentFixture<TaskDetailEntityComponent>;
         const route = ({ data: of({ task: new Task(123) }) } as any) as ActivatedRoute;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [EQuizTestModule],
-                declarations: [TaskDetailComponent],
+                declarations: [TaskDetailEntityComponent],
                 providers: [{ provide: ActivatedRoute, useValue: route }]
             })
-                .overrideTemplate(TaskDetailComponent, '')
+                .overrideTemplate(TaskDetailEntityComponent, '')
                 .compileComponents();
-            fixture = TestBed.createComponent(TaskDetailComponent);
+            fixture = TestBed.createComponent(TaskDetailEntityComponent);
             comp = fixture.componentInstance;
         });
 

@@ -7,10 +7,10 @@ import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ITask, Task } from 'app/shared/model/task.model';
 import { TaskService } from '../../services/task.service';
-import { TaskComponent } from './task.component';
-import { TaskDetailComponent } from './task-detail.component';
-import { TaskUpdateComponent } from './task-update.component';
-import { TaskDeletePopupComponent } from './task-delete-dialog.component';
+import { TaskListComponent } from 'app/features/quiz-manager/task/task-list/task-list.component';
+import { TaskDetailComponent } from 'app/features/quiz-manager/task/task-detail/task-detail.component';
+import { TaskUpdateComponent } from 'app/features/quiz-manager/task/task-update/task-update.component';
+import { TaskDeletePopupComponent } from 'app/features/quiz-manager/task/task-delete-dialog/task-delete-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class TaskResolve implements Resolve<ITask> {
@@ -27,50 +27,50 @@ export class TaskResolve implements Resolve<ITask> {
 
 export const taskRoute: Routes = [
     {
-        path: 'task',
-        component: TaskComponent,
+        path: 'quiz-manager/:quiz-id/task-set/:task-set-id/task',
+        component: TaskListComponent,
         resolve: {
             pagingParams: JhiResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_ADMIN'],
+            authorities: ['ROLE_USER'],
             defaultSort: 'id,asc',
             pageTitle: 'Tasks'
         },
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'task/:id/view',
+        path: 'quiz-manager/:quiz-id/task-set/:task-set-id/task/:id/view',
         component: TaskDetailComponent,
         resolve: {
             task: TaskResolve
         },
         data: {
-            authorities: ['ROLE_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'Tasks'
         },
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'task/new',
+        path: 'quiz-manager/:quiz-id/task-set/:task-set-id/task/new',
         component: TaskUpdateComponent,
         resolve: {
             task: TaskResolve
         },
         data: {
-            authorities: ['ROLE_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'Tasks'
         },
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'task/:id/edit',
+        path: 'quiz-manager/:quiz-id/task-set/:task-set-id/task/:id/edit',
         component: TaskUpdateComponent,
         resolve: {
             task: TaskResolve
         },
         data: {
-            authorities: ['ROLE_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'Tasks'
         },
         canActivate: [UserRouteAccessService]
@@ -79,13 +79,13 @@ export const taskRoute: Routes = [
 
 export const taskPopupRoute: Routes = [
     {
-        path: 'task/:id/delete',
+        path: 'quiz-manager/:quiz-id/task-set/:task-set-id/task/:id/delete',
         component: TaskDeletePopupComponent,
         resolve: {
             task: TaskResolve
         },
         data: {
-            authorities: ['ROLE_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'Tasks'
         },
         canActivate: [UserRouteAccessService],

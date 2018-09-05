@@ -1,9 +1,10 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { QuizModule } from 'app/features/quiz-manager/quiz/quiz.module';
 import { TaskSetModule } from 'app/features/quiz-manager/task-set/task-set.module';
+import { TaskModule } from 'app/features/quiz-manager/task/task.module';
 
 @NgModule({
-    imports: [QuizModule, TaskSetModule],
+    imports: [QuizModule, TaskSetModule, TaskModule],
     declarations: [],
     exports: [],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

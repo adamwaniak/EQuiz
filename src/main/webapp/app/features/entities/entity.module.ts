@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { EQuizEntityModule } from './quiz/quiz.entity.module';
-import { EQuizTaskModule } from './task/task.module';
+import { EQuizTaskModule } from './task/task.entity.module';
 import { EQuizTaskSetEntityModule } from './task-set/task-set.entity.module';
 import { EQuizAnswerModule } from './answer/answer.module';
 import { EQuizStudentModule } from './student/student.module';

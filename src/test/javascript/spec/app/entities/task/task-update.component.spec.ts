@@ -5,23 +5,23 @@ import { of } from 'rxjs';
 
 import { EQuizTestModule } from '../../../test.module';
 import { Task } from 'app/shared/model/task.model';
-import { TaskService, TaskUpdateComponent } from 'app/features/entities/task';
+import { TaskService, TaskUpdateEntityComponent } from 'app/features/entities/task';
 
 describe('Component Tests', () => {
     describe('Task Management Update Component', () => {
-        let comp: TaskUpdateComponent;
-        let fixture: ComponentFixture<TaskUpdateComponent>;
+        let comp: TaskUpdateEntityComponent;
+        let fixture: ComponentFixture<TaskUpdateEntityComponent>;
         let service: TaskService;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [EQuizTestModule],
-                declarations: [TaskUpdateComponent]
+                declarations: [TaskUpdateEntityComponent]
             })
-                .overrideTemplate(TaskUpdateComponent, '')
+                .overrideTemplate(TaskUpdateEntityComponent, '')
                 .compileComponents();
 
-            fixture = TestBed.createComponent(TaskUpdateComponent);
+            fixture = TestBed.createComponent(TaskUpdateEntityComponent);
             comp = fixture.componentInstance;
             service = fixture.debugElement.injector.get(TaskService);
         });

@@ -6,9 +6,9 @@ import { ITask } from 'app/shared/model/task.model';
 
 @Component({
     selector: 'jhi-task-detail',
-    templateUrl: './task-detail.component.html'
+    templateUrl: './task-detail.entity.component.html'
 })
-export class TaskDetailComponent implements OnInit {
+export class TaskDetailEntityComponent implements OnInit {
     task: ITask;
 
     constructor(private dataUtils: JhiDataUtils, private activatedRoute: ActivatedRoute) {}

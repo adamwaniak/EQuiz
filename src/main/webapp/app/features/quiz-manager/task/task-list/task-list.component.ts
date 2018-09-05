@@ -8,13 +8,17 @@ import { ITask } from 'app/shared/model/task.model';
 import { Principal } from 'app/core';
 
 import { ITEMS_PER_PAGE } from 'app/shared';
-import { TaskService } from '../../services/task.service';
+import { TaskService } from 'app/features/services/task.service';
+import { IQuiz } from 'app/shared/model/quiz.model';
+import { ITaskSet } from 'app/shared/model/task-set.model';
+import { QuizService } from 'app/features/services/quiz.service';
+import { TaskSetService } from 'app/features/services/task-set.service';
 
 @Component({
     selector: 'jhi-task',
-    templateUrl: './task.component.html'
+    templateUrl: './task-list.component.html'
 })
-export class TaskComponent implements OnInit, OnDestroy {
+export class TaskListComponent implements OnInit, OnDestroy {
     currentAccount: any;
     tasks: ITask[];
     error: any;
@@ -29,9 +33,15 @@ export class TaskComponent implements OnInit, OnDestroy {
     predicate: any;
     previousPage: any;
     reverse: any;
+    quizID: number;
+    quiz: IQuiz;
+    taskSetID: number;
+    taskSet: ITaskSet;
 
     constructor(
         private taskService: TaskService,
+        private quizService: QuizService,
+        private taskSetService: TaskSetService,
         private parseLinks: JhiParseLinks,
         private jhiAlertService: JhiAlertService,
         private principal: Principal,
@@ -41,6 +51,10 @@ export class TaskComponent implements OnInit, OnDestroy {
         private eventManager: JhiEventManager
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
+        this.activatedRoute.params.subscribe(params => {
+            this.quizID = params['quiz-id'];
+            this.taskSetID = params['task-set-id'];
+        });
         this.routeData = this.activatedRoute.data.subscribe(data => {
             this.page = data.pagingParams.page;
             this.previousPage = data.pagingParams.page;
@@ -50,6 +64,12 @@ export class TaskComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
+        this.quizService.find(this.quizID).subscribe(res => {
+            this.quiz = res.body;
+        });
+        this.taskSetService.find(this.taskSetID).subscribe(res => {
+            this.taskSet = res.body;
+        });
         this.taskService
             .query({
                 page: this.page - 1,

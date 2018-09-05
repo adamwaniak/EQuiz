@@ -5,18 +5,16 @@ import { Observable } from 'rxjs';
 import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { ITask } from 'app/shared/model/task.model';
-import { TaskService } from '../../services/task.service';
 import { ITaskSet } from 'app/shared/model/task-set.model';
 import { TaskSetService } from 'app/features/services/task-set.service';
+import { TaskService } from 'app/features/services/task.service';
 
 @Component({
     selector: 'jhi-task-update',
     templateUrl: './task-update.component.html'
 })
 export class TaskUpdateComponent implements OnInit {
-    private _task: ITask;
     isSaving: boolean;
-
     tasksets: ITaskSet[];
 
     constructor(
@@ -26,6 +24,16 @@ export class TaskUpdateComponent implements OnInit {
         private taskSetService: TaskSetService,
         private activatedRoute: ActivatedRoute
     ) {}
+
+    private _task: ITask;
+
+    get task() {
+        return this._task;
+    }
+
+    set task(task: ITask) {
+        this._task = task;
+    }
 
     ngOnInit() {
         this.isSaving = false;
@@ -65,6 +73,10 @@ export class TaskUpdateComponent implements OnInit {
         }
     }
 
+    trackTaskSetById(index: number, item: ITaskSet) {
+        return item.id;
+    }
+
     private subscribeToSaveResponse(result: Observable<HttpResponse<ITask>>) {
         result.subscribe((res: HttpResponse<ITask>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
     }
@@ -80,16 +92,5 @@ export class TaskUpdateComponent implements OnInit {
 
     private onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
-    }
-
-    trackTaskSetById(index: number, item: ITaskSet) {
-        return item.id;
-    }
-    get task() {
-        return this._task;
-    }
-
-    set task(task: ITask) {
-        this._task = task;
     }
 }
