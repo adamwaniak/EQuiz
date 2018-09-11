@@ -10,3 +10,14 @@ eg $input-color: red;
 @import '~bootstrap/scss/bootstrap';
 
 /* jhipster-needle-scss-add-vendor JHipster will add new css style */
+.display-4 {
+    font-size: 2.5rem;
+}
+
+.display-3 {
+    font-size: 3.5rem;
+}
+
+a:hover, a:visited, a:link, a:active {
+    text-decoration: none;
+}

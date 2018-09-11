@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {JhiAlertService, JhiDataUtils} from 'ng-jhipster';
 
-import { ITask } from 'app/shared/model/task.model';
-import { ITaskSet } from 'app/shared/model/task-set.model';
-import { TaskSetService } from 'app/features/services/task-set.service';
-import { TaskService } from 'app/features/services/task.service';
+import {ITask} from 'app/shared/model/task.model';
+import {ITaskSet} from 'app/shared/model/task-set.model';
+import {TaskSetService} from 'app/features/services/task-set.service';
+import {TaskService} from 'app/features/services/task.service';
 
 @Component({
     selector: 'jhi-task-update',

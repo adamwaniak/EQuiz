@@ -28,17 +28,18 @@
                 <div class="row">
                     <div class="col col-md align-self-center">
                         <h4>
-                            <span>Edition {{quiz.edition}}</span>
+                            <span>Edition:</span> <br>
+                            <small class="text-muted">{{quiz.edition}}</small>
                         </h4>
                     </div>
                     <div class="col col-md align-self-center">
-                        <h4><span>Start date: </span>
-                            <small class="text-muted">{{quiz.startDate | date: 'medium'}}</small>
+                        <h4><span>Start date: </span> <br>
+                            <small class="text-muted">{{quiz.startDate | date: 'short'}}</small>
                         </h4>
                     </div>
                     <div class="col col-md align-self-center">
-                        <h4><span>End date: </span>
-                            <small class="text-muted">{{quiz.endDate | date: 'medium'}}</small>
+                        <h4><span>End date: </span> <br>
+                            <small class="text-muted">{{quiz.endDate | date: 'short'}}</small>
                         </h4>
                     </div>
                     <div class="col col-md">
@@ -57,7 +58,7 @@
                         <span>Resolved quizzes: {{ quiz.students?.length || '0' }}</span>
                     </div>
                     <div class="col-md">
-                        <span>Number of task sets: {{ quiz.taskSets?.length || '0' }}</span>
+                        <span>Number of task sets {{ quiz.taskSets?.length || '0' }}</span>
                     </div>
                     <div class="col-md">
                         <span>Quiz length: {{quiz.maxTimeInMinutes}} minutes</span>

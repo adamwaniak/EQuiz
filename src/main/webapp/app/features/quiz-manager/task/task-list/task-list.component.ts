@@ -1,16 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { JhiAlertService, JhiDataUtils, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {JhiAlertService, JhiDataUtils, JhiEventManager, JhiParseLinks} from 'ng-jhipster';
 
-import { ITask } from 'app/shared/model/task.model';
-import { Principal } from 'app/core';
-import { TaskService } from 'app/features/services/task.service';
-import { IQuiz } from 'app/shared/model/quiz.model';
-import { ITaskSet } from 'app/shared/model/task-set.model';
-import { QuizService } from 'app/features/services/quiz.service';
-import { TaskSetService } from 'app/features/services/task-set.service';
+import {ITask} from 'app/shared/model/task.model';
+import {Principal} from 'app/core';
+import {TaskService} from 'app/features/services/task.service';
+import {IQuiz} from 'app/shared/model/quiz.model';
+import {ITaskSet} from 'app/shared/model/task-set.model';
+import {QuizService} from 'app/features/services/quiz.service';
+import {TaskSetService} from 'app/features/services/task-set.service';
 
 @Component({
     selector: 'jhi-task',

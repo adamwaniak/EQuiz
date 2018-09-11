@@ -14,12 +14,18 @@ h4 {
 
 a {
     color: #533f03;
-    font-weight: bold;
+    text-decoration: none;
 }
 
 a:hover {
     color: #533f03;
-    font-weight: bold;
+    text-decoration: none;
+}
+
+nav {
+    max-width: 1400px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 /* ==========================================================================
@@ -52,6 +58,9 @@ Generic styles
     padding: 1.5%;
     margin-top: 20px;
     border: none;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .error {

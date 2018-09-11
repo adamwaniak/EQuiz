@@ -1,8 +1,8 @@
 <div *ngIf="quiz">
     <fa-icon class="fa-1x text-info align-middle" [icon]="'arrow-left'"></fa-icon>
-    <button class="btn btn-outline-info" [routerLink]="['/quiz-manager']">
+    <a class="text-info align-middle" [routerLink]="['/quiz-manager']">
         {{quiz.name}}
-    </button>
+    </a>
 </div>
 <div *ngIf="taskSets && taskSets.length; else noAvaliableTaskSet">
     <div id="page-heading">
@@ -19,7 +19,7 @@
     </div>
     <jhi-alert></jhi-alert>
     <br/>
-    <div>
+    <div class="quiz-information-container">
         <div class="row">
             <div class="col">
                 <span class="font-weight-light">Quiz information:</span>
@@ -27,16 +27,20 @@
         </div>
         <div class="row">
             <div class="col-md-offset-2 col-md-2">
-                Start date: {{quiz.startDate | date: 'medium'}}
+                Start date<br>
+                {{quiz.startDate | date: 'short'}}
             </div>
             <div class="col-md-2">
-                End date: {{quiz.endDate | date: 'medium'}}
+                End date<br>
+                {{quiz.endDate | date: 'short'}}
             </div>
             <div class="col-md-2">
-                Time length: {{quiz.maxTimeInMinutes}} minutes
+                Time length<br>
+                {{quiz.maxTimeInMinutes}} minutes
             </div>
             <div class="col-md-2">
-                Task sets number: {{taskSets.length}}
+                Task sets number<br>
+                {{taskSets.length}}
             </div>
         </div>
     </div>

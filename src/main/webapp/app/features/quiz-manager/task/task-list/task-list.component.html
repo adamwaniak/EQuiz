@@ -1,13 +1,13 @@
 <div *ngIf="quiz && taskSet">
     <fa-icon class="fa-1x text-info align-middle" [icon]="'arrow-left'"></fa-icon>
-    <button class="btn btn-outline-info" [routerLink]="['/quiz-manager']">
+    <a class="text-info align-middle" [routerLink]="['/quiz-manager']">
 
         {{quiz.name}}
-    </button>
-    <span class="text-info">/</span>
-    <button class="btn btn-outline-info" [routerLink]="['/quiz-manager', quizID, 'task-set']">
+    </a>
+    <span class="text-info align-middle">/</span>
+    <a class="text-info align-middle" [routerLink]="['/quiz-manager', quizID, 'task-set']">
         {{taskSet.name}}
-    </button>
+    </a>
 </div>
 
 <div>
