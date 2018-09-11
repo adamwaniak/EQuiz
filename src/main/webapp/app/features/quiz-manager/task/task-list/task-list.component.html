@@ -1,26 +1,28 @@
 <div *ngIf="quiz && taskSet">
     <fa-icon class="fa-1x text-info align-middle" [icon]="'arrow-left'"></fa-icon>
     <a class="text-info align-middle" [routerLink]="['/quiz-manager']">
-
         {{quiz.name}}
     </a>
     <span class="text-info align-middle">/</span>
     <a class="text-info align-middle" [routerLink]="['/quiz-manager', quizID, 'task-set']">
         {{taskSet.name}}
     </a>
+    <span class="text-info align-middle">/</span>
+    <a class="text-info align-middle disabled">
+        tasks
+    </a>
 </div>
-
 <div>
-    <h2 id="page-heading">
-        <span>Tasks</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-task"
+
+    <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-task"
                 [routerLink]="['/task/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span>
             Create new Task
             </span>
-        </button>
-    </h2>
+    </button>
+    <br>
+
     <jhi-alert></jhi-alert>
     <br/>
     <div class="table-responsive" *ngIf="tasks">

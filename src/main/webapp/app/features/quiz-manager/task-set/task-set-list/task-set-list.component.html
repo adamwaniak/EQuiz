@@ -3,20 +3,21 @@
     <a class="text-info align-middle" [routerLink]="['/quiz-manager']">
         {{quiz.name}}
     </a>
+    <span class="text-info align-middle">/</span>
+    <a class="text-info align-middle disabled">
+        tasks sets
+    </a>
 </div>
 <div *ngIf="taskSets && taskSets.length; else noAvaliableTaskSet">
-    <div id="page-heading">
-        <h3>
-            <small class="text-muted">Task set list for quiz {{quiz.name}}</small>
 
             <button [id]="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-quiz"
                     [routerLink]="['/quiz-manager/new']">
-            <span>
-                Create new task set
-            </span>
+                <fa-icon [icon]="'plus'"></fa-icon>
+                <span>
+                    Create new task set
+                </span>
             </button>
-        </h3>
-    </div>
+    <br>
     <jhi-alert></jhi-alert>
     <br/>
     <div class="quiz-information-container">
@@ -57,7 +58,7 @@
                 <div class="col col-md align-self-center">
                     <button class="btn btn-info float-right"
                             [routerLink]="['/quiz-manager', quiz.id, 'task-set', taskSet.id, 'task']">
-                        <span>Go to task sets</span>
+                        <span>Go to tasks</span>
                     </button>
                 </div>
             </div>

@@ -3,6 +3,7 @@
         <span>Your Quizzes</span>
         <button [id]="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-quiz"
                     [routerLink]="['/quiz-manager/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
             <span>
                 Create new Quiz
             </span>
@@ -70,22 +71,23 @@
                 <div class="row">
                     <div class="col col-md align-self-center">
                         <button class="btn btn-outline-primary btn-fixed-width" [disabled]="!quiz.students"
-                                [routerLink]="['/quiz-manager/new']">
+                                [routerLink]="['#']">
                             <span>Check results</span>
                         </button>
                     </div>
                     <div class="col col-md align-self-center">
-                        <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['/quiz-manager/new']">
+                        <button class="btn btn-outline-primary btn-fixed-width"
+                                [routerLink]="['/quiz-manager',quiz.id,'edit']">
                             <span>Edit</span>
                         </button>
                     </div>
                     <div class="col col-md align-self-center">
-                        <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['/quiz-manager/new']">
+                        <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['#']">
                             <span>Publish</span>
                         </button>
                     </div>
                     <div class="col col-md align-self-center">
-                        <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['/quiz-manager/new']">
+                        <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['#']">
                             <span>Copy</span>
                         </button>
                     </div>
