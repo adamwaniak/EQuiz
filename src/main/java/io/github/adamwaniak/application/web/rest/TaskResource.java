@@ -1,11 +1,13 @@
 package io.github.adamwaniak.application.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import io.github.adamwaniak.application.service.QuizService;
 import io.github.adamwaniak.application.service.TaskService;
+import io.github.adamwaniak.application.service.TaskSetService;
+import io.github.adamwaniak.application.service.dto.TaskDTO;
 import io.github.adamwaniak.application.web.rest.errors.BadRequestAlertException;
 import io.github.adamwaniak.application.web.rest.util.HeaderUtil;
 import io.github.adamwaniak.application.web.rest.util.PaginationUtil;
-import io.github.adamwaniak.application.service.dto.TaskDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,12 +16,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -36,8 +38,14 @@ public class TaskResource {
 
     private final TaskService taskService;
 
-    public TaskResource(TaskService taskService) {
+    private final TaskSetService taskSetService;
+
+    private final QuizService quizService;
+
+    public TaskResource(TaskService taskService, TaskSetService taskSetService, QuizService quizService) {
         this.taskService = taskService;
+        this.taskSetService = taskSetService;
+        this.quizService = quizService;
     }
 
     /**
@@ -67,11 +75,10 @@ public class TaskResource {
      * @return the ResponseEntity with status 200 (OK) and with body the updated taskDTO,
      * or with status 400 (Bad Request) if the taskDTO is not valid,
      * or with status 500 (Internal Server Error) if the taskDTO couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/tasks")
     @Timed
-    public ResponseEntity<TaskDTO> updateTask(@Valid @RequestBody TaskDTO taskDTO) throws URISyntaxException {
+    public ResponseEntity<TaskDTO> updateTask(@Valid @RequestBody TaskDTO taskDTO) {
         log.debug("REST request to update Task : {}", taskDTO);
         if (taskDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -93,6 +100,26 @@ public class TaskResource {
     public ResponseEntity<List<TaskDTO>> getAllTasks(Pageable pageable) {
         log.debug("REST request to get a page of Tasks");
         Page<TaskDTO> page = taskService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/tasks");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    /**
+     * GET  /tasks : get task belonging to given task set.
+     *
+     * @param
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of tasks in body
+     */
+    @GetMapping("/tasks/by-task-set-id/{taskSetId}")
+    @Timed
+    public ResponseEntity<List<TaskDTO>> getTasksByTaskSetID(@PathVariable Long taskSetId, Pageable pageable, Authentication authentication) {
+        log.debug("REST request to get a page of Tasks belonging to task set of id {} by user", taskSetId, authentication.getName());
+        long quizID = taskSetService.findOne(taskSetId).get().getQuizId();
+        if (!quizService.isGivenQuizIdBelongToUser(quizID, authentication.getName())) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        Page<TaskDTO> page = taskService.findByTaskSetID(taskSetId, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/tasks");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -124,4 +151,6 @@ public class TaskResource {
         taskService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+
 }

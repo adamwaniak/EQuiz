@@ -6,12 +6,10 @@ import io.github.adamwaniak.application.service.dto.TaskDTO;
 import io.github.adamwaniak.application.service.mapper.TaskMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import java.util.Optional;
 /**
@@ -80,5 +78,19 @@ public class TaskService {
     public void delete(Long id) {
         log.debug("Request to delete Task : {}", id);
         taskRepository.deleteById(id);
+    }
+
+    /**
+     * Get the tasks by given task set id.
+     *
+     * @param taskSetID the task set ID
+     * @param pageable  the pagination information
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public Page<TaskDTO> findByTaskSetID(Long taskSetID, Pageable pageable) {
+        log.debug("Request to get tasks by given task set id {}", taskSetID);
+        return taskRepository.findByTaskSetId(taskSetID, pageable)
+            .map(taskMapper::toDto);
     }
 }
