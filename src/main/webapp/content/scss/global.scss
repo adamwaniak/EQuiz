@@ -61,6 +61,13 @@ Generic styles
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
+    @media (min-width: 1366px) {
+        min-height: 1080px;
+    }
+
+    @media (max-width: 1366px) {
+        min-height: 720px;
+    }
 }
 
 .error {
@@ -165,6 +172,7 @@ http://stackoverflow.com/questions/19562903/remove-padding-from-columns-in-boots
         }
     }
 }
+
 @include no-padding('left');
 @include no-padding('right');
 @include no-padding('top');
@@ -238,15 +246,3 @@ ui bootstrap tweaks
 }
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
-
-@media screen and (min-device-width: 1366px) {
-    .jh-card {
-        min-height: 900px;
-    }
-}
-
-@media screen and (max-device-width: 1366px) {
-    .jh-card {
-        min-height: 720px;
-    }
-}
