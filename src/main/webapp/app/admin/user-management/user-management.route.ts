@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes, CanActivate } from '@angular/router';
-import { JhiPaginationUtil, JhiResolvePagingParams } from 'ng-jhipster';
+import { ActivatedRouteSnapshot, CanActivate, Resolve, RouterStateSnapshot, Routes } from '@angular/router';
+import { JhiResolvePagingParams } from 'ng-jhipster';
 
 import { Principal, User, UserService } from 'app/core';
 import { UserMgmtComponent } from './user-management.component';
@@ -31,38 +31,46 @@ export class UserMgmtResolve implements Resolve<any> {
 
 export const userMgmtRoute: Routes = [
     {
-        path: 'user-management',
+        path: 'admin/user-management',
         component: UserMgmtComponent,
         resolve: {
             pagingParams: JhiResolvePagingParams
         },
         data: {
-            pageTitle: 'Users',
-            defaultSort: 'id,asc'
+            pageTitle: 'admin/Users',
+            defaultSort: 'id,asc',
+            state: 'user-management'
         }
     },
     {
-        path: 'user-management/:login/view',
+        path: 'admin/user-management/:login/view',
         component: UserMgmtDetailComponent,
         resolve: {
             user: UserMgmtResolve
         },
         data: {
-            pageTitle: 'Users'
+            pageTitle: 'Users',
+            state: 'user-management'
         }
     },
     {
-        path: 'user-management/new',
+        path: 'admin/user-management/new',
         component: UserMgmtUpdateComponent,
         resolve: {
             user: UserMgmtResolve
+        },
+        data: {
+            state: 'user-management'
         }
     },
     {
-        path: 'user-management/:login/edit',
+        path: 'admin/user-management/:login/edit',
         component: UserMgmtUpdateComponent,
         resolve: {
             user: UserMgmtResolve
+        },
+        data: {
+            state: 'user-management'
         }
     }
 ];
