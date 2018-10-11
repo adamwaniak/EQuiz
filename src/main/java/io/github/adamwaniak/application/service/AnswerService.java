@@ -89,4 +89,10 @@ public class AnswerService {
         log.debug("Request to delete Answer : {}", id);
         answerRepository.deleteById(id);
     }
+
+    public Page<AnswerDTO> findByTaskID(Long taskId, Pageable pageable) {
+        log.debug("Request to get answers by given task id {}", taskId);
+        return answerRepository.findByTaskId(taskId, pageable)
+            .map(answerMapper::toDto);
+    }
 }
