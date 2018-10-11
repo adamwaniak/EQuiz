@@ -55,8 +55,12 @@ export class QuizListComponent implements OnInit, OnDestroy {
                 sort: this.sort()
             })
             .subscribe(
-                (res: HttpResponse<IQuiz[]>) => this.paginateQuizzes(res.body, res.headers),
-                (res: HttpErrorResponse) => this.onError(res.message)
+                (res: HttpResponse<IQuiz[]>) => {
+                    this.paginateQuizzes(res.body, res.headers);
+                },
+                (res: HttpErrorResponse) => {
+                    this.onError(res.message);
+                }
             );
     }
 

@@ -1,49 +1,50 @@
-<div *ngIf="quizzes && quizzes.length; else noAvaliableQuiz">
-    <h2 id="page-heading" class="display-4">
-        <span>Your Quizzes</span>
-        <button [id]="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-quiz"
+<div *ngIf="quizzes">
+    <div *ngIf="quizzes.length; else noAvaliableQuiz">
+        <h2 id="page-heading" class="display-4">
+            <span>Your Quizzes</span>
+            <button [id]="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-quiz"
                     [routerLink]="['/quiz-manager/new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
-            <span>
+                <fa-icon [icon]="'plus'"></fa-icon>
+                <span>
                 Create new Quiz
             </span>
-        </button>
-    </h2>
-    <jhi-alert></jhi-alert>
-    <br/>
-        <div class="list-group" *ngIf="quizzes">
+            </button>
+        </h2>
+        <jhi-alert></jhi-alert>
+        <br/>
+        <div class="list-group">
             <div href="#" class="list-group-item list-group-item-action align-items-start container-fluid form-group"
                  *ngFor="let quiz of quizzes ;trackBy: trackId" [id]="'quiz-manager-quiz-' + quiz.id">
                 <div class="row">
-                    <div class="col col-md">
+                    <div class="col-md">
                         <div class="text-justify display-4">
                             {{quiz.name}}
                         </div>
                     </div>
-                    <div class="col col-md align-self-center">
+                    <div class="col-md align-self-center">
                         <button class="btn btn-info float-right" [routerLink]="['/quiz-manager', quiz.id, 'task-set']">
                             <span>Go to task sets</span>
                         </button>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col col-md align-self-center">
-                        <h4>
-                            <span>Edition:</span> <br>
+                    <div class="col-xl-3 col-md align-self-center">
+                        <h6>
+                            <span>Edition:</span>
                             <small class="text-muted">{{quiz.edition}}</small>
-                        </h4>
+                        </h6>
                     </div>
-                    <div class="col col-md align-self-center">
-                        <h4><span>Start date: </span> <br>
-                            <small class="text-muted">{{quiz.startDate | date: 'short'}}</small>
-                        </h4>
+                    <div class="col-xl-3 col-md align-self-center">
+                        <h6><span>Start date: </span>
+                            <small class="text-muted">{{quiz.startDate | date: 'dd.MM.yy, HH:mm'}}</small>
+                        </h6>
                     </div>
-                    <div class="col col-md align-self-center">
-                        <h4><span>End date: </span> <br>
-                            <small class="text-muted">{{quiz.endDate | date: 'short'}}</small>
-                        </h4>
+                    <div class="col-xl-3 col-md align-self-center">
+                        <h6><span>End date: </span>
+                            <small class="text-muted">{{quiz.endDate | date: 'dd.MM.yy, HH:mm'}}</small>
+                        </h6>
                     </div>
-                    <div class="col col-md">
+                    <div class="col-xl-3 col-md">
                         <button type="submit"
                                 [routerLink]="['/', { outlets: { popup: 'quiz-manager/'+ quiz.id + '/delete'} }]"
                                 replaceUrl="true"
@@ -55,57 +56,60 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md">
-                        <span>Resolved quizzes: {{ quiz.students?.length || '0' }}</span>
+                    <div class="col-xl-3 col-md">
+                        <h6><span>Resolved quizzes: </span>
+                            <small class="text-muted">{{ quiz.students?.length || '0' }}</small>
+                        </h6>
                     </div>
-                    <div class="col-md">
-                        <span>Number of task sets {{ quiz.taskSets?.length || '0' }}</span>
+                    <div class="col-xl-3 col-md">
+                        <h6><span>Number of task sets: </span>
+                            <small class="text-muted">{{ quiz.taskSets?.length || '0' }}</small>
+                        </h6>
                     </div>
-                    <div class="col-md">
-                        <span>Quiz length: {{quiz.maxTimeInMinutes}} minutes</span>
-                    </div>
-                    <div class="col-md">
-
+                    <div class="col-xl-3 col-md">
+                        <h6><span>Quiz length: </span>
+                            <small class="text-muted">{{quiz.maxTimeInMinutes}} minutes</small>
+                        </h6>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col col-md align-self-center">
+                    <div class="col-xl-3 col-md align-self-center">
                         <button class="btn btn-outline-primary btn-fixed-width" [disabled]="!quiz.students"
                                 [routerLink]="['#']">
                             <span>Check results</span>
                         </button>
                     </div>
-                    <div class="col col-md align-self-center">
+                    <div class="col-xl-3 col-md align-self-center">
+                        <button class="btn btn-outline-primary btn-fixed-width" (click)="newEdition(quiz.id)">
+                            <span>New edition</span>
+                        </button>
+                    </div>
+                    <div class="col-xl-3 col-md align-self-center">
+                        <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['#']">
+                            <span>Publish</span>
+                        </button>
+                    </div>
+                    <div class="col-xl-3 col-md align-self-center">
                         <button class="btn btn-outline-primary btn-fixed-width"
                                 [routerLink]="['/quiz-manager',quiz.id,'edit']">
                             <span>Edit</span>
                         </button>
                     </div>
-                    <div class="col col-md align-self-center">
-                        <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['#']">
-                            <span>Publish</span>
-                        </button>
-                    </div>
-                    <div class="col col-md align-self-center">
-                        <button class="btn btn-outline-primary btn-fixed-width" (click)="newEdition(quiz.id)">
-                            <span>New edition</span>
-                        </button>
-                    </div>
                 </div>
             </div>
-    </div>
+        </div>
         <div *ngIf="quizzes && quizzes.length">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5"
-                            [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5"
+                                [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5"
+                                [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+            </div>
         </div>
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5"
-                            [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
-        </div>
-    </div>
 </div>
-
+</div>
 <ng-template #noAvaliableQuiz>
     <div class="grid">
         <div class="row d-flex justify-content-center ">

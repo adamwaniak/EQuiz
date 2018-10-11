@@ -48,6 +48,7 @@ export class QuizUpdateComponent implements OnInit {
         this.accountService.get().subscribe(
             (res: HttpResponse<IUser>) => {
                 this.user = res.body;
+                this.quiz.ownerId = this.user.id;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );

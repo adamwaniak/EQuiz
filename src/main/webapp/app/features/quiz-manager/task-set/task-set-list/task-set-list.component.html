@@ -8,7 +8,7 @@
         tasks sets
     </a>
 </div>
-<div *ngIf="taskSets && taskSets.length; else noAvaliableTaskSet">
+<div *ngIf="taskSets && taskSets.length && quiz; else noAvaliableTaskSet">
 
             <button [id]="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-quiz"
                     [routerLink]="['/quiz-manager/new']">
@@ -27,7 +27,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-offset-2 col-md-2">
+
+            <div class="col-md-2">
                 Start date<br>
                 {{quiz.startDate | date: 'short'}}
             </div>
@@ -43,6 +44,10 @@
                 Task sets number<br>
                 {{taskSets.length}}
             </div>
+            <div class="col-md-2">
+                Edition<br>
+                {{quiz.edition}}
+            </div>
         </div>
     </div>
 
@@ -51,10 +56,22 @@
              *ngFor="let taskSet of taskSets ;trackBy: trackId">
             <div class="row">
                 <div class="col col-md">
-                    <div class="text-justify display-4">
+                    <div class="text-justify">
+                        Task set name:
                         {{taskSet.name}}
                     </div>
                 </div>
+                <div class="col col-md align-self-center">
+                    <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['/quiz-manager/new']">
+                        <span>Edit</span>
+                    </button>
+                </div>
+                <div class="col col-md align-self-center">
+                    <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['/quiz-manager/new']">
+                        <span>Copy</span>
+                    </button>
+                </div>
+
                 <div class="col col-md align-self-center">
                     <button class="btn btn-info float-right"
                             [routerLink]="['/quiz-manager', quiz.id, 'task-set', taskSet.id, 'task']">
@@ -64,57 +81,25 @@
             </div>
             <div class="row">
                 <div class="col col-md align-self-center">
-                    <h4>
-                        <span>Edition {{quiz.edition}}</span>
-                    </h4>
+                    Artificial Selection: <br>
+                    {{taskSet.artificialSelection}}
                 </div>
                 <div class="col col-md align-self-center">
-                    <h4><span>Start date: </span>
-                        <small class="text-muted">{{quiz.startDate | date: 'medium'}}</small>
-                    </h4>
+                    Max point for each task: <br>
+                    {{taskSet.maxPoint}}
                 </div>
                 <div class="col col-md align-self-center">
-                    <h4><span>End date: </span>
-                        <small class="text-muted">{{quiz.endDate | date: 'medium'}}</small>
-                    </h4>
+                    Required task amount: <br>
+                    {{taskSet.requiredTaskAmount}}
                 </div>
                 <div class="col col-md">
-                    One of three columns
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md">
-
-                </div>
-                <div class="col-md">
-                    One of three columns
-                </div>
-                <div class="col-md">
-                    One of three columns
-                </div>
-                <div class="col-md">
-                    One of three columns
-                </div>
-            </div>
-            <div class="row">
-                <div class="col col-md align-self-center">
-                    <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['/quiz-manager/new']">
-                        <span>Check results</span>
-                    </button>
-                </div>
-                <div class="col col-md align-self-center">
-                    <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['/quiz-manager/new']">
-                        <span>Edit</span>
-                    </button>
-                </div>
-                <div class="col col-md align-self-center">
-                    <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['/quiz-manager/new']">
-                        <span>Publish</span>
-                    </button>
-                </div>
-                <div class="col col-md align-self-center">
-                    <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['/quiz-manager/new']">
-                        <span>Copy</span>
+                    <button type="submit"
+                            [routerLink]="['/', { outlets: { popup: 'quiz-manager/'+ quiz.id + '/task-set/' + taskSet.id + '/delete'} }]"
+                            replaceUrl="true"
+                            queryParamsHandling="merge"
+                            class="btn btn-danger btn-sm float-right">
+                        <fa-icon [icon]="'times'"></fa-icon>
+                        <span class="d-none d-md-inline">Delete</span>
                     </button>
                 </div>
             </div>

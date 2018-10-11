@@ -13,7 +13,6 @@
     </a>
 </div>
 <div>
-
     <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-task"
             [routerLink]="['/quiz-manager/:quiz-id/task-set/:task-set-id/task/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
@@ -22,10 +21,9 @@
             </span>
     </button>
     <br>
-
     <jhi-alert></jhi-alert>
     <br/>
-    <div class="table-responsive" *ngIf="tasks">
+    <div class="table-responsive" *ngIf="tasks && quiz">
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
