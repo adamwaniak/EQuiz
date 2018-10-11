@@ -15,7 +15,6 @@ import { QuizService } from 'app/features/services/quiz.service';
 })
 export class TaskSetUpdateComponent implements OnInit {
     isSaving: boolean;
-    quizzes: IQuiz[];
     private _taskSet: ITaskSet;
     constructor(
         private jhiAlertService: JhiAlertService,
@@ -37,12 +36,9 @@ export class TaskSetUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ taskSet }) => {
             this.taskSet = taskSet;
         });
-        this.quizService.query().subscribe(
-            (res: HttpResponse<IQuiz[]>) => {
-                this.quizzes = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
+        this.activatedRoute.params.subscribe(quizID => {
+            this.taskSet.quizId = quizID['quiz-id'];
+        });
     }
 
     previousState() {

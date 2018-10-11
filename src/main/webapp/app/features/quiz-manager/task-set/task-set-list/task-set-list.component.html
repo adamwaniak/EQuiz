@@ -12,7 +12,7 @@
     <div *ngIf="taskSets.length; else noAvaliableTaskSet">
 
             <button [id]="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-quiz"
-                    [routerLink]="['/quiz-manager/new']">
+                    [routerLink]="['/quiz-manager/', quiz.id, 'task-set', 'new']">
                 <fa-icon [icon]="'plus'"></fa-icon>
                 <span>
                     Create new task set
@@ -89,13 +89,13 @@
                 </div>
                 <div class="col-auto align-self-center">
                     <button class="btn btn-outline-primary btn-fixed-width float-right"
-                            [routerLink]="['/quiz-manager/new']">
+                            [routerLink]="['/quiz-manager/', quiz.id, 'task-set', taskSet.id, 'edit']">
                         <span>Edit</span>
                     </button>
                 </div>
                 <div class="col-auto align-self-center">
                     <button class="btn btn-outline-primary btn-fixed-width float-right"
-                            [routerLink]="['/quiz-manager/new']">
+                            [routerLink]="['#']">
                         <span>Copy</span>
                     </button>
                 </div>
