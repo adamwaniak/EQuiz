@@ -9,13 +9,13 @@
     </a>
     <span class="text-info align-middle">/</span>
     <a class="text-info align-middle disabled">
-        tasks
+        Tasks
     </a>
 </div>
 <div>
 
     <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-task"
-                [routerLink]="['/task/new']">
+            [routerLink]="['/quiz-manager/:quiz-id/task-set/:task-set-id/task/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span>
             Create new Task
