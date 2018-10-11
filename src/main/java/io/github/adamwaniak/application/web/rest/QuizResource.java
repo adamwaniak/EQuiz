@@ -7,6 +7,7 @@ import io.github.adamwaniak.application.web.rest.errors.BadRequestAlertException
 import io.github.adamwaniak.application.web.rest.util.HeaderUtil;
 import io.github.adamwaniak.application.web.rest.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -131,5 +132,20 @@ public class QuizResource {
         Page<QuizDTO> page = quizService.getQuizzesByOwner(authentication.getName(), pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/current-user/quizzes");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/quizzes/new-edition/{quizID}")
+    @Timed
+    public ResponseEntity<Void> createNewEdition(Authentication authentication, @PathVariable Long quizID) {
+        log.debug("REST request to create new edition for user: {}, and quizID: {}", authentication.getPrincipal(), quizID);
+        if (!quizService.isGivenQuizIdBelongToUser(quizID, authentication.getName())) {
+            return ResponseEntity.status(402).headers(HeaderUtil.createAlert("Non authorized user trying to make new edition", "new edition")).build();
+        }
+        try {
+            quizService.createNewEdition(quizID);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(404).build();
+        }
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, "new edition")).build();
     }
 }

@@ -1,9 +1,11 @@
 package io.github.adamwaniak.application.service;
 
 import io.github.adamwaniak.application.domain.Quiz;
+import io.github.adamwaniak.application.domain.TaskSet;
 import io.github.adamwaniak.application.repository.QuizRepository;
 import io.github.adamwaniak.application.service.dto.QuizDTO;
 import io.github.adamwaniak.application.service.mapper.QuizMapper;
+import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -11,7 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Service Implementation for managing Quiz.
@@ -26,9 +30,12 @@ public class QuizService {
 
     private final QuizMapper quizMapper;
 
-    public QuizService(QuizRepository quizRepository, QuizMapper quizMapper) {
+    private final TaskSetService taskSetService;
+
+    public QuizService(QuizRepository quizRepository, QuizMapper quizMapper, TaskSetService taskSetService) {
         this.quizRepository = quizRepository;
         this.quizMapper = quizMapper;
+        this.taskSetService = taskSetService;
     }
 
     /**
@@ -93,4 +100,28 @@ public class QuizService {
         return quiz.map(quiz1 -> quiz1.getOwner().getLogin().equals(userLogin)).orElse(false);
     }
 
+    public void createNewEdition(Long quizID) throws NotFoundException {
+        Optional<Quiz> quiz = quizRepository.findById(quizID);
+        if (!quiz.isPresent()) {
+            throw new NotFoundException("Not found quiz for id: " + quizID);
+        }
+        Quiz newQuiz = copyQuiz(quiz.get());
+        quizRepository.save(newQuiz);
+    }
+
+    private Quiz copyQuiz(Quiz quiz) {
+        Quiz newQuiz = new Quiz();
+        newQuiz.setEdition(quiz.getEdition() + 1);
+        newQuiz.setName(quiz.getName());
+        newQuiz.setMaxTimeInMinutes(quiz.getMaxTimeInMinutes());
+        newQuiz.setOwner(quiz.getOwner());
+        newQuiz.startDate(quiz.getStartDate());
+        newQuiz.endDate(quiz.getEndDate());
+        Set<TaskSet> taskSets = new HashSet<>();
+        for (TaskSet taskSet : quiz.getTaskSets()) {
+            taskSets.add(taskSetService.copyTaskSetForQuiz(taskSet, newQuiz));
+        }
+        newQuiz.setTaskSets(taskSets);
+        return newQuiz;
+    }
 }

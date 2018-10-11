@@ -1,5 +1,7 @@
 package io.github.adamwaniak.application.service;
 
+import io.github.adamwaniak.application.domain.Quiz;
+import io.github.adamwaniak.application.domain.Task;
 import io.github.adamwaniak.application.domain.TaskSet;
 import io.github.adamwaniak.application.repository.TaskSetRepository;
 import io.github.adamwaniak.application.service.dto.TaskSetDTO;
@@ -11,7 +13,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
+
 /**
  * Service Implementation for managing TaskSet.
  */
@@ -25,9 +30,12 @@ public class TaskSetService {
 
     private final TaskSetMapper taskSetMapper;
 
-    public TaskSetService(TaskSetRepository taskSetRepository, TaskSetMapper taskSetMapper) {
+    private final TaskService taskService;
+
+    public TaskSetService(TaskSetRepository taskSetRepository, TaskSetMapper taskSetMapper, TaskService taskService) {
         this.taskSetRepository = taskSetRepository;
         this.taskSetMapper = taskSetMapper;
+        this.taskService = taskService;
     }
 
     /**
@@ -92,5 +100,21 @@ public class TaskSetService {
         log.debug("Request to get TaskSets by give quiz id {}", quizID);
         return taskSetRepository.findByQuizId(quizID, pageable)
             .map(taskSetMapper::toDto);
+    }
+
+    public TaskSet copyTaskSetForQuiz(TaskSet taskSet, Quiz quiz) {
+        TaskSet newTaskSet = new TaskSet();
+        newTaskSet.name(taskSet.getName())
+            .artificialSelection(taskSet.isArtificialSelection())
+            .maxPoint(taskSet.getMaxPoint())
+            .requiredTaskAmount(taskSet.getRequiredTaskAmount())
+            .quiz(quiz);
+        Set<Task> tasks = new HashSet<>();
+        for (Task task : taskSet.getTasks()) {
+            tasks.add(taskService.copyTaskForTaskSet(task, newTaskSet));
+        }
+        newTaskSet.tasks(tasks);
+        taskSetRepository.save(newTaskSet);
+        return newTaskSet;
     }
 }

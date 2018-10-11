@@ -55,6 +55,10 @@ export class QuizService {
             .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
     }
 
+    newEdition(quizID: number) {
+        return this.http.get(`${this.resourceUrl}/new-edition/${quizID}`, { observe: 'response' });
+    }
+
     private convertDateFromClient(quiz: IQuiz): IQuiz {
         const copy: IQuiz = Object.assign({}, quiz, {
             startDate: quiz.startDate != null && quiz.startDate.isValid() ? quiz.startDate.toJSON() : null,

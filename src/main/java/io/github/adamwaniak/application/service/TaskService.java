@@ -1,6 +1,8 @@
 package io.github.adamwaniak.application.service;
 
+import io.github.adamwaniak.application.domain.Answer;
 import io.github.adamwaniak.application.domain.Task;
+import io.github.adamwaniak.application.domain.TaskSet;
 import io.github.adamwaniak.application.repository.TaskRepository;
 import io.github.adamwaniak.application.service.dto.TaskDTO;
 import io.github.adamwaniak.application.service.mapper.TaskMapper;
@@ -11,7 +13,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
+
 /**
  * Service Implementation for managing Task.
  */
@@ -25,9 +30,27 @@ public class TaskService {
 
     private final TaskMapper taskMapper;
 
-    public TaskService(TaskRepository taskRepository, TaskMapper taskMapper) {
+    private final AnswerService answerService;
+
+    public TaskService(TaskRepository taskRepository, TaskMapper taskMapper, AnswerService answerService) {
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
+        this.answerService = answerService;
+    }
+
+    public Task copyTaskForTaskSet(Task task, TaskSet taskSet) {
+        Task newTask = new Task();
+        newTask.question(task.getQuestion())
+            .correctnessFactor(task.getCorrectnessFactor())
+            .image(task.getImage());
+        Set<Answer> answers = new HashSet<>();
+        for (Answer answer : task.getAnswers()) {
+            answers.add(answerService.copyAnswerForTask(answer, newTask));
+        }
+        newTask.answers(answers);
+        newTask.taskSet(taskSet);
+        taskRepository.save(newTask);
+        return newTask;
     }
 
     /**
