@@ -68,7 +68,10 @@ export class TaskSetListComponent implements OnInit, OnDestroy {
                 sort: this.sort()
             })
             .subscribe(
-                (res: HttpResponse<ITaskSet[]>) => this.paginateTaskSets(res.body, res.headers),
+                (res: HttpResponse<ITaskSet[]>) => {
+                    this.paginateTaskSets(res.body, res.headers);
+                    console.log(res.body);
+                },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
     }

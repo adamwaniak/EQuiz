@@ -8,7 +8,8 @@
         tasks sets
     </a>
 </div>
-<div *ngIf="taskSets && taskSets.length && quiz; else noAvaliableTaskSet">
+<div *ngIf="quiz && taskSets">
+    <div *ngIf="taskSets.length; else noAvaliableTaskSet">
 
             <button [id]="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-quiz"
                     [routerLink]="['/quiz-manager/new']">
@@ -23,30 +24,52 @@
     <div class="quiz-information-container">
         <div class="row">
             <div class="col">
-                <span class="font-weight-light">Quiz information:</span>
+                <h5>
+                    <span>Quiz information:</span>
+                </h5>
             </div>
         </div>
         <div class="row">
 
             <div class="col-md-2">
-                Start date<br>
-                {{quiz.startDate | date: 'short'}}
+                <h6>
+                    Start date:
+                    <div class="text-muted">
+                        {{quiz.startDate | date: 'dd.MM.yy, HH:mm'}}
+                    </div>
+                </h6>
             </div>
             <div class="col-md-2">
-                End date<br>
-                {{quiz.endDate | date: 'short'}}
+                <h6>
+                    End date:
+                    <div class="text-muted">
+                        {{quiz.endDate | date: 'dd.MM.yy, HH:mm'}}
+                    </div>
+                </h6>
             </div>
             <div class="col-md-2">
-                Time length<br>
-                {{quiz.maxTimeInMinutes}} minutes
+                <h6>
+                    Time length:
+                    <div class="text-muted">
+                        {{quiz.maxTimeInMinutes}} minutes
+                    </div>
+                </h6>
             </div>
             <div class="col-md-2">
-                Task sets number<br>
-                {{taskSets.length}}
+                <h6>
+                    Task sets number:
+                    <div class="text-muted">
+                        {{taskSets.length}}
+                    </div>
+                </h6>
             </div>
             <div class="col-md-2">
-                Edition<br>
-                {{quiz.edition}}
+                <h6>
+                    Edition:
+                    <div class="text-muted">
+                        {{quiz.edition}}
+                    </div>
+                </h6>
             </div>
         </div>
     </div>
@@ -55,24 +78,28 @@
         <div href="#" class="list-group-item list-group-item-action align-items-start container-fluid form-group"
              *ngFor="let taskSet of taskSets ;trackBy: trackId">
             <div class="row">
-                <div class="col col-md">
+                <div class="col">
                     <div class="text-justify">
-                        Task set name:
-                        {{taskSet.name}}
+                        <h5>
+                            <span class="text-muted">
+                                {{taskSet.name}}
+                            </span>
+                        </h5>
                     </div>
                 </div>
-                <div class="col col-md align-self-center">
-                    <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['/quiz-manager/new']">
+                <div class="col-auto align-self-center">
+                    <button class="btn btn-outline-primary btn-fixed-width float-right"
+                            [routerLink]="['/quiz-manager/new']">
                         <span>Edit</span>
                     </button>
                 </div>
-                <div class="col col-md align-self-center">
-                    <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['/quiz-manager/new']">
+                <div class="col-auto align-self-center">
+                    <button class="btn btn-outline-primary btn-fixed-width float-right"
+                            [routerLink]="['/quiz-manager/new']">
                         <span>Copy</span>
                     </button>
                 </div>
-
-                <div class="col col-md align-self-center">
+                <div class="col-auto align-self-center">
                     <button class="btn btn-info float-right"
                             [routerLink]="['/quiz-manager', quiz.id, 'task-set', taskSet.id, 'task']">
                         <span>Go to tasks</span>
@@ -81,16 +108,38 @@
             </div>
             <div class="row">
                 <div class="col col-md align-self-center">
-                    Artificial Selection: <br>
-                    {{taskSet.artificialSelection}}
+                    <h6>
+                        Artificial Selection:
+                        <span class="text-muted">
+                            {{taskSet.artificialSelection ? 'Yes':'No'}}
+                        </span>
+                    </h6>
+
+
                 </div>
                 <div class="col col-md align-self-center">
-                    Max point for each task: <br>
-                    {{taskSet.maxPoint}}
+                    <h6>
+                        Max point for each task:
+                        <span class="text-muted">
+                            {{taskSet.maxPoint}}
+                        </span>
+                    </h6>
                 </div>
                 <div class="col col-md align-self-center">
-                    Required task amount: <br>
-                    {{taskSet.requiredTaskAmount}}
+                    <h6>
+                        Required task amount:
+                        <span class="text-muted">
+                            {{taskSet.requiredTaskAmount}}
+                        </span>
+                    </h6>
+                </div>
+                <div class="col align-self-center">
+                    <h6>
+                        Task Number:
+                        <span class="text-muted">
+                        5
+                        </span>
+                    </h6>
                 </div>
                 <div class="col col-md">
                     <button type="submit"
@@ -102,6 +151,9 @@
                         <span class="d-none d-md-inline">Delete</span>
                     </button>
                 </div>
+            </div>
+            <div class="row">
+
             </div>
         </div>
     </div>
@@ -116,7 +168,7 @@
         </div>
     </div>
 </div>
-
+</div>
 <ng-template #noAvaliableTaskSet>
     <div class="grid">
         <div class="row d-flex justify-content-center ">
