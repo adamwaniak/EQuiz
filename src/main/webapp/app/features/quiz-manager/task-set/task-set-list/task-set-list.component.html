@@ -5,14 +5,14 @@
     </a>
     <span class="text-info align-middle">/</span>
     <a class="text-info align-middle disabled">
-        tasks sets
+        Task Sets
     </a>
 </div>
 <div *ngIf="quiz && taskSets">
     <div *ngIf="taskSets.length; else noAvaliableTaskSet">
 
             <button [id]="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-quiz"
-                    [routerLink]="['/quiz-manager/', quiz.id, 'task-set', 'new']">
+                    [routerLink]="['/quiz-manager/new']">
                 <fa-icon [icon]="'plus'"></fa-icon>
                 <span>
                     Create new task set
@@ -89,13 +89,13 @@
                 </div>
                 <div class="col-auto align-self-center">
                     <button class="btn btn-outline-primary btn-fixed-width float-right"
-                            [routerLink]="['/quiz-manager/', quiz.id, 'task-set', taskSet.id, 'edit']">
+                            [routerLink]="['/quiz-manager/new']">
                         <span>Edit</span>
                     </button>
                 </div>
                 <div class="col-auto align-self-center">
                     <button class="btn btn-outline-primary btn-fixed-width float-right"
-                            [routerLink]="['#']">
+                            [routerLink]="['/quiz-manager/new']">
                         <span>Copy</span>
                     </button>
                 </div>

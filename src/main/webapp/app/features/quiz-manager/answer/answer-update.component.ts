@@ -3,44 +3,40 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
-
+import { IAnswer } from 'app/shared/model/answer.model';
 import { ITask } from 'app/shared/model/task.model';
-import { ITaskSet } from 'app/shared/model/task-set.model';
-import { TaskSetService } from 'app/features/services/task-set.service';
 import { TaskService } from 'app/features/services/task.service';
+import { AnswerService } from 'app/features/services/answer.service';
 
 @Component({
-    selector: 'jhi-task-update',
-    templateUrl: './task-update.component.html'
+    selector: 'jhi-answer-update',
+    templateUrl: './answer-update.component.html'
 })
-export class TaskUpdateComponent implements OnInit {
+export class AnswerUpdateComponent implements OnInit {
+    private _answer: IAnswer;
     isSaving: boolean;
-    private _task: ITask;
+
+    tasks: ITask[];
+
     constructor(
         private dataUtils: JhiDataUtils,
         private jhiAlertService: JhiAlertService,
+        private answerService: AnswerService,
         private taskService: TaskService,
-        private taskSetService: TaskSetService,
         private activatedRoute: ActivatedRoute
     ) {}
 
-    get task() {
-        return this._task;
-    }
-
-    set task(task: ITask) {
-        this._task = task;
-    }
-
     ngOnInit() {
         this.isSaving = false;
-        this.activatedRoute.data.subscribe(({ task }) => {
-            this.task = task;
+        this.activatedRoute.data.subscribe(({ answer }) => {
+            this.answer = answer;
         });
-        this.activatedRoute.params.subscribe(route => {
-            this.task.taskSetId = route['task-set-id'];
-            console.log(this.task);
-        });
+        this.taskService.query().subscribe(
+            (res: HttpResponse<ITask[]>) => {
+                this.tasks = res.body;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
     }
 
     byteSize(field) {
@@ -61,19 +57,15 @@ export class TaskUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        if (this.task.id !== undefined) {
-            this.subscribeToSaveResponse(this.taskService.update(this.task));
+        if (this.answer.id !== undefined) {
+            this.subscribeToSaveResponse(this.answerService.update(this.answer));
         } else {
-            this.subscribeToSaveResponse(this.taskService.create(this.task));
+            this.subscribeToSaveResponse(this.answerService.create(this.answer));
         }
     }
 
-    trackTaskSetById(index: number, item: ITaskSet) {
-        return item.id;
-    }
-
-    private subscribeToSaveResponse(result: Observable<HttpResponse<ITask>>) {
-        result.subscribe((res: HttpResponse<ITask>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+    private subscribeToSaveResponse(result: Observable<HttpResponse<IAnswer>>) {
+        result.subscribe((res: HttpResponse<IAnswer>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
     }
 
     private onSaveSuccess() {
@@ -87,5 +79,17 @@ export class TaskUpdateComponent implements OnInit {
 
     private onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
+    }
+
+    trackTaskById(index: number, item: ITask) {
+        return item.id;
+    }
+
+    get answer() {
+        return this._answer;
+    }
+
+    set answer(answer: IAnswer) {
+        this._answer = answer;
     }
 }

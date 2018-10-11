@@ -1,4 +1,4 @@
-<div *ngIf="quiz && taskSet">
+<div *ngIf="quiz && taskSet && task">
     <fa-icon class="fa-1x text-info align-middle" [icon]="'arrow-left'"></fa-icon>
     <a class="text-info align-middle" [routerLink]="['/quiz-manager']">
         {{quiz.name}}
@@ -8,64 +8,49 @@
         {{taskSet.name}}
     </a>
     <span class="text-info align-middle">/</span>
+    <a class="text-info align-middle disabled" [routerLink]="['/quiz-manager', quizID, 'task-set', taskSetID, 'task']">
+        Task
+    </a>
+    <span class="text-info align-middle">/</span>
     <a class="text-info align-middle disabled">
-        Tasks
+        Answer
     </a>
 </div>
-<div *ngIf="tasks && quiz && taskSet">
-    <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-task"
-            [routerLink]="['/quiz-manager', quiz.id, 'task-set', taskSetID, 'task', 'new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
-            <span>
-            Create new Task
-            </span>
+
+<div *ngIf="answers && taskSet && task && quiz">
+    <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-answer mb-2"
+            [routerLink]="['/quiz-manager',quizID, 'task-set', taskSetID, 'task', taskID, 'answer', 'new']">
+        <fa-icon [icon]="'plus'"></fa-icon>
+        <span>Create new Answer</span>
     </button>
-    <br>
     <jhi-alert></jhi-alert>
-    <br/>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-                <th jhiSortBy="id"><span>ID</span>
+                <th jhiSortBy="name"><span>Name</span>
                     <fa-icon [icon]="'sort'"></fa-icon>
                 </th>
-                <th jhiSortBy="question"><span>Question</span>
+                <th jhiSortBy="isCorrect"><span>Is Correct</span>
                     <fa-icon [icon]="'sort'"></fa-icon>
                 </th>
-                <th jhiSortBy="correctnessFactor"><span>Correctness Factor</span>
-                    <fa-icon [icon]="'sort'"></fa-icon>
-                </th>
-                <th></th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let task of tasks ;trackBy: trackId">
-                <td><a [routerLink]="['/quiz-manager', quiz.id, 'task-set', taskSet.id,'task', task.id, 'view' ]">{{task.id}}</a>
-                </td>
-                <td>{{task.question}}</td>
-                <td>{{task.correctnessFactor}}</td>
-                <td>
-                    <a *ngIf="task.image" (click)="openFile(task.imageContentType, task.image)">open</a>
-                    <span *ngIf="task.image">{{task.imageContentType}}, {{byteSize(task.image)}}</span>
-                </td>
+            <tr *ngFor="let answer of answers ;trackBy: trackId">
+                <td>{{answer.name}}</td>
+                <td>{{answer.isCorrect}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
-                                [routerLink]="['/quiz-manager', quiz.id, 'task-set', taskSet.id,'task', task.id, 'answers' ]"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline">Answers</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/quiz-manager', quiz.id, 'task-set', taskSet.id,'task', task.id, 'edit']"
+                                [routerLink]="['/quiz-manager',quizID, 'task-set', taskSetID, 'task', taskID, 'answer', answer.id, 'edit']"
                                 class="btn btn-primary btn-sm">
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
                             <span class="d-none d-md-inline">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup:'quiz-manager/' + quiz.id + '/task-set/' + taskSet.id +'/task/' + task.id + '/delete'} }]"
+                                [routerLink]="['/', { outlets: { popup: 'quiz-manager/' + quiz.id + '/task-set/' + taskSet.id +'/task/' + task.id +  '/answer/'+ answer.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">
@@ -78,7 +63,7 @@
             </tbody>
         </table>
     </div>
-    <div *ngIf="tasks && tasks.length">
+    <div *ngIf="answers && answers.length">
         <div class="row justify-content-center">
             <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5"
                             [itemsPerPage]="itemsPerPage"></jhi-item-count>

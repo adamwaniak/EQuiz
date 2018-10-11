@@ -7,18 +7,18 @@ import { ActivatedRoute, Data } from '@angular/router';
 import { EQuizTestModule } from '../../../test.module';
 
 import { Answer } from 'app/shared/model/answer.model';
-import { AnswerComponent, AnswerService } from 'app/features/entities/answer';
+import { AnswerEntityComponent, AnswerService } from 'app/features/entities/answer';
 
 describe('Component Tests', () => {
     describe('Answer Management Component', () => {
-        let comp: AnswerComponent;
-        let fixture: ComponentFixture<AnswerComponent>;
+        let comp: AnswerEntityComponent;
+        let fixture: ComponentFixture<AnswerEntityComponent>;
         let service: AnswerService;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [EQuizTestModule],
-                declarations: [AnswerComponent],
+                declarations: [AnswerEntityComponent],
                 providers: [
                     {
                         provide: ActivatedRoute,
@@ -37,10 +37,10 @@ describe('Component Tests', () => {
                     }
                 ]
             })
-                .overrideTemplate(AnswerComponent, '')
+                .overrideTemplate(AnswerEntityComponent, '')
                 .compileComponents();
 
-            fixture = TestBed.createComponent(AnswerComponent);
+            fixture = TestBed.createComponent(AnswerEntityComponent);
             comp = fixture.componentInstance;
             service = fixture.debugElement.injector.get(AnswerService);
         });

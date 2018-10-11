@@ -11,9 +11,9 @@ import { TaskService } from 'app/features/services/task.service';
 
 @Component({
     selector: 'jhi-answer-update',
-    templateUrl: './answer-update.component.html'
+    templateUrl: './answer-update.entity.component.html'
 })
-export class AnswerUpdateComponent implements OnInit {
+export class AnswerUpdateEntityComponent implements OnInit {
     private _answer: IAnswer;
     isSaving: boolean;
 
