@@ -1,7 +1,7 @@
 <div *ngIf="quiz">
     <fa-icon class="fa-1x text-info align-middle" [icon]="'arrow-left'"></fa-icon>
     <a class="text-info align-middle" [routerLink]="['/quiz-manager']">
-        {{quiz.name}}
+        Quiz: {{quiz.name}}
     </a>
     <span class="text-info align-middle">/</span>
     <a class="text-info align-middle disabled">
@@ -12,7 +12,7 @@
     <div *ngIf="taskSets.length; else noAvaliableTaskSet">
 
             <button [id]="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-quiz"
-                    [routerLink]="['/quiz-manager/new']">
+                    [routerLink]="['/quiz-manager',quizID, 'task-set', 'new']">
                 <fa-icon [icon]="'plus'"></fa-icon>
                 <span>
                     Create new task set
@@ -89,13 +89,13 @@
                 </div>
                 <div class="col-auto align-self-center">
                     <button class="btn btn-outline-primary btn-fixed-width float-right"
-                            [routerLink]="['/quiz-manager/new']">
+                            [routerLink]="['/quiz-manager',quizID, 'task-set', taskSet.id, 'edit']">
                         <span>Edit</span>
                     </button>
                 </div>
                 <div class="col-auto align-self-center">
                     <button class="btn btn-outline-primary btn-fixed-width float-right"
-                            [routerLink]="['/quiz-manager/new']">
+                            [routerLink]="['/#']">
                         <span>Copy</span>
                     </button>
                 </div>
@@ -179,7 +179,7 @@
         </div>
         <div class="row d-flex justify-content-center">
             <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-quiz"
-                    [routerLink]="['/quiz-manager/new']">
+                    [routerLink]="['/quiz-manager',quizID, 'task-set', 'new']">
             <span>
                 Create new task set
             </span>

@@ -39,7 +39,6 @@ export class TaskUpdateComponent implements OnInit {
         });
         this.activatedRoute.params.subscribe(route => {
             this.task.taskSetId = route['task-set-id'];
-            console.log(this.task);
         });
     }
 

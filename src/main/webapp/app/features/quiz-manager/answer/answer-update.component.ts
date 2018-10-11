@@ -31,6 +31,9 @@ export class AnswerUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ answer }) => {
             this.answer = answer;
         });
+        this.activatedRoute.params.subscribe(route => {
+            this.answer.taskId = route['task-id'];
+        });
         this.taskService.query().subscribe(
             (res: HttpResponse<ITask[]>) => {
                 this.tasks = res.body;
