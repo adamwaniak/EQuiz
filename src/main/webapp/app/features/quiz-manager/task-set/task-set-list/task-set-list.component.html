@@ -132,25 +132,31 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col col-md align-self-center">
+                <div class="col-auto align-self-center">
                     <h6>
                         Artificial Selection:
                         <span class="text-muted">
                             {{taskSet.artificialSelection ? 'Yes':'No'}}
                         </span>
                     </h6>
-
-
                 </div>
-                <div class="col col-md align-self-center">
+                <div class="col-auto align-self-center">
                     <h6>
-                        Max point for each task:
+                        Sum max points:
+                        <span class="text-muted">
+                            {{taskSet.maxPoint * taskSet.requiredTaskAmount}}
+                        </span>
+                    </h6>
+                </div>
+                <div class="col-auto align-self-center">
+                    <h6>
+                        Max points for each task:
                         <span class="text-muted">
                             {{taskSet.maxPoint}}
                         </span>
                     </h6>
                 </div>
-                <div class="col col-md align-self-center">
+                <div class="col-auto align-self-center">
                     <h6>
                         Required tasks:
                         <span class="text-muted">
@@ -158,7 +164,7 @@
                         </span>
                     </h6>
                 </div>
-                <div class="col align-self-center">
+                <div class="col-auto align-self-center">
                     <h6>
                         Task Number:
                         <span class="text-muted">
