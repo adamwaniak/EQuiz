@@ -1,9 +1,10 @@
 package io.github.adamwaniak.application.service.mapper;
 
-import io.github.adamwaniak.application.domain.*;
+import io.github.adamwaniak.application.domain.Quiz;
+import io.github.adamwaniak.application.domain.TaskSet;
 import io.github.adamwaniak.application.service.dto.QuizDTO;
-
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity Quiz and its DTO QuizDTO.
@@ -11,8 +12,22 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {UserMapper.class})
 public interface QuizMapper extends EntityMapper<QuizDTO, Quiz> {
 
-    @Mapping(source = "owner.id", target = "ownerId")
-    QuizDTO toDto(Quiz quiz);
+    default QuizDTO toDto(Quiz quiz) {
+        QuizDTO quizDTO = new QuizDTO();
+        quizDTO.setEdition(quiz.getEdition());
+        quizDTO.setEndDate(quiz.getEndDate());
+        quizDTO.setStartDate(quiz.getStartDate());
+        quizDTO.setId(quiz.getId());
+        quizDTO.setOwnerId(quiz.getOwner().getId());
+        quizDTO.setMaxTimeInMinutes(quiz.getMaxTimeInMinutes());
+        quizDTO.setPassword(quiz.getPassword());
+        quizDTO.setName(quiz.getName());
+        quizDTO.setTaskSetNumber(quiz.getTaskSets().size());
+        quizDTO.setTaskNumber(quiz.getTaskSets().stream().mapToInt(taksSet -> taksSet.getTasks().size()).sum());
+        quizDTO.setRequiredTaskNumber(quiz.getTaskSets().stream().mapToInt(TaskSet::getRequiredTaskAmount).sum());
+        quizDTO.setResolvedNumber(quiz.getStudents().size());
+        return quizDTO;
+    }
 
     @Mapping(target = "taskSets", ignore = true)
     @Mapping(target = "students", ignore = true)

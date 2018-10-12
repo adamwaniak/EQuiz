@@ -23,6 +23,58 @@
     <br>
     <jhi-alert></jhi-alert>
     <br/>
+    <div class="quiz-information-container">
+        <div class="row">
+            <div class="col">
+                <h5>
+                    <span>Task set information:</span>
+                </h5>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-2">
+                <h6>
+                    Task set name:
+                    <div class="text-muted">
+                        {{taskSet.name}}
+                    </div>
+                </h6>
+            </div>
+            <div class="col-md-2">
+                <h6>
+                    Artificial Selection:
+                    <div class="text-muted">
+                        {{taskSet.artificialSelection ? 'Yes' : 'No'}}
+                    </div>
+                </h6>
+            </div>
+            <div class="col-md-2">
+                <h6>
+                    Max point:
+                    <div class="text-muted">
+                        {{taskSet.maxPoint}}
+                    </div>
+                </h6>
+            </div>
+            <div class="col-md-2">
+                <h6>
+                    Required task number:
+                    <div class="text-muted">
+                        {{taskSet.requiredTaskAmount}}
+                    </div>
+                </h6>
+            </div>
+            <div class="col-md-2">
+                <h6>
+                    Tasks number:
+                    <div class="text-muted">
+                        <span
+                            [ngClass]="{'text-danger': tasks.length < taskSet.requiredTaskAmount}">{{tasks.length}}</span>
+                    </div>
+                </h6>
+            </div>
+        </div>
+    </div>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
