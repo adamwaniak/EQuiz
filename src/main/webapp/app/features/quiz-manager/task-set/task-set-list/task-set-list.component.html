@@ -21,7 +21,7 @@
     <br>
     <jhi-alert></jhi-alert>
     <br/>
-    <div class="quiz-information-container">
+        <div class="quiz-information-container mb-2">
         <div class="row">
             <div class="col">
                 <h5>
@@ -30,7 +30,6 @@
             </div>
         </div>
         <div class="row">
-
             <div class="col-md-2">
                 <h6>
                     Start date:
@@ -57,14 +56,6 @@
             </div>
             <div class="col-md-2">
                 <h6>
-                    Task sets number:
-                    <div class="text-muted">
-                        {{taskSets.length}}
-                    </div>
-                </h6>
-            </div>
-            <div class="col-md-2">
-                <h6>
                     Edition:
                     <div class="text-muted">
                         {{quiz.edition}}
@@ -72,6 +63,40 @@
                 </h6>
             </div>
         </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <h6>
+                        Task sets number:
+                        <div class="text-muted">
+                            {{taskSets.length}}
+                        </div>
+                    </h6>
+                </div>
+                <div class="col-md-2">
+                    <h6>
+                        Required tasks:
+                        <div class="text-muted">
+                            {{quiz.requiredTaskNumber}}
+                        </div>
+                    </h6>
+                </div>
+                <div class="col-md-2">
+                    <h6>
+                        Tasks:
+                        <div class="text-muted">
+                            {{quiz.taskNumber}}
+                        </div>
+                    </h6>
+                </div>
+                <div class="col-md-2">
+                    <h6>
+                        Max points for quiz:
+                        <div class="text-muted">
+                            {{sumMaxPoints}}
+                        </div>
+                    </h6>
+                </div>
+            </div>
     </div>
 
     <div class="list-group" *ngIf="taskSets">
@@ -127,7 +152,7 @@
                 </div>
                 <div class="col col-md align-self-center">
                     <h6>
-                        Required task amount:
+                        Required tasks:
                         <span class="text-muted">
                             {{taskSet.requiredTaskAmount}}
                         </span>
@@ -151,9 +176,6 @@
                         <span class="d-none d-md-inline">Delete</span>
                     </button>
                 </div>
-            </div>
-            <div class="row">
-
             </div>
         </div>
     </div>
