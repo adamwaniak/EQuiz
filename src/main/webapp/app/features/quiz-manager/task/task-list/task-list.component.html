@@ -83,33 +83,28 @@
             </div>
         </div>
     </div>
+    <h5>Tasks:</h5>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-                <th jhiSortBy="id"><span>ID</span>
-                    <fa-icon [icon]="'sort'"></fa-icon>
-                </th>
                 <th jhiSortBy="question"><span>Question</span>
                     <fa-icon [icon]="'sort'"></fa-icon>
                 </th>
                 <th jhiSortBy="correctnessFactor"><span>Correctness Factor</span>
                     <fa-icon [icon]="'sort'"></fa-icon>
                 </th>
-                <th></th>
+                <th><span>Correct answers</span></th>
+                <th><span>Answers</span></th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let task of tasks ;trackBy: trackId">
-                <td><a [routerLink]="['/quiz-manager', quiz.id, 'task-set', taskSet.id,'task', task.id, 'view' ]">{{task.id}}</a>
-                </td>
                 <td>{{task.question}}</td>
                 <td>{{task.correctnessFactor}}</td>
-                <td>
-                    <a *ngIf="task.image" (click)="openFile(task.imageContentType, task.image)">open</a>
-                    <span *ngIf="task.image">{{task.imageContentType}}, {{byteSize(task.image)}}</span>
-                </td>
+                <td>1</td>
+                <td>2</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

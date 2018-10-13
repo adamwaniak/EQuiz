@@ -23,15 +23,61 @@
         <fa-icon [icon]="'plus'"></fa-icon>
         <span>Create new Answer</span>
     </button>
+    <br>
     <jhi-alert></jhi-alert>
+    <br>
+    <div class="quiz-information-container">
+        <div class="row">
+            <div class="col">
+                <h5>
+                    <span>Task information:</span>
+                </h5>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-auto">
+                <h6>
+                    Question:
+                    <div class="text-muted">
+                        {{task.question}}
+                    </div>
+                </h6>
+            </div>
+            <div class="col-auto">
+                <h6>
+                    Correctness factor:
+                    <div class="text-muted">
+                        {{task.correctnessFactor}}
+                    </div>
+                </h6>
+            </div>
+            <div class="col-auto align-self-center">
+                <h6>
+                    Correct answers:
+                    <div class="text-muted">
+                        1
+                    </div>
+                </h6>
+            </div>
+            <div class="col-auto">
+                <h6>
+                    Answers:
+                    <div class="text-muted">
+                        2
+                    </div>
+                </h6>
+            </div>
+        </div>
+    </div>
+    <h5>Answers:</h5>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-                <th jhiSortBy="name"><span>Name</span>
+                <th jhiSortBy="isCorrect" style="width: 140px;"><span>Is Correct</span>
                     <fa-icon [icon]="'sort'"></fa-icon>
                 </th>
-                <th jhiSortBy="isCorrect"><span>Is Correct</span>
+                <th jhiSortBy="name"><span>Name</span>
                     <fa-icon [icon]="'sort'"></fa-icon>
                 </th>
                 <th></th>
@@ -39,8 +85,8 @@
             </thead>
             <tbody>
             <tr *ngFor="let answer of answers ;trackBy: trackId">
+                <td>{{answer.isCorrect ? 'Yes' : 'No'}}</td>
                 <td>{{answer.name}}</td>
-                <td>{{answer.isCorrect}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
