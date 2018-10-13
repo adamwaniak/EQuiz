@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
-
-import { LoginModalService, Principal, Account } from 'app/core';
+import { faEdit, faFeatherAlt, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { Account, LoginModalService, Principal } from 'app/core';
 
 @Component({
     selector: 'jhi-home',
@@ -12,6 +12,9 @@ import { LoginModalService, Principal, Account } from 'app/core';
 export class HomeComponent implements OnInit {
     account: Account;
     modalRef: NgbModalRef;
+    faFeatherAlt = faFeatherAlt;
+    faEdit = faEdit;
+    faSearch = faSearch;
 
     constructor(private principal: Principal, private loginModalService: LoginModalService, private eventManager: JhiEventManager) {}
 
