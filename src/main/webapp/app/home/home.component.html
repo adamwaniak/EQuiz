@@ -1,5 +1,5 @@
 <div class="d-flex">
-    <h1 class="display-4  mx-auto">Welcome on EQuiz
+    <h1 class="display-4  mx-auto">Welcome to EQuiz
         <fa-icon [icon]="faFeatherAlt"></fa-icon>
     </h1>
     </div>
@@ -7,13 +7,37 @@
     <span class="lead mx-auto">Advanced knowledge testing platform</span>
 </div>
 <div class="row d-flex justify-content-around mt-5">
-    <button class="btn btn-primary">
-        <fa-icon [icon]="faSearch"></fa-icon>
-        Search for quizzes
-    </button>
-    <button class="btn btn-success">
-        <fa-icon [icon]="faEdit"></fa-icon>
-        Create your own quiz
-    </button>
+    <div>
+        <button class="btn btn-primary">
+            <fa-icon [icon]="faSearch"></fa-icon>
+            Search for quizzes
+        </button>
+    </div>
+    <div>
+        <button class="btn btn-success" [routerLink]="['/quiz-manager']">
+            <fa-icon [icon]="faEdit"></fa-icon>
+            Create your own quiz
+        </button>
+        <div class="text-center">
+            <small class="text-muted">*You need to be registered</small>
+        </div>
+    </div>
 </div>
-
+<p class="display-4 mt-5 text-center">Easily test your students and manage your quizzes</p>
+<div class="mx-auto slideshow d-none d-lg-block">
+    <slideshow [height]="'500px'"
+               [autoPlay]="true"
+               autoPlayInterval="5000"
+               [showArrows]="true"
+               [imageUrls]="imageArray"
+               [autoPlayWaitForLazyLoad]="true"
+               showDots="true"
+               backgroundSize="'cover'"
+               backgroundPosition="'center top'">
+    </slideshow>
+</div>
+<h5 class="mt-5 text-center">Intelligent question selection</h5>
+<p class="text-center">An equiz application that examines students' answers and finds the difficulty of each task. On
+    this basis
+    in later editions of the test questions are appropriately chosen in such a way that every student got
+    a collection of questions of similar difficulty, but may differ in questions.</p>

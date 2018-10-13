@@ -15,6 +15,13 @@ export class HomeComponent implements OnInit {
     faFeatherAlt = faFeatherAlt;
     faEdit = faEdit;
     faSearch = faSearch;
+    imageArray = [
+        '/content/images/app-screens/1.png',
+        '/content/images/app-screens/2.png',
+        '/content/images/app-screens/3.png',
+        '/content/images/app-screens/4.png',
+        '/content/images/app-screens/5.png'
+    ];
 
     constructor(private principal: Principal, private loginModalService: LoginModalService, private eventManager: JhiEventManager) {}
 
