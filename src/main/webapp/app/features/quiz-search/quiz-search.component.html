@@ -1,4 +1,26 @@
 <!--<input type="text" [(ngModel)]="query" id="search" placeholder="Search to type">-->
-<p>
-    it works!
-</p>
+<div class="container">
+    <br/>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <form class="card card-sm" (ngSubmit)="search()" #editForm="ngForm">
+                <div class="card-body row no-gutters align-items-center">
+                    <div class="col-auto">
+                        <fa-icon [icon]="faSearch" class=" h4 text-muted"></fa-icon>
+                    </div>
+                    <div class="col">
+                        <input class="form-control form-control-lg form-control-borderless" type="search"
+                               placeholder="Search quizzes by code" [(ngModel)]="query" name="query"
+                               pattern=".{3,}" required>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-lg btn-primary" type="submit" [disabled]="query?.length < 4"
+                                (click)="search(query)">Search
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

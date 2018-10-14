@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,10 +33,13 @@ public class QuizService {
 
     private final TaskSetService taskSetService;
 
-    public QuizService(QuizRepository quizRepository, QuizMapper quizMapper, TaskSetService taskSetService) {
+    private BCryptPasswordEncoder encoder;
+
+    public QuizService(QuizRepository quizRepository, QuizMapper quizMapper, TaskSetService taskSetService, BCryptPasswordEncoder encoder) {
         this.quizRepository = quizRepository;
         this.quizMapper = quizMapper;
         this.taskSetService = taskSetService;
+        this.encoder = encoder;
     }
 
     /**
@@ -47,6 +51,7 @@ public class QuizService {
     public QuizDTO save(QuizDTO quizDTO) {
         log.debug("Request to save Quiz : {}", quizDTO);
         Quiz quiz = quizMapper.toEntity(quizDTO);
+        quiz.setUrl(encoder.encode(quiz.getId() + quiz.getName() + quiz.getOwner()));
         quiz = quizRepository.save(quiz);
         return quizMapper.toDto(quiz);
     }

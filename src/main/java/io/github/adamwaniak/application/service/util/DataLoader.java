@@ -116,8 +116,8 @@ public class DataLoader implements ApplicationRunner {
                 .password(encoder.encode("password"))
                 .edition(1)
                 .maxTimeInMinutes(10)
-                .owner(user)
-                .url(Integer.toString(quiz.hashCode()));
+                .owner(user);
+            quiz.url(encoder.encode("new test" + i + i));
             quizRepository.save(quiz);
         }
 

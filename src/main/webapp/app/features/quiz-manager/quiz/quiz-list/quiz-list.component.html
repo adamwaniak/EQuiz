@@ -22,6 +22,12 @@
                         </div>
                     </div>
                     <div class="col-auto align-self-center">
+                        <button class="btn btn-outline-primary btn-fixed-width float-right"
+                                [routerLink]="['/quiz-manager',quiz.id,'edit']">
+                            <span>Edit</span>
+                        </button>
+                    </div>
+                    <div class="col-auto align-self-center">
                         <button class="btn btn-info float-right" [routerLink]="['/quiz-manager', quiz.id, 'task-set']">
                             <span>Go to task sets</span>
                         </button>
@@ -73,6 +79,11 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-xl-3 col-md">
+                        <h6><span>Quiz code: </span>
+                            <span class="text-muted">{{quiz.url.slice(10,16)}}</span>
+                        </h6>
+                    </div>
                     <div class="col-xl-3 col-md align-self-center">
                         <button class="btn btn-outline-primary btn-fixed-width" [disabled]="!quiz.students"
                                 [routerLink]="['#']">
@@ -84,12 +95,7 @@
                             <span>New edition</span>
                         </button>
                     </div>
-                    <div class="col-xl-3 col-md align-self-center">
-                        <button class="btn btn-outline-primary btn-fixed-width"
-                                [routerLink]="['/quiz-manager',quiz.id,'edit']">
-                            <span>Edit</span>
-                        </button>
-                    </div>
+
                 </div>
             </div>
         </div>
