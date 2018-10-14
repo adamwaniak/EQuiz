@@ -20,6 +20,7 @@ import { ErrorComponent, FooterComponent, JhiMainComponent, NavbarComponent, Pag
 import { QuizManagerModule } from 'app/features/quiz-manager/quiz-manager.module';
 import { EntityModule } from 'app/features/entities/entity.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { QuizSearchModule } from 'app/features/quiz-search/quiz-search.module';
 
 @NgModule({
     imports: [
@@ -32,7 +33,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         EQuizHomeModule,
         EQuizAccountModule,
         EntityModule,
-        QuizManagerModule
+        QuizManagerModule,
+        QuizSearchModule
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
