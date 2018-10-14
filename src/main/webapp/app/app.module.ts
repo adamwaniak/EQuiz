@@ -35,7 +35,6 @@ import { QuizSearchModule } from 'app/features/quiz-search/quiz-search.module';
         EntityModule,
         QuizManagerModule,
         QuizSearchModule
-        // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
     providers: [
