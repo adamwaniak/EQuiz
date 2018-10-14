@@ -129,4 +129,8 @@ public class QuizService {
         newQuiz.setTaskSets(taskSets);
         return newQuiz;
     }
+
+    public Page<QuizDTO> getQuizzesByCodeContains(String code, Pageable pageable) {
+        return quizRepository.findByUrlContains(code, pageable).map(quizMapper::toDto);
+    }
 }

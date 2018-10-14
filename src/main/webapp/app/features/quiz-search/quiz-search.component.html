@@ -22,5 +22,65 @@
             </form>
         </div>
     </div>
+    <div class="list-group mt-5">
+        <div href="#" class="list-group-item list-group-item-action align-items-start container-fluid form-group"
+             *ngFor="let quiz of quizzes" [id]="'quiz-manager-quiz-' + quiz.id">
+            <div class="row">
+                <div class="col-8">
+                    <div class="row mb-2">
+                        <div class="col-auto mr-auto">
+                            <div class="display-4">
+                                {{quiz.name}}
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-4 col-md align-self-center">
+                            <h6>
+                                <span>Edition:</span>
+                                <span class="text-muted">{{quiz.edition}}</span>
+                            </h6>
+                        </div>
+                        <div class="col-xl-4 col-md align-self-center">
+                            <h6><span>Start date: </span>
+                                <span class="text-muted">{{quiz.startDate | date: 'dd.MM.yy, HH:mm'}}</span>
+                            </h6>
+                        </div>
+                        <div class="col-xl-4 col-md align-self-center mr-auto">
+                            <h6><span>End date: </span>
+                                <span class="text-muted">{{quiz.endDate | date: 'dd.MM.yy, HH:mm'}}</span>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-4 col-md">
+                            <h6><span>Quiz length: </span>
+                                <span class="text-muted">{{quiz.maxTimeInMinutes}} minutes</span>
+                            </h6>
+                        </div>
+                        <div class="col-xl-4 col-md">
+                            <h6><span>Quiz code: </span>
+                                <span class="text-muted">{{quiz.url.slice(10,16)}}</span>
+                            </h6>
+                        </div>
+                        <div class="col-xl-4 col-md">
+                            <h6><span>Author: </span>
+                                <span class="text-muted">{{quizzesAuthorName.get(quiz.id)}}</span>
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 resolve-button-container">
+                    <button class="btn btn-lg btn-primary"
+                            [routerLink]="['/quiz', quiz.url]">
+                        <span>Resolve<fa-icon [icon]="faArrowRight" class="ml-3"></fa-icon></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
 

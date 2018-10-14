@@ -59,6 +59,12 @@ export class QuizService {
         return this.http.get(`${this.resourceUrl}/new-edition/${quizID}`, { observe: 'response' });
     }
 
+    findByContainsQuizCode(code: string) {
+        return this.http
+            .get<IQuiz[]>(`${this.resourceUrl}/by-code/${code}`, { observe: 'response' })
+            .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+    }
+
     private convertDateFromClient(quiz: IQuiz): IQuiz {
         const copy: IQuiz = Object.assign({}, quiz, {
             startDate: quiz.startDate != null && quiz.startDate.isValid() ? quiz.startDate.toJSON() : null,

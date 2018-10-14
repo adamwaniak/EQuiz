@@ -148,4 +148,12 @@ public class QuizResource {
         }
         return ResponseEntity.ok().headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, "new edition")).build();
     }
+
+    @GetMapping("/quizzes/by-code/{code}")
+    @Timed
+    public ResponseEntity<List<QuizDTO>> getQuizzesByCode(@PathVariable String code, Pageable pageable) {
+        log.debug("REST request to get quizzes by code {}", code);
+        Page<QuizDTO> page = quizService.getQuizzesByCodeContains(code, pageable);
+        return new ResponseEntity<>(page.getContent(), HttpStatus.OK);
+    }
 }

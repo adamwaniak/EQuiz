@@ -1,7 +1,7 @@
 package io.github.adamwaniak.application.web.rest;
 
-import io.github.adamwaniak.application.config.Constants;
 import com.codahale.metrics.annotation.Timed;
+import io.github.adamwaniak.application.config.Constants;
 import io.github.adamwaniak.application.domain.User;
 import io.github.adamwaniak.application.repository.UserRepository;
 import io.github.adamwaniak.application.security.AuthoritiesConstants;
@@ -14,7 +14,6 @@ import io.github.adamwaniak.application.web.rest.errors.LoginAlreadyUsedExceptio
 import io.github.adamwaniak.application.web.rest.util.HeaderUtil;
 import io.github.adamwaniak.application.web.rest.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -28,7 +27,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * REST controller for managing users.
@@ -171,6 +173,20 @@ public class UserResource {
         return ResponseUtil.wrapOrNotFound(
             userService.getUserWithAuthoritiesByLogin(login)
                 .map(UserDTO::new));
+    }
+
+    /**
+     * GET /users/:id : get the "login" user.
+     *
+     * @param id the id of the user to find
+     * @return the ResponseEntity with status 200 (OK) and with body the "id" user, or with status 404 (Not Found)
+     */
+    @GetMapping("/users/{id}/name")
+    @Timed
+    public ResponseEntity<String> getUserNameById(@PathVariable Long id) {
+        log.debug("REST request to get User name by id : {}", id);
+        Map<String, String> map = new HashMap<>();
+        return new ResponseEntity<>(userService.getUserNameById(id), HttpStatus.OK);
     }
 
     /**
