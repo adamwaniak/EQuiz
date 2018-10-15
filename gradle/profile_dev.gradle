@@ -1,5 +1,7 @@
 import org.gradle.internal.os.OperatingSystem
 
+heroku config:set GRADLE_TASK="build"
+
 apply plugin: 'org.springframework.boot'
 apply plugin: 'com.moowork.node'
 
@@ -27,6 +29,9 @@ task webpackBuildDev(type: NpmTask, dependsOn: 'npm_install') {
     outputs.file("build/www/app/main.bundle.js")
     args = ["run", "webpack:build"]
 }
+
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
 
 war {
     webAppDirName = 'build/www/'
