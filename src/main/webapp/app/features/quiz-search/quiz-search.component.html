@@ -1,4 +1,3 @@
-<!--<input type="text" [(ngModel)]="query" id="search" placeholder="Search to type">-->
 <div class="container">
     <br/>
     <div class="row justify-content-center">
@@ -15,7 +14,7 @@
                     </div>
                     <div class="col-auto">
                         <button class="btn btn-lg btn-primary" type="submit" [disabled]="query?.length < 4"
-                                (click)="search(query)">Search
+                                (click)="search()">Search
                         </button>
                     </div>
                 </div>

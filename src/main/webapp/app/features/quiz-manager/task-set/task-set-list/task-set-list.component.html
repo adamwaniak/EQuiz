@@ -11,7 +11,7 @@
 <div *ngIf="quiz && taskSets">
     <div *ngIf="taskSets.length; else noAvaliableTaskSet">
 
-            <button [id]="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-quiz"
+            <button class="btn btn-primary float-right jh-create-entity create-quiz"
                     [routerLink]="['/quiz-manager',quizID, 'task-set', 'new']">
                 <fa-icon [icon]="'plus'"></fa-icon>
                 <span>
@@ -185,7 +185,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="quizzes && quizzes.length">
+    <div>
         <div class="row justify-content-center">
             <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5"
                             [itemsPerPage]="itemsPerPage"></jhi-item-count>

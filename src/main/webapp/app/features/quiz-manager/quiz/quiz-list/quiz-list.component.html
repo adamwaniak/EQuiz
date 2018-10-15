@@ -2,7 +2,7 @@
     <div *ngIf="quizzes.length; else noAvaliableQuiz">
         <h2 id="page-heading" class="display-4">
             <span>Your Quizzes</span>
-            <button [id]="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-quiz"
+            <button class="btn btn-primary float-right jh-create-entity create-quiz"
                     [routerLink]="['/quiz-manager/new']">
                 <fa-icon [icon]="'plus'"></fa-icon>
                 <span>
