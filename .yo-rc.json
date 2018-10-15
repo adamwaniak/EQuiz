@@ -20,7 +20,7 @@
     "messageBroker": false,
     "buildTool": "gradle",
     "useSass": true,
-    "clientPackageManager": "yarn",
+    "clientPackageManager": "npm",
     "testFrameworks": [
       "protractor"
     ],
