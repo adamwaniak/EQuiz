@@ -40,7 +40,6 @@ public class Task implements Serializable {
     private String imageContentType;
 
     @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Answer> answers = new HashSet<>();
 
     @ManyToOne

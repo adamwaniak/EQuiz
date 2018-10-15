@@ -45,7 +45,6 @@ public class Student implements Serializable {
     private Quiz quiz;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<StudentAnswer> studentAnswers = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

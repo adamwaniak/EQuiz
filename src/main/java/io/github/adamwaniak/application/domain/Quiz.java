@@ -55,11 +55,9 @@ public class Quiz implements Serializable {
     private Integer maxTimeInMinutes;
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.REMOVE)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<TaskSet> taskSets = new HashSet<>();
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.REMOVE)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Student> students = new HashSet<>();
 
     @ManyToOne

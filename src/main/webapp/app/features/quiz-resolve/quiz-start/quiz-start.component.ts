@@ -3,6 +3,7 @@ import { StudentService } from 'app/features/services/student.service';
 import { IStudent, Student } from 'app/shared/model/student.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuizService } from 'app/features/services/quiz.service';
+import { QuizResolveService } from 'app/features/services/quiz-resolve.service';
 
 @Component({
     selector: 'jhi-quiz-start',
@@ -16,6 +17,7 @@ export class QuizStartComponent implements OnInit {
     constructor(
         private studentService: StudentService,
         private quizService: QuizService,
+        private quizResolveService: QuizResolveService,
         private router: Router,
         private activatedRoute: ActivatedRoute
     ) {
@@ -35,8 +37,10 @@ export class QuizStartComponent implements OnInit {
         this.studentService.create(this.student).subscribe(
             res => {
                 localStorage.setItem('student', JSON.stringify(res.body));
-                console.log(localStorage.getItem('student'));
-                this.router.navigate([`/quiz/${this.quizUrl}/1`]);
+                this.quizResolveService.getQuizForResolve(this.student.quizId).subscribe(resQuiz => {
+                    localStorage.setItem('quiz', JSON.stringify(resQuiz.body));
+                    this.router.navigate([`/quiz/${this.quizUrl}/1`]);
+                });
             },
             res => {}
         );
