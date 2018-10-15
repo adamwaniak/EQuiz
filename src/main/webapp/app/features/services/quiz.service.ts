@@ -65,6 +65,12 @@ export class QuizService {
             .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
     }
 
+    checkPassword(password: string) {
+        return this.http
+            .post(`${this.resourceUrl}/password`, { password: password })
+            .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+    }
+
     private convertDateFromClient(quiz: IQuiz): IQuiz {
         const copy: IQuiz = Object.assign({}, quiz, {
             startDate: quiz.startDate != null && quiz.startDate.isValid() ? quiz.startDate.toJSON() : null,
