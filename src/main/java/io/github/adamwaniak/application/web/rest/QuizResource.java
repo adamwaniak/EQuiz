@@ -158,6 +158,14 @@ public class QuizResource {
         return new ResponseEntity<>(page.getContent(), HttpStatus.OK);
     }
 
+    @GetMapping("/quizzes/by-url/{url}")
+    @Timed
+    public ResponseEntity<QuizDTO> getQuizByUrl(@PathVariable String url) {
+        log.debug("REST request to get quizzes by url {}", url);
+        QuizDTO quizDTO = quizService.getQuizByUrl(url);
+        return new ResponseEntity<>(quizDTO, HttpStatus.OK);
+    }
+
     @PostMapping("/quizzes/password")
     @Timed
     public ResponseEntity checkPasswordAndGetQuiz(@RequestBody Map<String, String> urlAndPasswordMap) {

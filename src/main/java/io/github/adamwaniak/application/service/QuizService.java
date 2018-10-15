@@ -144,4 +144,8 @@ public class QuizService {
         }
         return null;
     }
+
+    public QuizDTO getQuizByUrl(String url) {
+        return quizMapper.toDto(quizRepository.findByUrl(url));
+    }
 }

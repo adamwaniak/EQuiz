@@ -65,8 +65,14 @@ export class QuizService {
             .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
     }
 
+    findByUrl(url: string): Observable<EntityResponseType> {
+        return this.http
+            .get<IQuiz>(`${this.resourceUrl}/by-url/${url}`, { observe: 'response' })
+            .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+    }
+
     checkPassword(password: string, url: string): Observable<EntityResponseType> {
-        return this.http.post(`${this.resourceUrl}/password`, { 'password': password, 'url': url }, { observe: 'response' });
+        return this.http.post(`${this.resourceUrl}/password`, { password: password, url: url }, { observe: 'response' });
     }
 
     private convertDateFromClient(quiz: IQuiz): IQuiz {
