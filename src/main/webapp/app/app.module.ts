@@ -5,7 +5,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LocalStorageService, Ng2Webstorage, SessionStorageService } from 'ngx-webstorage';
 import { JhiEventManager } from 'ng-jhipster';
-
 import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
 import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
 import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
@@ -15,12 +14,12 @@ import { EQuizCoreModule } from 'app/core';
 import { EQuizAppRoutingModule } from './app-routing.module';
 import { EQuizHomeModule } from 'app/home';
 import { EQuizAccountModule } from './account/account.module';
-// jhipster-needle-angular-add-module-import JHipster will add new module here
 import { ErrorComponent, FooterComponent, JhiMainComponent, NavbarComponent, PageRibbonComponent } from './layouts';
 import { QuizManagerModule } from 'app/features/quiz-manager/quiz-manager.module';
 import { EntityModule } from 'app/features/entities/entity.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { QuizSearchModule } from 'app/features/quiz-search/quiz-search.module';
+import { QuizResolveModule } from 'app/features/quiz-resolve/quiz-resolve.module';
 
 @NgModule({
     imports: [
@@ -34,7 +33,8 @@ import { QuizSearchModule } from 'app/features/quiz-search/quiz-search.module';
         EQuizAccountModule,
         EntityModule,
         QuizManagerModule,
-        QuizSearchModule
+        QuizSearchModule,
+        QuizResolveModule
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
     providers: [
