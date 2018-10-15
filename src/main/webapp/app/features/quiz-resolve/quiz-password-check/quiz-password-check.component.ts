@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QuizService } from 'app/features/services/quiz.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'jhi-quiz-password-check',
@@ -9,15 +9,21 @@ import { Router } from '@angular/router';
 })
 export class QuizPasswordCheckComponent implements OnInit {
     password: string;
+    quizUrl: string;
 
-    constructor(private quizService: QuizService, private router: Router) {}
+    constructor(private quizService: QuizService, private router: Router, private activatedRoute: ActivatedRoute) {
+        this.activatedRoute.params.subscribe(params => {
+            this.quizUrl = params['code'];
+        });
+    }
 
     ngOnInit() {}
 
     submit() {
-        this.quizService.checkPassword(this.password).subscribe(
+        this.quizService.checkPassword(this.password, this.quizUrl).subscribe(
             res => {
-                this.router.navigate([0]);
+                console.log(res.body);
+                this.router.navigate([`/quiz/${this.quizUrl}/0`]);
             },
             res => {}
         );

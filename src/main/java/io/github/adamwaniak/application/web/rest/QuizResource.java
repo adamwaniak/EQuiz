@@ -22,6 +22,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -155,5 +156,16 @@ public class QuizResource {
         log.debug("REST request to get quizzes by code {}", code);
         Page<QuizDTO> page = quizService.getQuizzesByCodeContains(code, pageable);
         return new ResponseEntity<>(page.getContent(), HttpStatus.OK);
+    }
+
+    @PostMapping("/quizzes/password")
+    @Timed
+    public ResponseEntity checkPasswordAndGetQuiz(@RequestBody Map<String, String> urlAndPasswordMap) {
+        log.debug("REST request to check password for quiz (url:{})", urlAndPasswordMap.get("url"));
+        QuizDTO quizDTO = quizService.checkPasswordAndGetQuiz(urlAndPasswordMap.get("password"), urlAndPasswordMap.get("url"));
+        if (quizDTO == null) {
+            return ResponseEntity.status(403).build();
+        }
+        return ResponseEntity.ok().build();
     }
 }

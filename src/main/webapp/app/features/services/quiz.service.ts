@@ -61,14 +61,12 @@ export class QuizService {
 
     findByContainsQuizCode(code: string) {
         return this.http
-            .get<IQuiz[]>(`${this.resourceUrl}/by-code/${code}`, { observe: 'response' })
+            .get<IQuiz[]>(`${this.resourceUrl}/by-code/${code.replace('/', '%2F')}`, { observe: 'response' })
             .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
     }
 
-    checkPassword(password: string) {
-        return this.http
-            .post(`${this.resourceUrl}/password`, { password: password })
-            .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+    checkPassword(password: string, url: string): Observable<EntityResponseType> {
+        return this.http.post(`${this.resourceUrl}/password`, { password: password, url: url }, { observe: 'response' });
     }
 
     private convertDateFromClient(quiz: IQuiz): IQuiz {

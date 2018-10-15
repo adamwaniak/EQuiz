@@ -16,4 +16,6 @@ public interface QuizRepository extends JpaRepository<Quiz, Long> {
     Page<Quiz> findByOwnerLogin(String ownerLogin, Pageable pageable);
 
     Page<Quiz> findByUrlContains(String code, Pageable pageable);
+
+    Quiz findByUrl(String url);
 }

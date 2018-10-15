@@ -117,7 +117,7 @@ public class DataLoader implements ApplicationRunner {
                 .edition(1)
                 .maxTimeInMinutes(10)
                 .owner(user);
-            quiz.url(encoder.encode("new test" + i + i));
+            quiz.url(encoder.encode("new test" + i + i).replace('/', 'a'));
             quizRepository.save(quiz);
         }
 

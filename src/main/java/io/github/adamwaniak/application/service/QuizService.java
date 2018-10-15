@@ -51,7 +51,7 @@ public class QuizService {
     public QuizDTO save(QuizDTO quizDTO) {
         log.debug("Request to save Quiz : {}", quizDTO);
         Quiz quiz = quizMapper.toEntity(quizDTO);
-        quiz.setUrl(encoder.encode(quiz.getId() + quiz.getName() + quiz.getOwner()));
+        quiz.setUrl(encoder.encode(quiz.getId() + quiz.getName() + quiz.getOwner()).replace('/', 'a'));
         quiz = quizRepository.save(quiz);
         return quizMapper.toDto(quiz);
     }
@@ -132,5 +132,16 @@ public class QuizService {
 
     public Page<QuizDTO> getQuizzesByCodeContains(String code, Pageable pageable) {
         return quizRepository.findByUrlContains(code, pageable).map(quizMapper::toDto);
+    }
+
+    public QuizDTO checkPasswordAndGetQuiz(String password, String url) {
+        Quiz quiz = quizRepository.findByUrl(url);
+        if (quiz == null) {
+            return null;
+        }
+        if (encoder.matches(password, quiz.getPassword())) {
+            return quizMapper.toDto(quiz);
+        }
+        return null;
     }
 }
