@@ -20,13 +20,13 @@ bootRun {
     args = []
 }
 
-task webpackBuildDev(type: NpmTask, dependsOn: 'npm_install') {
-    inputs.dir("src/main/webapp/")
-    inputs.files(fileTree('src/main/webapp/'))
-    outputs.dir("build/www/")
-    outputs.file("build/www/app/main.bundle.js")
-    args = ["run", "webpack:build"]
-}
+//task webpackBuildDev(type: NpmTask, dependsOn: 'npm_install') {
+//    inputs.dir("src/main/webapp/")
+//    inputs.files(fileTree('src/main/webapp/'))
+//    outputs.dir("build/www/")
+//    outputs.file("build/www/app/main.bundle.js")
+//    args = ["run", "webpack:build"]
+//}
 
 war {
     webAppDirName = 'build/www/'
