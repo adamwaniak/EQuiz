@@ -28,9 +28,6 @@ task webpackBuildDev(type: NpmTask, dependsOn: 'npm_install') {
     args = ["run", "webpack:build"]
 }
 
-task stage(dependsOn: ['build', 'clean'])
-build.mustRunAfter clean
-
 war {
     webAppDirName = 'build/www/'
 }
