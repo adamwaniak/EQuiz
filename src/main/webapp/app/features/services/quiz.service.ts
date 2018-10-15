@@ -66,7 +66,7 @@ export class QuizService {
     }
 
     checkPassword(password: string, url: string): Observable<EntityResponseType> {
-        return this.http.post(`${this.resourceUrl}/password`, { password: password, url: url }, { observe: 'response' });
+        return this.http.post(`${this.resourceUrl}/password`, { 'password': password, 'url': url }, { observe: 'response' });
     }
 
     private convertDateFromClient(quiz: IQuiz): IQuiz {
