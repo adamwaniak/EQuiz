@@ -50,13 +50,12 @@ public class StudentAnswerDTO implements Serializable {
         this.taskId = taskId;
     }
 
-    public boolean isChecked() {
+    public boolean getIsChecked() {
         return isChecked;
     }
 
-    public StudentAnswerDTO setChecked(boolean checked) {
+    public void setIsChecked(boolean checked) {
         isChecked = checked;
-        return this;
     }
 
     @Override
@@ -87,6 +86,7 @@ public class StudentAnswerDTO implements Serializable {
             ", student=" + getStudentId() +
             ", answer=" + getAnswerId() +
             ", task=" + getTaskId() +
+            ", isChecked=" + getIsChecked() +
             "}";
     }
 }

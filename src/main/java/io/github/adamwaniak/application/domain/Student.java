@@ -1,8 +1,6 @@
 package io.github.adamwaniak.application.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
@@ -19,7 +17,6 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "student")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Student implements Serializable {
 
     private static final long serialVersionUID = 1L;

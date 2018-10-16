@@ -4,6 +4,7 @@ import io.github.adamwaniak.application.domain.*;
 import io.github.adamwaniak.application.repository.QuizRepository;
 import io.github.adamwaniak.application.repository.StudentAnswerRepository;
 import io.github.adamwaniak.application.repository.StudentRepository;
+import io.github.adamwaniak.application.service.dto.StudentAnswerDTO;
 import io.github.adamwaniak.application.service.dto.resolve.AnswerForResolveDTO;
 import io.github.adamwaniak.application.service.dto.resolve.QuizForResolveDTO;
 import io.github.adamwaniak.application.service.dto.resolve.TaskForResolveDTO;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -29,17 +31,20 @@ public class QuizResolveService {
 
     private final StudentAnswerRepository studentAnswerRepository;
 
+    private final StudentAnswerService studentAnswerService;
+
     private final TaskSetService taskSetService;
 
     private BCryptPasswordEncoder encoder;
 
     public QuizResolveService(QuizRepository quizRepository, TaskSetService taskSetService, BCryptPasswordEncoder encoder,
-                              StudentRepository studentRepository, StudentAnswerRepository studentAnswerRepository) {
+                              StudentRepository studentRepository, StudentAnswerRepository studentAnswerRepository, StudentAnswerService studentAnswerService) {
         this.quizRepository = quizRepository;
         this.taskSetService = taskSetService;
         this.encoder = encoder;
         this.studentRepository = studentRepository;
         this.studentAnswerRepository = studentAnswerRepository;
+        this.studentAnswerService = studentAnswerService;
     }
 
     public QuizForResolveDTO getQuizForResolve(Long quizId, Long studentId) {
@@ -103,14 +108,14 @@ public class QuizResolveService {
             studentAnswer.answer(answer)
                 .task(answer.getTask())
                 .student(student)
-                .isChecked(false);
+                .setIsChecked(false);
             studentAnswer = studentAnswerRepository.save(studentAnswer);
             answerForResolveDTO
                 .setAnswerId(answer.getId())
                 .setName(answer.getName())
                 .setImage(answer.getImage())
                 .setImageContentType(answer.getImageContentType())
-                .setStudentAnswer(studentAnswer.isChecked())
+                .setStudentAnswer(studentAnswer.getIsChecked())
                 .setStudentAnswerId(studentAnswer.getId());
             answerForResolveDTOSet.add(answerForResolveDTO);
         }
@@ -122,4 +127,69 @@ public class QuizResolveService {
             .setEndDate(Instant.now().plus(quiz.getMaxTimeInMinutes() + 1, ChronoUnit.MINUTES));
     }
 
+    public boolean submitResolvedQuiz(List<StudentAnswerDTO> newStudentAnswers, Long quizId, Long studentId) {
+        Student student = studentRepository.getOne(studentId);
+        for (StudentAnswerDTO answer : newStudentAnswers) {
+            studentAnswerService.save(answer);
+        }
+        computeAndSetUpScore(student);
+        return true;
+    }
+
+    private void computeAndSetUpScore(Student student) {
+        Quiz quiz = student.getQuiz();
+        Set<StudentAnswer> studentAnswers = student.getStudentAnswers();
+        double studentScore = 0;
+        int maxScore = 0;
+        for (TaskSet taskSet : quiz.getTaskSets()) {
+            int requiredNumberOfTask = taskSet.getRequiredTaskAmount();
+            int maxPointPerTask = taskSet.getMaxPoint();
+            maxScore = maxScore + maxPointPerTask * requiredNumberOfTask;
+            for (Task task : taskSet.getTasks()) {
+                Set<StudentAnswer> studentAnswersPerTask = studentAnswers.stream()
+                    .filter(studentAnswer -> studentAnswer.getTask().getId() == task.getId())
+                    .collect(Collectors.toSet());
+                if (studentAnswersPerTask != null && studentAnswersPerTask.size() > 0) {
+                    double scorePerTask = 0;
+                    int positiveAnswers = 0;
+                    for (Answer answer : task.getAnswers()) {
+                        StudentAnswer studentAnswer = studentAnswersPerTask.stream().filter(sAnswer -> sAnswer.getAnswer().getId() == answer.getId()).findFirst().get();
+                        if (studentAnswer.getIsChecked() && !answer.getIsCorrect()) {
+                            positiveAnswers = 0;
+                            break;
+                        } else if (studentAnswer.getIsChecked() && answer.getIsCorrect()) {
+                            positiveAnswers += 1;
+                        }
+                    }
+                    long trueAnswers = task.getAnswers().stream().filter(a -> a.getIsCorrect()).count();
+                    if (trueAnswers == 0 && positiveAnswers == 0) {
+                        scorePerTask = maxPointPerTask;
+                    } else {
+                        scorePerTask = maxPointPerTask * positiveAnswers / trueAnswers;
+                    }
+                    studentScore = studentScore + scorePerTask;
+                }
+            }
+        }
+        student.setScore(studentScore);
+        student.setGrade(selectGrade(studentScore, maxScore));
+        studentRepository.save(student);
+    }
+
+    private String selectGrade(double studentScore, int maxScore) {
+        double percentScore = studentScore / maxScore;
+        if (percentScore > 0.9) {
+            return "5";
+        } else if (percentScore > 0.8) {
+            return "4.5";
+        } else if (percentScore > 0.7) {
+            return "4";
+        } else if (percentScore > 0.6) {
+            return "3.5";
+        } else if (percentScore > 0.5) {
+            return "3";
+        } else {
+            return "2";
+        }
+    }
 }

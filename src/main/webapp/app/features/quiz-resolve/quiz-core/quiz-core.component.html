@@ -1,3 +1,4 @@
+<button class="btn btn-primary" (click)="submit()">Submit</button>
 <jhi-quiz-core-navigation [numberOfTask]="numberOfTask" [quizUrl]="quizUrl"
                           (notifyParent)="getNotificationChangeActiveTaskNumber($event)"></jhi-quiz-core-navigation>
 <jhi-quiz-core-content [task]="activeTask" (notifyParent)="getNotificationChangeAnswer($event)"></jhi-quiz-core-content>

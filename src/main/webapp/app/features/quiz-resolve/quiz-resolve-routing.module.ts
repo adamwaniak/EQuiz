@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {QuizStartComponent} from 'app/features/quiz-resolve/quiz-start/quiz-start.component';
 import {QuizPasswordCheckComponent} from 'app/features/quiz-resolve/quiz-password-check/quiz-password-check.component';
 import {QuizCoreComponent} from 'app/features/quiz-resolve/quiz-core/quiz-core.component';
+import {QuizResultComponent} from 'app/features/quiz-resolve/quiz-result/quiz-result.component';
 
 const routes: Routes = [
     {
@@ -31,6 +32,13 @@ const routes: Routes = [
         component: QuizCoreComponent,
         data: {
             state: 'quiz-core'
+        }
+    },
+    {
+        path: 'quiz/:code/result/:student-id',
+        component: QuizResultComponent,
+        data: {
+            state: 'quiz-result'
         }
     }
 ];

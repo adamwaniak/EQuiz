@@ -1,9 +1,9 @@
 package io.github.adamwaniak.application.service.mapper;
 
-import io.github.adamwaniak.application.domain.*;
+import io.github.adamwaniak.application.domain.StudentAnswer;
 import io.github.adamwaniak.application.service.dto.StudentAnswerDTO;
-
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity StudentAnswer and its DTO StudentAnswerDTO.

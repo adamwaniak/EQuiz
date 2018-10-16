@@ -33,7 +33,7 @@ public class AnswerService {
 
     public Answer copyAnswerForTask(Answer answer, Task task) {
         Answer newAnswer = new Answer();
-        newAnswer.isCorrect(answer.isIsCorrect())
+        newAnswer.isCorrect(answer.getIsCorrect())
             .name(answer.getName())
             .task(task);
         answerRepository.save(newAnswer);

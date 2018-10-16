@@ -5,8 +5,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -66,7 +66,7 @@ public class Answer implements Serializable {
         this.name = name;
     }
 
-    public Boolean isIsCorrect() {
+    public Boolean getIsCorrect() {
         return isCorrect;
     }
 
@@ -144,7 +144,7 @@ public class Answer implements Serializable {
         return "Answer{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", isCorrect='" + isIsCorrect() + "'" +
+            ", isCorrect='" + getIsCorrect() + "'" +
             ", image='" + getImage() + "'" +
             ", imageContentType='" + getImageContentType() + "'" +
             "}";

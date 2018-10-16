@@ -77,17 +77,16 @@ public class StudentAnswer implements Serializable {
         return this;
     }
 
-    public void setTask(Task task) {
-        this.task = task;
-    }
-
-    public boolean isChecked() {
+    public boolean getIsChecked() {
         return isChecked;
     }
 
-    public StudentAnswer isChecked(boolean checked) {
+    public void setIsChecked(boolean checked) {
         isChecked = checked;
-        return this;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
     }
 
     @Override

@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {QuizResolveService} from 'app/features/services/quiz-resolve.service';
 import {Student} from 'app/shared/model/student.model';
 import {AnswerForResolve, QuizResolve, TaskForResolve} from 'app/shared/model/quiz-resolve.model';
+import {StudentAnswer} from 'app/shared/model/student-answer.model';
 
 @Component({
     selector: 'jhi-quiz-core',
@@ -45,5 +46,19 @@ export class QuizCoreComponent implements OnInit {
     getNotificationChangeAnswer($event: AnswerForResolve) {
         const answerToChange = this.quiz.tasks[this.activeTaskNumber].answers.find(answer => answer.answerId === $event.answerId);
         answerToChange.studentAnswer = !answerToChange.studentAnswer;
+    }
+
+    submit() {
+        const answers: StudentAnswer[] = [];
+        for (const task of this.quiz.tasks) {
+            for (const answer of task.answers) {
+                console.log('answer.answerId, this.student.id, answer.answerId, task.taskId, answer.studentAnswer: '
+                    + answer.studentAnswerId, this.student.id, answer.answerId, task.taskId, answer.studentAnswer);
+                answers.push(new StudentAnswer(answer.studentAnswerId, this.student.id, answer.answerId, task.taskId, answer.studentAnswer));
+            }
+        }
+        this.quizResolveService.submit(this.quiz.quizId, answers, this.student.id).subscribe(res => {
+            this.router.navigate([`/quiz/${this.quizUrl}/result/${this.student.id}`]);
+        });
     }
 }

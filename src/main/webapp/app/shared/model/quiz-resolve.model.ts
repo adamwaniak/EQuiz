@@ -17,5 +17,6 @@ export class TaskForResolve {
 }
 
 export class AnswerForResolve {
-    constructor(public answerId?: number, public name?: string, public studentAnswer?: boolean) {}
+    constructor(public answerId?: number, public name?: string, public studentAnswer?: boolean, public studentAnswerId?: number) {
+    }
 }
