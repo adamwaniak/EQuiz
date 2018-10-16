@@ -4,6 +4,7 @@ import {QuizResolveService} from 'app/features/services/quiz-resolve.service';
 import {Student} from 'app/shared/model/student.model';
 import {AnswerForResolve, QuizResolve, TaskForResolve} from 'app/shared/model/quiz-resolve.model';
 import {StudentAnswer} from 'app/shared/model/student-answer.model';
+import {faEdit} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'jhi-quiz-core',
@@ -17,6 +18,7 @@ export class QuizCoreComponent implements OnInit {
     student: Student;
     quiz: QuizResolve;
     numberOfTask: number;
+    faEdit = faEdit;
 
     constructor(private router: Router,
                 private activatedRoute: ActivatedRoute, private quizResolveService: QuizResolveService) {

@@ -1,6 +1,8 @@
-<button class="btn btn-primary" (click)="submit()">Submit</button>
+<div class="row">
+    <button class="btn btn-success ml-auto mr-3 my-2" (click)="submit()">
+        <span><fa-icon [icon]="faEdit" class="mr-2"></fa-icon>Submit</span>
+    </button>
+</div>
 <jhi-quiz-core-navigation [numberOfTask]="numberOfTask" [quizUrl]="quizUrl"
                           (notifyParent)="getNotificationChangeActiveTaskNumber($event)"></jhi-quiz-core-navigation>
 <jhi-quiz-core-content [task]="activeTask" (notifyParent)="getNotificationChangeAnswer($event)"></jhi-quiz-core-content>
-
-
