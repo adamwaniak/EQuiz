@@ -137,7 +137,7 @@ public class QuizService {
 
     public QuizDTO checkPasswordAndGetQuiz(String password, String url) {
         Quiz quiz = quizRepository.findByUrl(url);
-        if (quiz == null) {
+        if (password == null || quiz == null) {
             return null;
         }
         if (encoder.matches(password, quiz.getPassword())) {

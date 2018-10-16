@@ -12,6 +12,7 @@
                                placeholder="Search quizzes by code" [(ngModel)]="query" name="query"
                                pattern=".{3,}" required>
                     </div>
+                    <div class="w-100 d-block d-sm-none"></div>
                     <div class="col-auto">
                         <button class="btn btn-lg btn-primary" type="submit" [disabled]="query?.length < 4"
                                 (click)="search()">Search
