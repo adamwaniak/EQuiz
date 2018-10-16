@@ -16,6 +16,8 @@ public class StudentAnswerDTO implements Serializable {
 
     private Long taskId;
 
+    private boolean isChecked;
+
     public Long getId() {
         return id;
     }
@@ -46,6 +48,15 @@ public class StudentAnswerDTO implements Serializable {
 
     public void setTaskId(Long taskId) {
         this.taskId = taskId;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public StudentAnswerDTO setChecked(boolean checked) {
+        isChecked = checked;
+        return this;
     }
 
     @Override

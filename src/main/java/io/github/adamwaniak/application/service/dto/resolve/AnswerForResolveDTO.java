@@ -6,6 +6,7 @@ public class AnswerForResolveDTO {
     private Long answerId;
     private String name;
     private boolean studentAnswer;
+    private Long studentAnswerId;
     @Lob
     private byte[] image;
     private String imageContentType;
@@ -31,6 +32,10 @@ public class AnswerForResolveDTO {
         return imageContentType;
     }
 
+    public Long getStudentAnswerId() {
+        return studentAnswerId;
+    }
+
     public AnswerForResolveDTO setAnswerId(Long answerId) {
         this.answerId = answerId;
         return this;
@@ -53,6 +58,11 @@ public class AnswerForResolveDTO {
 
     public AnswerForResolveDTO setImageContentType(String imageContentType) {
         this.imageContentType = imageContentType;
+        return this;
+    }
+
+    public AnswerForResolveDTO setStudentAnswerId(Long studentAnswerId) {
+        this.studentAnswerId = studentAnswerId;
         return this;
     }
 }

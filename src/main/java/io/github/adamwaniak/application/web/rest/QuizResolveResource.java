@@ -1,7 +1,6 @@
 package io.github.adamwaniak.application.web.rest;
 
 import io.github.adamwaniak.application.service.QuizResolveService;
-import io.github.adamwaniak.application.service.QuizService;
 import io.github.adamwaniak.application.service.dto.resolve.QuizForResolveDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +25,9 @@ public class QuizResolveResource {
         this.quizResolveService = quizResolveService;
     }
 
-    @GetMapping("/resolve/{quizId}")
-    public ResponseEntity<QuizForResolveDTO> getQuizForResolve(@PathVariable Long quizId){
-        return new ResponseEntity<>(quizResolveService.getQuizForResolve(quizId), HttpStatus.OK);
+    @GetMapping("/resolve/{quizId}/{studentId}")
+    public ResponseEntity<QuizForResolveDTO> getQuizForResolve(@PathVariable Long quizId, @PathVariable Long studentId) {
+        return new ResponseEntity<>(quizResolveService.getQuizForResolve(quizId, studentId), HttpStatus.OK);
     }
 
 }

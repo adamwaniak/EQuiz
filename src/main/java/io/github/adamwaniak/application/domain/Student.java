@@ -9,6 +9,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -39,6 +40,10 @@ public class Student implements Serializable {
     @Size(min = 0)
     @Column(name = "grade")
     private String grade;
+
+    private Instant startDate;
+
+    private Instant endDate;
 
     @ManyToOne
     @JsonIgnoreProperties("students")
@@ -132,7 +137,24 @@ public class Student implements Serializable {
     public void setStudentAnswers(Set<StudentAnswer> studentAnswers) {
         this.studentAnswers = studentAnswers;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    public Instant getStartDate() {
+        return startDate;
+    }
+
+    public Student setStartDate(Instant startDate) {
+        this.startDate = startDate;
+        return this;
+    }
+
+    public Instant getEndDate() {
+        return endDate;
+    }
+
+    public Student setEndDate(Instant endDate) {
+        this.endDate = endDate;
+        return this;
+    }
 
     @Override
     public boolean equals(Object o) {
