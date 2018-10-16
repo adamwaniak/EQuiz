@@ -1,7 +1,5 @@
-<p>
-    quiz-core works!
-</p>
-<jhi-quiz-core-navigation></jhi-quiz-core-navigation>
-<jhi-quiz-core-content></jhi-quiz-core-content>
-<p>{{taskNumber}}</p>
+<jhi-quiz-core-navigation [numberOfTask]="numberOfTask" [quizUrl]="quizUrl"
+                          (notifyParent)="getNotificationChangeActiveTaskNumber($event)"></jhi-quiz-core-navigation>
+<jhi-quiz-core-content [task]="activeTask" (notifyParent)="getNotificationChangeAnswer($event)"></jhi-quiz-core-content>
+
 

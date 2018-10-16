@@ -1,3 +1,8 @@
-<p>
-    quiz-core-content works!
-</p>
+<h4>{{task?.question}}</h4>
+
+<div *ngFor="let answer of task?.answers; let i = index">
+    <label [for]="'answer-'+ i">{{answer.name}}</label>
+    <input type="checkbox" [id]="'answer-'+ i" [(value)]="answer.studentAnswer" (click)="sendNotification(answer)"
+           [checked]="answer.studentAnswer">
+    <span>{{answer.studentAnswer}}</span>
+</div>

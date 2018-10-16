@@ -1,4 +1,4 @@
-import { Moment } from 'moment';
+import {Moment} from 'moment';
 
 export class QuizResolve {
     constructor(
@@ -7,15 +7,15 @@ export class QuizResolve {
         public startDate?: Moment,
         public endDate?: Moment,
         public maxTimeInMinutes?: number,
-        public task?: Task[],
-        public answers?: Answer[]
+        public tasks?: TaskForResolve[],
     ) {}
 }
 
-class Task {
-    constructor(public taskId?: number, question?: string, public answers?: Answer[]) {}
+export class TaskForResolve {
+    constructor(public taskId?: number, question?: string, public answers?: AnswerForResolve[]) {
+    }
 }
 
-class Answer {
+export class AnswerForResolve {
     constructor(public answerId?: number, public name?: string, public studentAnswer?: boolean) {}
 }

@@ -37,7 +37,7 @@ export class QuizStartComponent implements OnInit {
         this.studentService.create(this.student).subscribe(
             res => {
                 localStorage.setItem('student', JSON.stringify(res.body));
-                this.router.navigate([`/quiz/${this.quizUrl}/start/1`]);
+                this.router.navigate([`/quiz/${this.quizUrl}/start/0`]);
             },
             res => {}
         );
