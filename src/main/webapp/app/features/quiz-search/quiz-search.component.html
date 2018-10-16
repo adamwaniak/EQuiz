@@ -22,6 +22,17 @@
             </form>
         </div>
     </div>
+    <div *ngIf="quizzes?.length === 0" class="mt-5">
+        <div class="grid">
+            <div class="row d-flex justify-content-center ">
+                <span class="display-3">I did not find any matching quizzes <fa-icon [icon]="faFrown"
+                                                                                     class="text-muted"></fa-icon></span>
+                <div class="row d-flex justify-content-center text-muted">
+                    <span>If you think that is problem with the website contact administrator</span>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="list-group mt-5">
         <div href="#" class="list-group-item list-group-item-action align-items-start container-fluid form-group"
              *ngFor="let quiz of quizzes" [id]="'quiz-manager-quiz-' + quiz.id">

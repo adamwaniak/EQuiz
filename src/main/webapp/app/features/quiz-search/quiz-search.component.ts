@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { QuizService } from 'app/features/services/quiz.service';
-import { faArrowRight, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { IQuiz } from 'app/shared/model/quiz.model';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { JhiAlertService } from 'ng-jhipster';
-import { UserService } from 'app/core';
+import {Component, OnInit} from '@angular/core';
+import {QuizService} from 'app/features/services/quiz.service';
+import {faArrowRight, faFrown, faSearch} from '@fortawesome/free-solid-svg-icons';
+import {IQuiz} from 'app/shared/model/quiz.model';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {JhiAlertService} from 'ng-jhipster';
+import {UserService} from 'app/core';
 
 @Component({
     selector: 'jhi-quiz-search',
@@ -14,6 +14,7 @@ import { UserService } from 'app/core';
 export class QuizSearchComponent implements OnInit {
     query: string;
     faSearch = faSearch;
+    faFrown = faFrown;
     faArrowRight = faArrowRight;
     quizzes: IQuiz[];
     quizzesAuthorName = new Map();
