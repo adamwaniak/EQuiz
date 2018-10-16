@@ -4,15 +4,18 @@ import {IStudent, Student} from 'app/shared/model/student.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {QuizService} from 'app/features/services/quiz.service';
 import {QuizResolveService} from 'app/features/services/quiz-resolve.service';
+import {faArrowRight, faUser} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'jhi-quiz-start',
     templateUrl: './quiz-start.component.html',
-    styles: []
+    styleUrls: ['./quiz-start.component.scss']
 })
 export class QuizStartComponent implements OnInit {
     student: IStudent;
     quizUrl: string;
+    faUser = faUser;
+    faArrowRight = faArrowRight;
 
     constructor(
         private studentService: StudentService,

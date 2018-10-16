@@ -52,8 +52,6 @@ export class QuizCoreComponent implements OnInit {
         const answers: StudentAnswer[] = [];
         for (const task of this.quiz.tasks) {
             for (const answer of task.answers) {
-                console.log('answer.answerId, this.student.id, answer.answerId, task.taskId, answer.studentAnswer: '
-                    + answer.studentAnswerId, this.student.id, answer.answerId, task.taskId, answer.studentAnswer);
                 answers.push(new StudentAnswer(answer.studentAnswerId, this.student.id, answer.answerId, task.taskId, answer.studentAnswer));
             }
         }
