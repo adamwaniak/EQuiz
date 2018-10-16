@@ -111,6 +111,7 @@ public class QuizService {
             throw new NotFoundException("Not found quiz for id: " + quizID);
         }
         Quiz newQuiz = copyQuiz(quiz.get());
+        newQuiz.setUrl(encoder.encode(newQuiz.getId() + newQuiz.getName() + newQuiz.getOwner()).replace('/', 'a'));
         quizRepository.save(newQuiz);
     }
 
