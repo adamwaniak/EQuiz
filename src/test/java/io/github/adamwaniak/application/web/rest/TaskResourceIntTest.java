@@ -4,7 +4,9 @@ import io.github.adamwaniak.application.EQuizApp;
 
 import io.github.adamwaniak.application.domain.Task;
 import io.github.adamwaniak.application.repository.TaskRepository;
+import io.github.adamwaniak.application.service.QuizService;
 import io.github.adamwaniak.application.service.TaskService;
+import io.github.adamwaniak.application.service.TaskSetService;
 import io.github.adamwaniak.application.service.dto.TaskDTO;
 import io.github.adamwaniak.application.service.mapper.TaskMapper;
 import io.github.adamwaniak.application.web.rest.errors.ExceptionTranslator;
@@ -60,10 +62,16 @@ public class TaskResourceIntTest {
 
     @Autowired
     private TaskMapper taskMapper;
-    
+
 
     @Autowired
     private TaskService taskService;
+
+    @Autowired
+    private TaskSetService taskSetService;
+
+    @Autowired
+    private QuizService quizService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -84,7 +92,7 @@ public class TaskResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final TaskResource taskResource = new TaskResource(taskService);
+        final TaskResource taskResource = new TaskResource(taskService, taskSetService, quizService);
         this.restTaskMockMvc = MockMvcBuilders.standaloneSetup(taskResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -189,7 +197,7 @@ public class TaskResourceIntTest {
             .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))));
     }
-    
+
 
     @Test
     @Transactional
@@ -257,7 +265,7 @@ public class TaskResourceIntTest {
         // Create the Task
         TaskDTO taskDTO = taskMapper.toDto(task);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restTaskMockMvc.perform(put("/api/tasks")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(taskDTO)))

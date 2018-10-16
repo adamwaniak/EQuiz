@@ -34,6 +34,7 @@ export class TaskSetListComponent implements OnInit, OnDestroy {
     reverse: any;
     quizID: number;
     quiz: IQuiz;
+    sumMaxPoints: number;
 
     constructor(
         private taskSetService: TaskSetService,
@@ -68,7 +69,10 @@ export class TaskSetListComponent implements OnInit, OnDestroy {
                 sort: this.sort()
             })
             .subscribe(
-                (res: HttpResponse<ITaskSet[]>) => this.paginateTaskSets(res.body, res.headers),
+                (res: HttpResponse<ITaskSet[]>) => {
+                    this.paginateTaskSets(res.body, res.headers);
+                    this.sumMaxPoints = this.taskSets.reduce((prev, curr) => prev + curr.maxPoint * curr.requiredTaskAmount, 0);
+                },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
     }

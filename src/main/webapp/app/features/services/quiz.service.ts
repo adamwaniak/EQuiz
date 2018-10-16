@@ -55,6 +55,26 @@ export class QuizService {
             .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
     }
 
+    newEdition(quizID: number) {
+        return this.http.get(`${this.resourceUrl}/new-edition/${quizID}`, { observe: 'response' });
+    }
+
+    findByContainsQuizCode(code: string) {
+        return this.http
+            .get<IQuiz[]>(`${this.resourceUrl}/by-code/${code}`, { observe: 'response' })
+            .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+    }
+
+    findByUrl(url: string): Observable<EntityResponseType> {
+        return this.http
+            .get<IQuiz>(`${this.resourceUrl}/by-url/${url}`, { observe: 'response' })
+            .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+    }
+
+    checkPassword(password: string, url: string): Observable<EntityResponseType> {
+        return this.http.post(`${this.resourceUrl}/password`, { 'password': password, 'url': url }, { observe: 'response' });
+    }
+
     private convertDateFromClient(quiz: IQuiz): IQuiz {
         const copy: IQuiz = Object.assign({}, quiz, {
             startDate: quiz.startDate != null && quiz.startDate.isValid() ? quiz.startDate.toJSON() : null,

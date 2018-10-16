@@ -27,7 +27,6 @@ export class TaskService {
         return this.http.get<ITask>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
-    // /tasks/by-task-set-id/{taskSetId}
     findByTaskSetId(taskSetId: number, req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http.get<ITask[]>(`${this.resourceUrl}/by-task-set-id/${taskSetId}`, {

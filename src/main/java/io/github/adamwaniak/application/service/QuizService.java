@@ -1,17 +1,22 @@
 package io.github.adamwaniak.application.service;
 
 import io.github.adamwaniak.application.domain.Quiz;
+import io.github.adamwaniak.application.domain.TaskSet;
 import io.github.adamwaniak.application.repository.QuizRepository;
 import io.github.adamwaniak.application.service.dto.QuizDTO;
 import io.github.adamwaniak.application.service.mapper.QuizMapper;
+import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Service Implementation for managing Quiz.
@@ -26,9 +31,15 @@ public class QuizService {
 
     private final QuizMapper quizMapper;
 
-    public QuizService(QuizRepository quizRepository, QuizMapper quizMapper) {
+    private final TaskSetService taskSetService;
+
+    private BCryptPasswordEncoder encoder;
+
+    public QuizService(QuizRepository quizRepository, QuizMapper quizMapper, TaskSetService taskSetService, BCryptPasswordEncoder encoder) {
         this.quizRepository = quizRepository;
         this.quizMapper = quizMapper;
+        this.taskSetService = taskSetService;
+        this.encoder = encoder;
     }
 
     /**
@@ -40,6 +51,7 @@ public class QuizService {
     public QuizDTO save(QuizDTO quizDTO) {
         log.debug("Request to save Quiz : {}", quizDTO);
         Quiz quiz = quizMapper.toEntity(quizDTO);
+        quiz.setUrl(encoder.encode(quiz.getId() + quiz.getName() + quiz.getOwner()).replace('/', 'a'));
         quiz = quizRepository.save(quiz);
         return quizMapper.toDto(quiz);
     }
@@ -93,4 +105,48 @@ public class QuizService {
         return quiz.map(quiz1 -> quiz1.getOwner().getLogin().equals(userLogin)).orElse(false);
     }
 
+    public void createNewEdition(Long quizID) throws NotFoundException {
+        Optional<Quiz> quiz = quizRepository.findById(quizID);
+        if (!quiz.isPresent()) {
+            throw new NotFoundException("Not found quiz for id: " + quizID);
+        }
+        Quiz newQuiz = copyQuiz(quiz.get());
+        newQuiz.setUrl(encoder.encode(newQuiz.getId() + newQuiz.getName() + newQuiz.getOwner()).replace('/', 'a'));
+        quizRepository.save(newQuiz);
+    }
+
+    private Quiz copyQuiz(Quiz quiz) {
+        Quiz newQuiz = new Quiz();
+        newQuiz.setEdition(quiz.getEdition() + 1);
+        newQuiz.setName(quiz.getName());
+        newQuiz.setMaxTimeInMinutes(quiz.getMaxTimeInMinutes());
+        newQuiz.setOwner(quiz.getOwner());
+        newQuiz.startDate(quiz.getStartDate());
+        newQuiz.endDate(quiz.getEndDate());
+        Set<TaskSet> taskSets = new HashSet<>();
+        for (TaskSet taskSet : quiz.getTaskSets()) {
+            taskSets.add(taskSetService.copyTaskSetForQuiz(taskSet, newQuiz));
+        }
+        newQuiz.setTaskSets(taskSets);
+        return newQuiz;
+    }
+
+    public Page<QuizDTO> getQuizzesByCodeContains(String code, Pageable pageable) {
+        return quizRepository.findByUrlContains(code, pageable).map(quizMapper::toDto);
+    }
+
+    public QuizDTO checkPasswordAndGetQuiz(String password, String url) {
+        Quiz quiz = quizRepository.findByUrl(url);
+        if (password == null || quiz == null) {
+            return null;
+        }
+        if (encoder.matches(password, quiz.getPassword())) {
+            return quizMapper.toDto(quiz);
+        }
+        return null;
+    }
+
+    public QuizDTO getQuizByUrl(String url) {
+        return quizMapper.toDto(quizRepository.findByUrl(url));
+    }
 }

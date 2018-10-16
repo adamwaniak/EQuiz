@@ -1,17 +1,18 @@
 <div *ngIf="quiz">
     <fa-icon class="fa-1x text-info align-middle" [icon]="'arrow-left'"></fa-icon>
     <a class="text-info align-middle" [routerLink]="['/quiz-manager']">
-        {{quiz.name}}
+        Quiz: {{quiz.name}}
     </a>
     <span class="text-info align-middle">/</span>
     <a class="text-info align-middle disabled">
-        tasks sets
+        Task Sets
     </a>
 </div>
-<div *ngIf="taskSets && taskSets.length; else noAvaliableTaskSet">
+<div *ngIf="quiz && taskSets">
+    <div *ngIf="taskSets.length; else noAvaliableTaskSet">
 
-            <button [id]="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-quiz"
-                    [routerLink]="['/quiz-manager/new']">
+            <button class="btn btn-primary float-right jh-create-entity create-quiz"
+                    [routerLink]="['/quiz-manager',quizID, 'task-set', 'new']">
                 <fa-icon [icon]="'plus'"></fa-icon>
                 <span>
                     Create new task set
@@ -20,42 +21,110 @@
     <br>
     <jhi-alert></jhi-alert>
     <br/>
-    <div class="quiz-information-container">
+        <div class="quiz-information-container mb-2">
         <div class="row">
             <div class="col">
-                <span class="font-weight-light">Quiz information:</span>
+                <h5>
+                    <span>Quiz information:</span>
+                </h5>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-offset-2 col-md-2">
-                Start date<br>
-                {{quiz.startDate | date: 'short'}}
+            <div class="col-md-2">
+                <h6>
+                    Start date:
+                    <div class="text-muted">
+                        {{quiz.startDate | date: 'dd.MM.yy, HH:mm'}}
+                    </div>
+                </h6>
             </div>
             <div class="col-md-2">
-                End date<br>
-                {{quiz.endDate | date: 'short'}}
+                <h6>
+                    End date:
+                    <div class="text-muted">
+                        {{quiz.endDate | date: 'dd.MM.yy, HH:mm'}}
+                    </div>
+                </h6>
             </div>
             <div class="col-md-2">
-                Time length<br>
-                {{quiz.maxTimeInMinutes}} minutes
+                <h6>
+                    Time length:
+                    <div class="text-muted">
+                        {{quiz.maxTimeInMinutes}} minutes
+                    </div>
+                </h6>
             </div>
             <div class="col-md-2">
-                Task sets number<br>
-                {{taskSets.length}}
+                <h6>
+                    Edition:
+                    <div class="text-muted">
+                        {{quiz.edition}}
+                    </div>
+                </h6>
             </div>
         </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <h6>
+                        Task sets number:
+                        <div class="text-muted">
+                            {{taskSets.length}}
+                        </div>
+                    </h6>
+                </div>
+                <div class="col-md-2">
+                    <h6>
+                        Required tasks:
+                        <div class="text-muted">
+                            {{quiz.requiredTaskNumber}}
+                        </div>
+                    </h6>
+                </div>
+                <div class="col-md-2">
+                    <h6>
+                        Tasks:
+                        <div class="text-muted">
+                            {{quiz.taskNumber}}
+                        </div>
+                    </h6>
+                </div>
+                <div class="col-md-2">
+                    <h6>
+                        Max points for quiz:
+                        <div class="text-muted">
+                            {{sumMaxPoints}}
+                        </div>
+                    </h6>
+                </div>
+            </div>
     </div>
-
+        <h5 class="mb-0">Task sets:</h5>
     <div class="list-group" *ngIf="taskSets">
         <div href="#" class="list-group-item list-group-item-action align-items-start container-fluid form-group"
              *ngFor="let taskSet of taskSets ;trackBy: trackId">
             <div class="row">
-                <div class="col col-md">
-                    <div class="text-justify display-4">
-                        {{taskSet.name}}
+                <div class="col">
+                    <div class="text-justify">
+                        <h5>
+                            <span class="text-muted">
+                                {{taskSet.name}}
+                            </span>
+                        </h5>
                     </div>
                 </div>
-                <div class="col col-md align-self-center">
+                <div class="col-auto align-self-center">
+                    <button class="btn btn-outline-primary btn-fixed-width float-right"
+                            [routerLink]="['/quiz-manager',quizID, 'task-set', taskSet.id, 'edit']">
+                        <span>Edit</span>
+                    </button>
+                </div>
+                <div class="col-auto align-self-center">
+                    <button class="btn btn-outline-primary btn-fixed-width float-right"
+                            [routerLink]="['/#']">
+                        <span>Copy</span>
+                    </button>
+                </div>
+                <div class="col-auto align-self-center">
                     <button class="btn btn-info float-right"
                             [routerLink]="['/quiz-manager', quiz.id, 'task-set', taskSet.id, 'task']">
                         <span>Go to tasks</span>
@@ -63,64 +132,60 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col col-md align-self-center">
-                    <h4>
-                        <span>Edition {{quiz.edition}}</span>
-                    </h4>
+                <div class="col-auto align-self-center">
+                    <h6>
+                        Artificial Selection:
+                        <span class="text-muted">
+                            {{taskSet.artificialSelection ? 'Yes':'No'}}
+                        </span>
+                    </h6>
                 </div>
-                <div class="col col-md align-self-center">
-                    <h4><span>Start date: </span>
-                        <small class="text-muted">{{quiz.startDate | date: 'medium'}}</small>
-                    </h4>
+                <div class="col-auto align-self-center">
+                    <h6>
+                        Sum max points:
+                        <span class="text-muted">
+                            {{taskSet.maxPoint * taskSet.requiredTaskAmount}}
+                        </span>
+                    </h6>
                 </div>
-                <div class="col col-md align-self-center">
-                    <h4><span>End date: </span>
-                        <small class="text-muted">{{quiz.endDate | date: 'medium'}}</small>
-                    </h4>
+                <div class="col-auto align-self-center">
+                    <h6>
+                        Max points for each task:
+                        <span class="text-muted">
+                            {{taskSet.maxPoint}}
+                        </span>
+                    </h6>
+                </div>
+                <div class="col-auto align-self-center">
+                    <h6>
+                        Required tasks:
+                        <span class="text-muted">
+                            {{taskSet.requiredTaskAmount}}
+                        </span>
+                    </h6>
+                </div>
+                <div class="col-auto align-self-center">
+                    <h6>
+                        Task Number:
+                        <span class="text-muted">
+                         5
+                        </span>
+                    </h6>
                 </div>
                 <div class="col col-md">
-                    One of three columns
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md">
-
-                </div>
-                <div class="col-md">
-                    One of three columns
-                </div>
-                <div class="col-md">
-                    One of three columns
-                </div>
-                <div class="col-md">
-                    One of three columns
-                </div>
-            </div>
-            <div class="row">
-                <div class="col col-md align-self-center">
-                    <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['/quiz-manager/new']">
-                        <span>Check results</span>
-                    </button>
-                </div>
-                <div class="col col-md align-self-center">
-                    <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['/quiz-manager/new']">
-                        <span>Edit</span>
-                    </button>
-                </div>
-                <div class="col col-md align-self-center">
-                    <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['/quiz-manager/new']">
-                        <span>Publish</span>
-                    </button>
-                </div>
-                <div class="col col-md align-self-center">
-                    <button class="btn btn-outline-primary btn-fixed-width" [routerLink]="['/quiz-manager/new']">
-                        <span>Copy</span>
+                    <button type="submit"
+                            [routerLink]="['/', { outlets: { popup: 'quiz-manager/'+ quiz.id + '/task-set/' + taskSet.id + '/delete'} }]"
+                            replaceUrl="true"
+                            queryParamsHandling="merge"
+                            class="btn btn-danger btn-sm float-right">
+                        <fa-icon [icon]="'times'"></fa-icon>
+                        <span class="d-none d-md-inline">Delete</span>
                     </button>
                 </div>
             </div>
         </div>
     </div>
-    <div *ngIf="quizzes && quizzes.length">
+    <div>
         <div class="row justify-content-center">
             <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5"
                             [itemsPerPage]="itemsPerPage"></jhi-item-count>
@@ -131,7 +196,7 @@
         </div>
     </div>
 </div>
-
+</div>
 <ng-template #noAvaliableTaskSet>
     <div class="grid">
         <div class="row d-flex justify-content-center ">
@@ -142,7 +207,7 @@
         </div>
         <div class="row d-flex justify-content-center">
             <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-quiz"
-                    [routerLink]="['/quiz-manager/new']">
+                    [routerLink]="['/quiz-manager',quizID, 'task-set', 'new']">
             <span>
                 Create new task set
             </span>

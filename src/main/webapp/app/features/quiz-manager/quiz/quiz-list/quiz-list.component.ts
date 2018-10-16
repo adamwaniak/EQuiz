@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { QuizService } from 'app/features/services/quiz.service';
 import { IQuiz } from 'app/shared/model/quiz.model';
 import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
@@ -55,8 +55,12 @@ export class QuizListComponent implements OnInit, OnDestroy {
                 sort: this.sort()
             })
             .subscribe(
-                (res: HttpResponse<IQuiz[]>) => this.paginateQuizzes(res.body, res.headers),
-                (res: HttpErrorResponse) => this.onError(res.message)
+                (res: HttpResponse<IQuiz[]>) => {
+                    this.paginateQuizzes(res.body, res.headers);
+                },
+                (res: HttpErrorResponse) => {
+                    this.onError(res.message);
+                }
             );
     }
 
@@ -116,6 +120,12 @@ export class QuizListComponent implements OnInit, OnDestroy {
             result.push('id');
         }
         return result;
+    }
+
+    newEdition(quizID: number) {
+        this.quizService
+            .newEdition(quizID)
+            .subscribe((res: HttpResponse<any>) => this.loadAll(), (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     private paginateQuizzes(data: IQuiz[], headers: HttpHeaders) {

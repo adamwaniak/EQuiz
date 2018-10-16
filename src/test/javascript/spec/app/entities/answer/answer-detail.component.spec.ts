@@ -6,23 +6,23 @@ import { of } from 'rxjs';
 import { EQuizTestModule } from '../../../test.module';
 
 import { Answer } from 'app/shared/model/answer.model';
-import { AnswerDetailComponent } from 'app/features/entities/answer';
+import { AnswerDetailEntityComponent } from 'app/features/entities/answer';
 
 describe('Component Tests', () => {
     describe('Answer Management Detail Component', () => {
-        let comp: AnswerDetailComponent;
-        let fixture: ComponentFixture<AnswerDetailComponent>;
+        let comp: AnswerDetailEntityComponent;
+        let fixture: ComponentFixture<AnswerDetailEntityComponent>;
         const route = ({ data: of({ answer: new Answer(123) }) } as any) as ActivatedRoute;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [EQuizTestModule],
-                declarations: [AnswerDetailComponent],
+                declarations: [AnswerDetailEntityComponent],
                 providers: [{ provide: ActivatedRoute, useValue: route }]
             })
-                .overrideTemplate(AnswerDetailComponent, '')
+                .overrideTemplate(AnswerDetailEntityComponent, '')
                 .compileComponents();
-            fixture = TestBed.createComponent(AnswerDetailComponent);
+            fixture = TestBed.createComponent(AnswerDetailEntityComponent);
             comp = fixture.componentInstance;
         });
 

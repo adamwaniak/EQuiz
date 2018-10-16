@@ -8,7 +8,7 @@ import { JhiAlertService } from 'ng-jhipster';
 
 import { IQuiz } from 'app/shared/model/quiz.model';
 
-import { IUser, UserService } from 'app/core';
+import { AccountService, IUser } from 'app/core';
 import { QuizService } from 'app/features/services/quiz.service';
 
 @Component({
@@ -17,14 +17,14 @@ import { QuizService } from 'app/features/services/quiz.service';
 })
 export class QuizUpdateComponent implements OnInit {
     isSaving: boolean;
-    users: IUser[];
+    user: IUser;
     startDate: string;
     endDate: string;
     private _quiz: IQuiz;
     constructor(
         private jhiAlertService: JhiAlertService,
         private quizService: QuizService,
-        private userService: UserService,
+        private accountService: AccountService,
         private activatedRoute: ActivatedRoute
     ) {}
     get quiz() {
@@ -42,9 +42,13 @@ export class QuizUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ quiz }) => {
             this.quiz = quiz;
         });
-        this.userService.query().subscribe(
-            (res: HttpResponse<IUser[]>) => {
-                this.users = res.body;
+        if (this.quiz.edition === undefined) {
+            this.quiz.edition = 1;
+        }
+        this.accountService.get().subscribe(
+            (res: HttpResponse<IUser>) => {
+                this.user = res.body;
+                this.quiz.ownerId = this.user.id;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );

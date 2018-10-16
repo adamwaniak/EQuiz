@@ -12,10 +12,9 @@ export class Answer implements IAnswer {
         public id?: number,
         public name?: string,
         public isCorrect?: boolean,
+        public taskId?: number,
         public imageContentType?: string,
         public image?: any,
-        public taskId?: number
     ) {
-        this.isCorrect = this.isCorrect || false;
     }
 }

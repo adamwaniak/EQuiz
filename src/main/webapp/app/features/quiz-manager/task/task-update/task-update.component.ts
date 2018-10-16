@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {JhiAlertService, JhiDataUtils} from 'ng-jhipster';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
-import {ITask} from 'app/shared/model/task.model';
-import {ITaskSet} from 'app/shared/model/task-set.model';
-import {TaskSetService} from 'app/features/services/task-set.service';
-import {TaskService} from 'app/features/services/task.service';
+import { ITask } from 'app/shared/model/task.model';
+import { ITaskSet } from 'app/shared/model/task-set.model';
+import { TaskSetService } from 'app/features/services/task-set.service';
+import { TaskService } from 'app/features/services/task.service';
 
 @Component({
     selector: 'jhi-task-update',
@@ -15,7 +15,6 @@ import {TaskService} from 'app/features/services/task.service';
 })
 export class TaskUpdateComponent implements OnInit {
     isSaving: boolean;
-    tasksets: ITaskSet[];
     private _task: ITask;
     constructor(
         private dataUtils: JhiDataUtils,
@@ -38,12 +37,9 @@ export class TaskUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ task }) => {
             this.task = task;
         });
-        this.taskSetService.query().subscribe(
-            (res: HttpResponse<ITaskSet[]>) => {
-                this.tasksets = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
+        this.activatedRoute.params.subscribe(route => {
+            this.task.taskSetId = route['task-set-id'];
+        });
     }
 
     byteSize(field) {

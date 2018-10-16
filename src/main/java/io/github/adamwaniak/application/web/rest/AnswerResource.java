@@ -2,10 +2,10 @@ package io.github.adamwaniak.application.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import io.github.adamwaniak.application.service.AnswerService;
+import io.github.adamwaniak.application.service.dto.AnswerDTO;
 import io.github.adamwaniak.application.web.rest.errors.BadRequestAlertException;
 import io.github.adamwaniak.application.web.rest.util.HeaderUtil;
 import io.github.adamwaniak.application.web.rest.util.PaginationUtil;
-import io.github.adamwaniak.application.service.dto.AnswerDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,12 +14,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -67,11 +67,10 @@ public class AnswerResource {
      * @return the ResponseEntity with status 200 (OK) and with body the updated answerDTO,
      * or with status 400 (Bad Request) if the answerDTO is not valid,
      * or with status 500 (Internal Server Error) if the answerDTO couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/answers")
     @Timed
-    public ResponseEntity<AnswerDTO> updateAnswer(@Valid @RequestBody AnswerDTO answerDTO) throws URISyntaxException {
+    public ResponseEntity<AnswerDTO> updateAnswer(@Valid @RequestBody AnswerDTO answerDTO) {
         log.debug("REST request to update Answer : {}", answerDTO);
         if (answerDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -123,5 +122,22 @@ public class AnswerResource {
         log.debug("REST request to delete Answer : {}", id);
         answerService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * GET  /answers : get answers belonging to given task.
+     *
+     * @param
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of answers in body
+     */
+    @GetMapping("/answers/by-task-id/{taskId}")
+    @Timed
+    public ResponseEntity<List<AnswerDTO>> getTasksByTaskSetID(@PathVariable Long taskId, Pageable pageable, Authentication authentication) {
+        log.debug("REST request to get a page of Answers belonging to task of id {} by user", taskId, authentication.getName());
+
+        Page<AnswerDTO> page = answerService.findByTaskID(taskId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/tasks");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 }

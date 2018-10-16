@@ -1,14 +1,13 @@
 package io.github.adamwaniak.application.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -18,7 +17,6 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "student")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Student implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,12 +38,15 @@ public class Student implements Serializable {
     @Column(name = "grade")
     private String grade;
 
+    private Instant startDate;
+
+    private Instant endDate;
+
     @ManyToOne
     @JsonIgnoreProperties("students")
     private Quiz quiz;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<StudentAnswer> studentAnswers = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -133,7 +134,24 @@ public class Student implements Serializable {
     public void setStudentAnswers(Set<StudentAnswer> studentAnswers) {
         this.studentAnswers = studentAnswers;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    public Instant getStartDate() {
+        return startDate;
+    }
+
+    public Student setStartDate(Instant startDate) {
+        this.startDate = startDate;
+        return this;
+    }
+
+    public Instant getEndDate() {
+        return endDate;
+    }
+
+    public Student setEndDate(Instant endDate) {
+        this.endDate = endDate;
+        return this;
+    }
 
     @Override
     public boolean equals(Object o) {

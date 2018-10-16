@@ -31,7 +31,7 @@ export const QUIZ_ROUTES: Routes = [
         component: QuizListComponent,
         data: {
             authorities: ['ROLE_USER'],
-            defaultSort: 'startDate,desc',
+            defaultSort: 'id, desc',
             state: 'quiz-manager'
         },
         canActivate: [UserRouteAccessService],

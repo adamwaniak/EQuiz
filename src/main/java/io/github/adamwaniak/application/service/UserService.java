@@ -1,15 +1,15 @@
 package io.github.adamwaniak.application.service;
 
+import io.github.adamwaniak.application.config.Constants;
 import io.github.adamwaniak.application.domain.Authority;
 import io.github.adamwaniak.application.domain.User;
 import io.github.adamwaniak.application.repository.AuthorityRepository;
-import io.github.adamwaniak.application.config.Constants;
 import io.github.adamwaniak.application.repository.UserRepository;
 import io.github.adamwaniak.application.security.AuthoritiesConstants;
 import io.github.adamwaniak.application.security.SecurityUtils;
-import io.github.adamwaniak.application.service.util.RandomUtil;
 import io.github.adamwaniak.application.service.dto.UserDTO;
-
+import io.github.adamwaniak.application.service.util.RandomUtil;
+import io.github.adamwaniak.application.web.rest.errors.InvalidPasswordException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
@@ -17,7 +17,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import io.github.adamwaniak.application.web.rest.errors.InvalidPasswordException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -269,5 +268,11 @@ public class UserService {
     private void clearUserCaches(User user) {
         Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)).evict(user.getLogin());
         Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE)).evict(user.getEmail());
+    }
+
+    public String getUserNameById(Long id) {
+        final String[] name = new String[1];
+        userRepository.findById(id).ifPresent(user -> name[0] = user.getFirstName() + " " + user.getLastName());
+        return name[0];
     }
 }

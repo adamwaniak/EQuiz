@@ -1,8 +1,9 @@
 package io.github.adamwaniak.application.service.dto;
 
-import java.time.Instant;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -27,6 +28,14 @@ public class QuizDTO implements Serializable {
     private Integer edition;
 
     private String url;
+
+    private Integer taskSetNumber;
+
+    private Integer requiredTaskNumber;
+
+    private Integer taskNumber;
+
+    private Integer resolvedNumber;
 
     @NotNull
     @Min(value = 1)
@@ -104,6 +113,42 @@ public class QuizDTO implements Serializable {
 
     public void setOwnerId(Long userId) {
         this.ownerId = userId;
+    }
+
+    public Integer getTaskSetNumber() {
+        return taskSetNumber;
+    }
+
+    public QuizDTO setTaskSetNumber(int taskSetNumber) {
+        this.taskSetNumber = taskSetNumber;
+        return this;
+    }
+
+    public Integer getRequiredTaskNumber() {
+        return requiredTaskNumber;
+    }
+
+    public QuizDTO setRequiredTaskNumber(int requiredTaskNumber) {
+        this.requiredTaskNumber = requiredTaskNumber;
+        return this;
+    }
+
+    public Integer getTaskNumber() {
+        return taskNumber;
+    }
+
+    public QuizDTO setTaskNumber(int taskNumber) {
+        this.taskNumber = taskNumber;
+        return this;
+    }
+
+    public Integer getResolvedNumber() {
+        return resolvedNumber;
+    }
+
+    public QuizDTO setResolvedNumber(Integer resolvedNumber) {
+        this.resolvedNumber = resolvedNumber;
+        return this;
     }
 
     @Override

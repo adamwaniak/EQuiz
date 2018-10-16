@@ -64,7 +64,7 @@
                 <div class="form-group">
                     <label class="form-control-label" for="field_edition">Edition</label>
                     <input type="number" class="form-control" name="edition" id="field_edition"
-                           [(ngModel)]="quiz.edition" required/>
+                           [(ngModel)]="quiz.edition" required readonly/>
                     <div [hidden]="!(editForm.controls.edition?.dirty && editForm.controls.edition?.invalid)">
                         <small class="form-text text-danger"
                                [hidden]="!editForm.controls.edition?.errors?.required">
@@ -79,7 +79,7 @@
                 <div class="form-group">
                     <label class="form-control-label" for="field_url">Url</label>
                     <input type="text" class="form-control" name="url" id="field_url"
-                           [(ngModel)]="quiz.url"/>
+                           [(ngModel)]="quiz.url" disabled/>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_maxTimeInMinutes">Max Time In Minutes</label>
@@ -101,15 +101,9 @@
                         </small>
                     </div>
                 </div>
-
-                <div class="form-group">
+                <div class="form-group" hidden>
                     <label class="form-control-label" for="field_owner">Owner</label>
-                    <select class="form-control" id="field_owner" name="owner" [(ngModel)]="quiz.ownerId">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">
-                            {{userOption.id}}
-                        </option>
-                    </select>
+                    <input class="form-control" id="field_owner" name="owner" [(ngModel)]="quiz.ownerId" required>
                 </div>
             </div>
             <div>

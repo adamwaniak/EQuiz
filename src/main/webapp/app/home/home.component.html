@@ -1,41 +1,43 @@
-<div class="row">
-    <div class="col-md-3">
-        <span class="hipster img-fluid rounded"></span>
+<div class="d-flex">
+    <h1 class="display-4  mx-auto">Welcome to EQuiz
+        <fa-icon [icon]="faFeatherAlt"></fa-icon>
+    </h1>
     </div>
-    <div class="col-md-9">
-        <h1 class="display-4">Welcome, Java Hipster!</h1>
-        <p class="lead">This is your homepage</p>
-
-        <div [ngSwitch]="isAuthenticated()">
-            <div class="alert alert-success" *ngSwitchCase="true">
-                <span id="home-logged-message" *ngIf="account"
-                   > You are logged in as user "{{account.login}}". </span>
-            </div>
-
-            <div class="alert alert-warning" *ngSwitchCase="false">
-                <span>If you want to </span>
-                <a class="alert-link" (click)="login()">sign in</a><span>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
-            </div>
-            <div class="alert alert-warning" *ngSwitchCase="false">
-                <span>You don't have an account yet?</span>&nbsp;
-                <a class="alert-link" routerLink="register">Register a new account</a>
-            </div>
+<div class="d-flex">
+    <span class="lead mx-auto">Advanced knowledge testing platform</span>
+</div>
+<div class="row d-flex justify-content-around mt-5">
+    <div>
+        <button class="btn btn-primary" [routerLink]="['/search']">
+            <fa-icon [icon]="faSearch"></fa-icon>
+            Search for quizzes
+        </button>
+    </div>
+    <div>
+        <button class="btn btn-success" [routerLink]="['/quiz-manager']">
+            <fa-icon [icon]="faEdit"></fa-icon>
+            Create your own quiz
+        </button>
+        <div class="text-center">
+            <small class="text-muted">*You need to be registered</small>
         </div>
-
-        <p>
-            If you have any question on JHipster:
-        </p>
-
-        <ul>
-            <li><a href="https://www.jhipster.tech/" target="_blank" rel="noopener">JHipster homepage</a></li>
-            <li><a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener">JHipster on Stack Overflow</a></li>
-            <li><a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener">JHipster bug tracker</a></li>
-            <li><a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener">JHipster public chat room</a></li>
-            <li><a href="https://twitter.com/java_hipster" target="_blank" rel="noopener">follow @java_hipster on Twitter</a></li>
-        </ul>
-
-        <p>
-            <span>If you like JHipster, don't forget to give us a star on</span> <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener">GitHub</a>!
-        </p>
     </div>
 </div>
+<p class="display-4 mt-5 text-center">Easily test your students and manage your quizzes</p>
+<div class="mx-auto slideshow d-none d-lg-block">
+    <slideshow [height]="'500px'"
+               [autoPlay]="true"
+               autoPlayInterval="5000"
+               [showArrows]="true"
+               [imageUrls]="imageArray"
+               [autoPlayWaitForLazyLoad]="true"
+               showDots="true"
+               backgroundSize="'cover'"
+               backgroundPosition="'center top'">
+    </slideshow>
+</div>
+<h5 class="mt-5 text-center">Intelligent question selection</h5>
+<p class="text-center">An equiz application that examines students' answers and finds the difficulty of each task. On
+    this basis
+    in later editions of the test questions are appropriately chosen in such a way that every student got
+    a collection of questions of similar difficulty, but may differ in questions.</p>

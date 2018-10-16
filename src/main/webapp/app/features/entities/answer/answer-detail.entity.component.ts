@@ -6,9 +6,9 @@ import { IAnswer } from 'app/shared/model/answer.model';
 
 @Component({
     selector: 'jhi-answer-detail',
-    templateUrl: './answer-detail.component.html'
+    templateUrl: './answer-detail.entity.component.html'
 })
-export class AnswerDetailComponent implements OnInit {
+export class AnswerDetailEntityComponent implements OnInit {
     answer: IAnswer;
 
     constructor(private dataUtils: JhiDataUtils, private activatedRoute: ActivatedRoute) {}

@@ -1,9 +1,10 @@
 package io.github.adamwaniak.application.service.dto;
 
-import javax.validation.constraints.*;
+import javax.persistence.Lob;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Lob;
 
 /**
  * A DTO for the Answer entity.
@@ -17,7 +18,7 @@ public class AnswerDTO implements Serializable {
     private String name;
 
     @NotNull
-    private Boolean isCorrect;
+    private Boolean isCorrect = false;
 
     @Lob
     private byte[] image;

@@ -4,6 +4,7 @@ import io.github.adamwaniak.application.EQuizApp;
 
 import io.github.adamwaniak.application.domain.TaskSet;
 import io.github.adamwaniak.application.repository.TaskSetRepository;
+import io.github.adamwaniak.application.service.QuizService;
 import io.github.adamwaniak.application.service.TaskSetService;
 import io.github.adamwaniak.application.service.dto.TaskSetDTO;
 import io.github.adamwaniak.application.service.mapper.TaskSetMapper;
@@ -60,10 +61,13 @@ public class TaskSetResourceIntTest {
 
     @Autowired
     private TaskSetMapper taskSetMapper;
-    
+
 
     @Autowired
     private TaskSetService taskSetService;
+
+    @Autowired
+    private QuizService quizService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -84,7 +88,7 @@ public class TaskSetResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final TaskSetResource taskSetResource = new TaskSetResource(taskSetService);
+        final TaskSetResource taskSetResource = new TaskSetResource(taskSetService, quizService);
         this.restTaskSetMockMvc = MockMvcBuilders.standaloneSetup(taskSetResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -227,7 +231,7 @@ public class TaskSetResourceIntTest {
             .andExpect(jsonPath("$.[*].maxPoint").value(hasItem(DEFAULT_MAX_POINT)))
             .andExpect(jsonPath("$.[*].artificialSelection").value(hasItem(DEFAULT_ARTIFICIAL_SELECTION.booleanValue())));
     }
-    
+
 
     @Test
     @Transactional
@@ -295,7 +299,7 @@ public class TaskSetResourceIntTest {
         // Create the TaskSet
         TaskSetDTO taskSetDTO = taskSetMapper.toDto(taskSet);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restTaskSetMockMvc.perform(put("/api/task-sets")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(taskSetDTO)))

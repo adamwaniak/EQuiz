@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
@@ -22,6 +22,10 @@ export class UserService {
 
     find(login: string): Observable<HttpResponse<IUser>> {
         return this.http.get<IUser>(`${this.resourceUrl}/${login}`, { observe: 'response' });
+    }
+
+    getUserNameById(id: number): Observable<any> {
+        return this.http.get(`${this.resourceUrl}/${id}/name`, { observe: 'response', responseType: 'text' });
     }
 
     query(req?: any): Observable<HttpResponse<IUser[]>> {

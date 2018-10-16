@@ -12,9 +12,9 @@ import { AnswerService } from '../../services/answer.service';
 
 @Component({
     selector: 'jhi-answer',
-    templateUrl: './answer.component.html'
+    templateUrl: './answer.entity.component.html'
 })
-export class AnswerComponent implements OnInit, OnDestroy {
+export class AnswerEntityComponent implements OnInit, OnDestroy {
     currentAccount: any;
     answers: IAnswer[];
     error: any;

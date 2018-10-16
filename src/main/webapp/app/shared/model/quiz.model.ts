@@ -14,6 +14,10 @@ export interface IQuiz {
     taskSets?: ITaskSet[];
     students?: IStudent[];
     ownerId?: number;
+    taskSetNumber?: number;
+    requiredTaskNumber?: number;
+    taskNumber?: number;
+    resolvedNumber?: number;
 }
 
 export class Quiz implements IQuiz {
@@ -28,6 +32,10 @@ export class Quiz implements IQuiz {
         public maxTimeInMinutes?: number,
         public taskSets?: ITaskSet[],
         public students?: IStudent[],
-        public ownerId?: number
+        public ownerId?: number,
+        public taskSetNumber?: number,
+        public requiredTaskNumber?: number,
+        public taskNumber?: number,
+        public resolvedNumber?: number
     ) {}
 }

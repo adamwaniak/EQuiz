@@ -1,16 +1,11 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
+import { answerPopupRoute, answerRoute } from 'app/features/quiz-manager/answer/answer.route';
 import { EQuizSharedModule } from 'app/shared';
-import {
-    AnswerComponent,
-    AnswerDeleteDialogComponent,
-    AnswerDeletePopupComponent,
-    AnswerDetailComponent,
-    answerPopupRoute,
-    answerRoute,
-    AnswerUpdateComponent
-} from './index';
+import { AnswerComponent } from 'app/features/quiz-manager/answer/answer.component';
+import { AnswerDetailComponent } from 'app/features/quiz-manager/answer/answer-detail.component';
+import { AnswerUpdateComponent } from 'app/features/quiz-manager/answer/answer-update.component';
+import { AnswerDeleteDialogComponent, AnswerDeletePopupComponent } from 'app/features/quiz-manager/answer/answer-delete-dialog.component';
 
 const ENTITY_STATES = [...answerRoute, ...answerPopupRoute];
 
@@ -20,4 +15,4 @@ const ENTITY_STATES = [...answerRoute, ...answerPopupRoute];
     entryComponents: [AnswerComponent, AnswerUpdateComponent, AnswerDeleteDialogComponent, AnswerDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class EQuizAnswerModule {}
+export class AnswerModule {}

@@ -7,6 +7,7 @@ import io.github.adamwaniak.application.web.rest.errors.BadRequestAlertException
 import io.github.adamwaniak.application.web.rest.util.HeaderUtil;
 import io.github.adamwaniak.application.web.rest.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -131,5 +133,47 @@ public class QuizResource {
         Page<QuizDTO> page = quizService.getQuizzesByOwner(authentication.getName(), pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/current-user/quizzes");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/quizzes/new-edition/{quizID}")
+    @Timed
+    public ResponseEntity<Void> createNewEdition(Authentication authentication, @PathVariable Long quizID) {
+        log.debug("REST request to create new edition for user: {}, and quizID: {}", authentication.getPrincipal(), quizID);
+        if (!quizService.isGivenQuizIdBelongToUser(quizID, authentication.getName())) {
+            return ResponseEntity.status(402).headers(HeaderUtil.createAlert("Non authorized user trying to make new edition", "new edition")).build();
+        }
+        try {
+            quizService.createNewEdition(quizID);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(404).build();
+        }
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, "new edition")).build();
+    }
+
+    @GetMapping("/quizzes/by-code/{code}")
+    @Timed
+    public ResponseEntity<List<QuizDTO>> getQuizzesByCode(@PathVariable String code, Pageable pageable) {
+        log.debug("REST request to get quizzes by code {}", code);
+        Page<QuizDTO> page = quizService.getQuizzesByCodeContains(code, pageable);
+        return new ResponseEntity<>(page.getContent(), HttpStatus.OK);
+    }
+
+    @GetMapping("/quizzes/by-url/{url}")
+    @Timed
+    public ResponseEntity<QuizDTO> getQuizByUrl(@PathVariable String url) {
+        log.debug("REST request to get quizzes by url {}", url);
+        QuizDTO quizDTO = quizService.getQuizByUrl(url);
+        return new ResponseEntity<>(quizDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("/quizzes/password")
+    @Timed
+    public ResponseEntity checkPasswordAndGetQuiz(@RequestBody Map<String, String> urlAndPasswordMap) {
+        log.debug("REST request to check password for quiz (url:{})", urlAndPasswordMap.get("url"));
+        QuizDTO quizDTO = quizService.checkPasswordAndGetQuiz(urlAndPasswordMap.get("password"), urlAndPasswordMap.get("url"));
+        if (quizDTO == null) {
+            return ResponseEntity.status(403).build();
+        }
+        return ResponseEntity.ok().build();
     }
 }

@@ -1,9 +1,9 @@
 package io.github.adamwaniak.application.service.mapper;
 
-import io.github.adamwaniak.application.domain.*;
+import io.github.adamwaniak.application.domain.Quiz;
 import io.github.adamwaniak.application.service.dto.QuizDTO;
-
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity Quiz and its DTO QuizDTO.

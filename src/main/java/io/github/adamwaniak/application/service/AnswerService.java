@@ -1,17 +1,16 @@
 package io.github.adamwaniak.application.service;
 
 import io.github.adamwaniak.application.domain.Answer;
+import io.github.adamwaniak.application.domain.Task;
 import io.github.adamwaniak.application.repository.AnswerRepository;
 import io.github.adamwaniak.application.service.dto.AnswerDTO;
 import io.github.adamwaniak.application.service.mapper.AnswerMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import java.util.Optional;
 /**
@@ -30,6 +29,15 @@ public class AnswerService {
     public AnswerService(AnswerRepository answerRepository, AnswerMapper answerMapper) {
         this.answerRepository = answerRepository;
         this.answerMapper = answerMapper;
+    }
+
+    public Answer copyAnswerForTask(Answer answer, Task task) {
+        Answer newAnswer = new Answer();
+        newAnswer.isCorrect(answer.getIsCorrect())
+            .name(answer.getName())
+            .task(task);
+        answerRepository.save(newAnswer);
+        return newAnswer;
     }
 
     /**
@@ -80,5 +88,11 @@ public class AnswerService {
     public void delete(Long id) {
         log.debug("Request to delete Answer : {}", id);
         answerRepository.deleteById(id);
+    }
+
+    public Page<AnswerDTO> findByTaskID(Long taskId, Pageable pageable) {
+        log.debug("Request to get answers by given task id {}", taskId);
+        return answerRepository.findByTaskId(taskId, pageable)
+            .map(answerMapper::toDto);
     }
 }

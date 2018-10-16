@@ -5,6 +5,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { VERSION } from 'app/app.constants';
 import { LoginModalService, LoginService, Principal } from 'app/core';
 import { ProfileService } from '../profiles/profile.service';
+import { faEdit, faFeatherAlt, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'jhi-navbar',
@@ -18,6 +19,9 @@ export class NavbarComponent implements OnInit {
     swaggerEnabled: boolean;
     modalRef: NgbModalRef;
     version: string;
+    faFeatherAlt = faFeatherAlt;
+    faEdit = faEdit;
+    faSearch = faSearch;
 
     constructor(
         private loginService: LoginService,

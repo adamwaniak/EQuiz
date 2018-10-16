@@ -1,69 +1,117 @@
 <div *ngIf="quiz && taskSet">
     <fa-icon class="fa-1x text-info align-middle" [icon]="'arrow-left'"></fa-icon>
     <a class="text-info align-middle" [routerLink]="['/quiz-manager']">
-        {{quiz.name}}
+        Quiz: {{quiz.name}}
     </a>
     <span class="text-info align-middle">/</span>
     <a class="text-info align-middle" [routerLink]="['/quiz-manager', quizID, 'task-set']">
-        {{taskSet.name}}
+        Task Set: {{taskSet.name}}
     </a>
     <span class="text-info align-middle">/</span>
     <a class="text-info align-middle disabled">
-        tasks
+        Tasks
     </a>
 </div>
-<div>
-
+<div *ngIf="tasks && quiz && taskSet">
     <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-task"
-                [routerLink]="['/task/new']">
+            [routerLink]="['/quiz-manager', quiz.id, 'task-set', taskSetID, 'task', 'new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span>
             Create new Task
             </span>
     </button>
     <br>
-
     <jhi-alert></jhi-alert>
     <br/>
-    <div class="table-responsive" *ngIf="tasks">
+    <div class="quiz-information-container">
+        <div class="row">
+            <div class="col">
+                <h5>
+                    <span>Task set information:</span>
+                </h5>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-auto">
+                <h6>
+                    Task set name:
+                    <div class="text-muted">
+                        {{taskSet.name}}
+                    </div>
+                </h6>
+            </div>
+            <div class="col-auto">
+                <h6>
+                    Artificial Selection:
+                    <div class="text-muted">
+                        {{taskSet.artificialSelection ? 'Yes' : 'No'}}
+                    </div>
+                </h6>
+            </div>
+            <div class="col-auto align-self-center">
+                <h6>
+                    Sum max points:
+                    <div class="text-muted">
+                        {{taskSet.maxPoint * taskSet.requiredTaskAmount}}
+                    </div>
+                </h6>
+            </div>
+            <div class="col-auto">
+                <h6>
+                    Max points for question:
+                    <div class="text-muted">
+                        {{taskSet.maxPoint}}
+                    </div>
+                </h6>
+            </div>
+            <div class="col-auto">
+                <h6>
+                    Required task number:
+                    <div class="text-muted">
+                        {{taskSet.requiredTaskAmount}}
+                    </div>
+                </h6>
+            </div>
+            <div class="col-auto">
+                <h6>
+                    Tasks number:
+                    <div class="text-muted">
+                        <span
+                            [ngClass]="{'text-danger': tasks.length < taskSet.requiredTaskAmount}">{{tasks.length}}</span>
+                    </div>
+                </h6>
+            </div>
+        </div>
+    </div>
+    <h5>Tasks:</h5>
+    <div class="table-responsive">
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-                <th jhiSortBy="id"><span>ID</span>
-                    <fa-icon [icon]="'sort'"></fa-icon>
-                </th>
                 <th jhiSortBy="question"><span>Question</span>
                     <fa-icon [icon]="'sort'"></fa-icon>
                 </th>
                 <th jhiSortBy="correctnessFactor"><span>Correctness Factor</span>
                     <fa-icon [icon]="'sort'"></fa-icon>
                 </th>
-                <th jhiSortBy="image"><span>Image</span>
-                    <fa-icon [icon]="'sort'"></fa-icon>
-                </th>
-                <th jhiSortBy="taskSetId"><span>Task Set</span>
-                    <fa-icon [icon]="'sort'"></fa-icon>
-                </th>
+                <th><span>Correct answers</span></th>
+                <th><span>Answers</span></th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let task of tasks ;trackBy: trackId">
-                <td><a [routerLink]="['/quiz-manager', quiz.id, 'task-set', taskSet.id,'task', task.id, 'view' ]">{{task.id}}</a>
-                </td>
                 <td>{{task.question}}</td>
                 <td>{{task.correctnessFactor}}</td>
-                <td>
-                    <a *ngIf="task.image" (click)="openFile(task.imageContentType, task.image)">open</a>
-                    <span *ngIf="task.image">{{task.imageContentType}}, {{byteSize(task.image)}}</span>
-                </td>
+                <td>1</td>
+                <td>2</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
-                                [routerLink]="['/quiz-manager', quiz.id, 'task-set', taskSet.id,'task', task.id, 'view' ]"
+                                [routerLink]="['/quiz-manager', quiz.id, 'task-set', taskSet.id,'task', task.id, 'answers' ]"
                                 class="btn btn-info btn-sm">
                             <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline">View</span>
+                            <span class="d-none d-md-inline">Answers</span>
                         </button>
                         <button type="submit"
                                 [routerLink]="['/quiz-manager', quiz.id, 'task-set', taskSet.id,'task', task.id, 'edit']"
@@ -72,7 +120,7 @@
                             <span class="d-none d-md-inline">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup:'quiz-manager' + quiz.id + '/task-set' + taskSet.id +'/task' + task.id + '/delete'} }]"
+                                [routerLink]="['/', { outlets: { popup:'quiz-manager/' + quiz.id + '/task-set/' + taskSet.id +'/task/' + task.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">

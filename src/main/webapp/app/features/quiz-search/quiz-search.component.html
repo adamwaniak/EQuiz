@@ -1,0 +1,98 @@
+<div class="container">
+    <br/>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <form class="card card-sm" (ngSubmit)="search()" #editForm="ngForm">
+                <div class="card-body row no-gutters align-items-center">
+                    <div class="col-auto">
+                        <fa-icon [icon]="faSearch" class=" h4 text-muted"></fa-icon>
+                    </div>
+                    <div class="col">
+                        <input class="form-control form-control-lg form-control-borderless" type="search"
+                               placeholder="Search quizzes by code" [(ngModel)]="query" name="query"
+                               pattern=".{3,}" required>
+                    </div>
+                    <div class="w-100 d-block d-sm-none"></div>
+                    <div class="col-auto">
+                        <button class="btn btn-lg btn-primary" type="submit" [disabled]="query?.length < 4"
+                                (click)="search()">Search
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div *ngIf="quizzes?.length === 0" class="mt-5">
+        <div class="grid">
+            <div class="row d-flex justify-content-center ">
+                <span class="display-3">I did not find any matching quizzes <fa-icon [icon]="faFrown"
+                                                                                     class="text-muted"></fa-icon></span>
+                <div class="row d-flex justify-content-center text-muted">
+                    <span>If you think that is problem with the website contact administrator</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="list-group mt-5">
+        <div href="#" class="list-group-item list-group-item-action align-items-start container-fluid form-group"
+             *ngFor="let quiz of quizzes" [id]="'quiz-manager-quiz-' + quiz.id">
+            <div class="row">
+                <div class="col-8">
+                    <div class="row mb-2">
+                        <div class="col-auto mr-auto">
+                            <div class="display-4">
+                                {{quiz.name}}
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-4 col-md align-self-center">
+                            <h6>
+                                <span>Edition:</span>
+                                <span class="text-muted">{{quiz.edition}}</span>
+                            </h6>
+                        </div>
+                        <div class="col-xl-4 col-md align-self-center">
+                            <h6><span>Start date: </span>
+                                <span class="text-muted">{{quiz.startDate | date: 'dd.MM.yy, HH:mm'}}</span>
+                            </h6>
+                        </div>
+                        <div class="col-xl-4 col-md align-self-center mr-auto">
+                            <h6><span>End date: </span>
+                                <span class="text-muted">{{quiz.endDate | date: 'dd.MM.yy, HH:mm'}}</span>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-4 col-md">
+                            <h6><span>Quiz length: </span>
+                                <span class="text-muted">{{quiz.maxTimeInMinutes}} minutes</span>
+                            </h6>
+                        </div>
+                        <div class="col-xl-4 col-md">
+                            <h6><span>Quiz code: </span>
+                                <span class="text-muted">{{quiz.url.slice(10,16)}}</span>
+                            </h6>
+                        </div>
+                        <div class="col-xl-4 col-md">
+                            <h6><span>Author: </span>
+                                <span class="text-muted">{{quizzesAuthorName.get(quiz.id)}}</span>
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-100 d-block d-sm-none"></div>
+                <div class="col-4 resolve-button-container col-sm-2 ml-5">
+                    <button class="btn btn-lg btn-primary"
+                            [routerLink]="['/quiz', quiz.url]">
+                        <span>Resolve<fa-icon [icon]="faArrowRight" class="ml-3"></fa-icon></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

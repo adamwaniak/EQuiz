@@ -1,0 +1,122 @@
+<div *ngIf="quiz && taskSet && task">
+    <fa-icon class="fa-1x text-info align-middle" [icon]="'arrow-left'"></fa-icon>
+    <a class="text-info align-middle" [routerLink]="['/quiz-manager']">
+        Quiz: {{quiz.name}}
+    </a>
+    <span class="text-info align-middle">/</span>
+    <a class="text-info align-middle" [routerLink]="['/quiz-manager', quizID, 'task-set']">
+        Task Set: {{taskSet.name}}
+    </a>
+    <span class="text-info align-middle">/</span>
+    <a class="text-info align-middle disabled" [routerLink]="['/quiz-manager', quizID, 'task-set', taskSetID, 'task']">
+        Task: {{task.question}}
+    </a>
+    <span class="text-info align-middle">/</span>
+    <a class="text-info align-middle disabled">
+        Answers
+    </a>
+</div>
+
+<div *ngIf="answers && taskSet && task && quiz">
+    <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-answer mb-2"
+            [routerLink]="['/quiz-manager',quizID, 'task-set', taskSetID, 'task', taskID, 'answer', 'new']">
+        <fa-icon [icon]="'plus'"></fa-icon>
+        <span>Create new Answer</span>
+    </button>
+    <br>
+    <jhi-alert></jhi-alert>
+    <br>
+    <div class="quiz-information-container">
+        <div class="row">
+            <div class="col">
+                <h5>
+                    <span>Task information:</span>
+                </h5>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-auto">
+                <h6>
+                    Question:
+                    <div class="text-muted">
+                        {{task.question}}
+                    </div>
+                </h6>
+            </div>
+            <div class="col-auto">
+                <h6>
+                    Correctness factor:
+                    <div class="text-muted">
+                        {{task.correctnessFactor}}
+                    </div>
+                </h6>
+            </div>
+            <div class="col-auto align-self-center">
+                <h6>
+                    Correct answers:
+                    <div class="text-muted">
+                        1
+                    </div>
+                </h6>
+            </div>
+            <div class="col-auto">
+                <h6>
+                    Answers:
+                    <div class="text-muted">
+                        2
+                    </div>
+                </h6>
+            </div>
+        </div>
+    </div>
+    <h5>Answers:</h5>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+                <th jhiSortBy="isCorrect" style="width: 140px;"><span>Is Correct</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
+                </th>
+                <th jhiSortBy="name"><span>Name</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let answer of answers ;trackBy: trackId">
+                <td>{{answer.isCorrect ? 'Yes' : 'No'}}</td>
+                <td>{{answer.name}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/quiz-manager',quizID, 'task-set', taskSetID, 'task', taskID, 'answer', answer.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'quiz-manager/' + quiz.id + '/task-set/' + taskSet.id +'/task/' + task.id +  '/answer/'+ answer.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="answers && answers.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5"
+                            [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5"
+                            [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

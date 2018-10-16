@@ -3,11 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
-
 import { IAnswer } from 'app/shared/model/answer.model';
-import { AnswerService } from '../../services/answer.service';
 import { ITask } from 'app/shared/model/task.model';
 import { TaskService } from 'app/features/services/task.service';
+import { AnswerService } from 'app/features/services/answer.service';
 
 @Component({
     selector: 'jhi-answer-update',
@@ -31,6 +30,9 @@ export class AnswerUpdateComponent implements OnInit {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ answer }) => {
             this.answer = answer;
+        });
+        this.activatedRoute.params.subscribe(route => {
+            this.answer.taskId = route['task-id'];
         });
         this.taskService.query().subscribe(
             (res: HttpResponse<ITask[]>) => {
@@ -85,6 +87,7 @@ export class AnswerUpdateComponent implements OnInit {
     trackTaskById(index: number, item: ITask) {
         return item.id;
     }
+
     get answer() {
         return this._answer;
     }

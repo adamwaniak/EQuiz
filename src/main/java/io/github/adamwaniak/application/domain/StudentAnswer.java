@@ -1,11 +1,8 @@
 package io.github.adamwaniak.application.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -14,7 +11,6 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "student_answer")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class StudentAnswer implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -22,6 +18,8 @@ public class StudentAnswer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private boolean isChecked;
 
     @ManyToOne
     @JsonIgnoreProperties("studentAnswers")
@@ -79,10 +77,17 @@ public class StudentAnswer implements Serializable {
         return this;
     }
 
+    public boolean getIsChecked() {
+        return isChecked;
+    }
+
+    public void setIsChecked(boolean checked) {
+        isChecked = checked;
+    }
+
     public void setTask(Task task) {
         this.task = task;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {

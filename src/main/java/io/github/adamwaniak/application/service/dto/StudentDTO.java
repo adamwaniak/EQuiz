@@ -1,7 +1,10 @@
 package io.github.adamwaniak.application.service.dto;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -22,6 +25,10 @@ public class StudentDTO implements Serializable {
     private String grade;
 
     private Long quizId;
+
+    private Instant startDate;
+
+    private Instant endDate;
 
     public Long getId() {
         return id;
@@ -61,6 +68,24 @@ public class StudentDTO implements Serializable {
 
     public void setQuizId(Long quizId) {
         this.quizId = quizId;
+    }
+
+    public Instant getStartDate() {
+        return startDate;
+    }
+
+    public StudentDTO setStartDate(Instant startDate) {
+        this.startDate = startDate;
+        return this;
+    }
+
+    public Instant getEndDate() {
+        return endDate;
+    }
+
+    public StudentDTO setEndDate(Instant endDate) {
+        this.endDate = endDate;
+        return this;
     }
 
     @Override

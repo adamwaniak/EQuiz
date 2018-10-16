@@ -44,14 +44,9 @@
                            [(ngModel)]="task.imageContentType"/>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" hidden>
                     <label class="form-control-label" for="field_taskSet">Task Set</label>
-                    <select class="form-control" id="field_taskSet" name="taskSet" [(ngModel)]="task.taskSetId">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="taskSetOption.id"
-                                *ngFor="let taskSetOption of tasksets; trackBy: trackTaskSetById">{{taskSetOption.id}}
-                        </option>
-                    </select>
+                    <input class="form-control" id="field_taskSet" name="taskSet" [(ngModel)]="task.taskSetId" required>
                 </div>
             </div>
             <div>
