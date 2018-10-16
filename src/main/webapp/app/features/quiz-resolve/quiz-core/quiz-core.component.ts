@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {QuizResolveService} from 'app/features/services/quiz-resolve.service';
+import {Student} from 'app/shared/model/student.model';
 
 @Component({
     selector: 'jhi-quiz-core',
@@ -6,7 +9,25 @@ import { Component, OnInit } from '@angular/core';
     styles: []
 })
 export class QuizCoreComponent implements OnInit {
-    constructor() {}
+    activeTask: number;
+    quizUrl: string;
+    student: Student;
 
-    ngOnInit() {}
+    constructor(private router: Router,
+                private activatedRoute: ActivatedRoute, private quizResolveService: QuizResolveService) {
+    }
+
+    ngOnInit() {
+        this.activatedRoute.params.subscribe(params => {
+            this.activeTask = params['active-task'];
+        });
+        this.activatedRoute.params.subscribe(params => {
+            this.quizUrl = params['code'];
+        });
+        this.student = JSON.parse(localStorage.getItem('student'));
+        this.quizResolveService.getQuizForResolve(this.student.quizId, this.student.id).subscribe(resQuiz => {
+            localStorage.setItem('quiz', JSON.stringify(resQuiz.body));
+            this.router.navigate([`/quiz/${this.quizUrl}/start/1`]);
+        });
+    }
 }

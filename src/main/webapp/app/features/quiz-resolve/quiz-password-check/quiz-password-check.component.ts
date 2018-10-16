@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { QuizService } from 'app/features/services/quiz.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {QuizService} from 'app/features/services/quiz.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'jhi-quiz-password-check',
@@ -23,7 +23,7 @@ export class QuizPasswordCheckComponent implements OnInit {
         this.quizService.checkPassword(this.password, this.quizUrl).subscribe(
             res => {
                 console.log(res.body);
-                this.router.navigate([`/quiz/${this.quizUrl}/0`]);
+                this.router.navigate([`/quiz/${this.quizUrl}/start`]);
             },
             res => {}
         );

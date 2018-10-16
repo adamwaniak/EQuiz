@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { QuizStartComponent } from 'app/features/quiz-resolve/quiz-start/quiz-start.component';
-import { QuizPasswordCheckComponent } from 'app/features/quiz-resolve/quiz-password-check/quiz-password-check.component';
-import { QuizCoreComponent } from 'app/features/quiz-resolve/quiz-core/quiz-core.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {QuizStartComponent} from 'app/features/quiz-resolve/quiz-start/quiz-start.component';
+import {QuizPasswordCheckComponent} from 'app/features/quiz-resolve/quiz-password-check/quiz-password-check.component';
+import {QuizCoreComponent} from 'app/features/quiz-resolve/quiz-core/quiz-core.component';
 
 const routes: Routes = [
     {
@@ -20,14 +20,14 @@ const routes: Routes = [
         }
     },
     {
-        path: 'quiz/:code/0',
+        path: 'quiz/:code/start',
         component: QuizStartComponent,
         data: {
             state: 'quiz-start'
         }
     },
     {
-        path: 'quiz/:code/:id',
+        path: 'quiz/:code/start/:active-task',
         component: QuizCoreComponent,
         data: {
             state: 'quiz-core'
