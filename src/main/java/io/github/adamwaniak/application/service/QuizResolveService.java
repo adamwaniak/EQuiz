@@ -167,6 +167,9 @@ public class QuizResolveService {
                     } else {
                         scorePerTask = maxPointPerTask * positiveAnswers / trueAnswers;
                     }
+                    task.addStudentScore(scorePerTask);
+                    task.addStudentNumber(1L);
+                    task.setCorrectnessFactor(task.getAllStudentScore() / task.getStudentNumber());
                     studentScore = studentScore + scorePerTask;
                 }
             }

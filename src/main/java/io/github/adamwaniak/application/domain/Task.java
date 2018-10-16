@@ -32,6 +32,10 @@ public class Task implements Serializable {
     @Column(name = "correctness_factor")
     private Double correctnessFactor;
 
+    private Double allStudentScore = 0.0;
+
+    private Long studentNumber = 0L;
+
     @Lob
     @Column(name = "image")
     private byte[] image;
@@ -46,7 +50,15 @@ public class Task implements Serializable {
     @JsonIgnoreProperties("tasks")
     private TaskSet taskSet;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    public void addStudentScore(double score) {
+        allStudentScore += score;
+    }
+
+    public void addStudentNumber(Long number) {
+        studentNumber += number;
+    }
+
+
     public Long getId() {
         return id;
     }
@@ -144,7 +156,22 @@ public class Task implements Serializable {
     public void setTaskSet(TaskSet taskSet) {
         this.taskSet = taskSet;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    public Double getAllStudentScore() {
+        return allStudentScore;
+    }
+
+    public void setAllStudentScore(Double allStudentScore) {
+        this.allStudentScore = allStudentScore;
+    }
+
+    public Long getStudentNumber() {
+        return studentNumber;
+    }
+
+    public void setStudentNumber(Long studentNumber) {
+        this.studentNumber = studentNumber;
+    }
 
     @Override
     public boolean equals(Object o) {
