@@ -33,8 +33,8 @@ export class QuizCoreComponent implements OnInit {
         });
         this.student = JSON.parse(localStorage.getItem('student'));
         this.quizResolveService.getQuizForResolve(this.student.quizId, this.student.id).subscribe(resQuiz => {
-            localStorage.setItem('quiz', JSON.stringify(resQuiz.body));
             this.quiz = resQuiz.body;
+            localStorage.setItem('quiz', JSON.stringify(resQuiz.body));
             this.numberOfTask = this.quiz.tasks.length;
             this.activeTask = this.quiz.tasks[this.activeTaskNumber];
         });
