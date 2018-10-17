@@ -45,6 +45,9 @@ export class QuizUpdateComponent implements OnInit {
         if (this.quiz.edition === undefined) {
             this.quiz.edition = 1;
         }
+        if (this.quiz.password === undefined) {
+            this.quiz.password = '';
+        }
         this.accountService.get().subscribe(
             (res: HttpResponse<IUser>) => {
                 this.user = res.body;
