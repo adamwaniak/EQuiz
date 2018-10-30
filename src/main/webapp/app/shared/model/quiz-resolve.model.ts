@@ -12,7 +12,7 @@ export class QuizResolve {
 }
 
 export class TaskForResolve {
-    constructor(public taskId?: number, question?: string, public answers?: AnswerForResolve[]) {
+    constructor(public taskId?: number, public question?: string, public answers?: AnswerForResolve[]) {
     }
 }
 
