@@ -30,6 +30,8 @@ public class StudentDTO implements Serializable {
 
     private Instant endDate;
 
+    private Long maxPossibleScore;
+
     public Long getId() {
         return id;
     }
@@ -88,6 +90,14 @@ public class StudentDTO implements Serializable {
         return this;
     }
 
+    public Long getMaxPossibleScore() {
+        return maxPossibleScore;
+    }
+
+    public void setMaxPossibleScore(Long maxPossibleScore) {
+        this.maxPossibleScore = maxPossibleScore;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -112,11 +122,14 @@ public class StudentDTO implements Serializable {
     @Override
     public String toString() {
         return "StudentDTO{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", score=" + getScore() +
-            ", grade='" + getGrade() + "'" +
-            ", quiz=" + getQuizId() +
-            "}";
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", score=" + score +
+            ", grade='" + grade + '\'' +
+            ", quizId=" + quizId +
+            ", startDate=" + startDate +
+            ", endDate=" + endDate +
+            ", maxPossibleScore=" + maxPossibleScore +
+            '}';
     }
 }

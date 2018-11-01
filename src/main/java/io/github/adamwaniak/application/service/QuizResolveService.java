@@ -168,31 +168,14 @@ public class QuizResolveService {
                         scorePerTask = maxPointPerTask * positiveAnswers / trueAnswers;
                     }
                     task.addStudentScore(scorePerTask);
-                    task.addStudentNumber(1L);
-                    task.setCorrectnessFactor(task.getAllStudentScore() / task.getStudentNumber());
+                    task.addMaxPossibleScore((long) maxPointPerTask);
                     studentScore = studentScore + scorePerTask;
                 }
             }
         }
         student.setScore(studentScore);
-        student.setGrade(selectGrade(studentScore, maxScore));
         studentRepository.save(student);
     }
 
-    private String selectGrade(double studentScore, int maxScore) {
-        double percentScore = studentScore / maxScore;
-        if (percentScore > 0.9) {
-            return "5";
-        } else if (percentScore > 0.8) {
-            return "4.5";
-        } else if (percentScore > 0.7) {
-            return "4";
-        } else if (percentScore > 0.6) {
-            return "3.5";
-        } else if (percentScore > 0.5) {
-            return "3";
-        } else {
-            return "2";
-        }
-    }
+
 }

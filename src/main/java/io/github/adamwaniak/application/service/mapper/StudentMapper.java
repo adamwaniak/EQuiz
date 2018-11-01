@@ -1,9 +1,13 @@
 package io.github.adamwaniak.application.service.mapper;
 
-import io.github.adamwaniak.application.domain.*;
+import io.github.adamwaniak.application.domain.Student;
+import io.github.adamwaniak.application.domain.Task;
 import io.github.adamwaniak.application.service.dto.StudentDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-import org.mapstruct.*;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Mapper for the entity Student and its DTO StudentDTO.
@@ -12,7 +16,20 @@ import org.mapstruct.*;
 public interface StudentMapper extends EntityMapper<StudentDTO, Student> {
 
     @Mapping(source = "quiz.id", target = "quizId")
-    StudentDTO toDto(Student student);
+    default StudentDTO toDto(Student student) {
+        StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setId(student.getId());
+        studentDTO.setStartDate(student.getStartDate());
+        studentDTO.setName(student.getName());
+        studentDTO.setEndDate(student.getEndDate());
+        studentDTO.setQuizId(student.getQuiz().getId());
+        studentDTO.setScore(student.getScore());
+        Set<Task> studentTasks = student.getStudentAnswers().stream().map(ans -> ans.getTask()).collect(Collectors.toSet());
+        Long maxPossibleScore = studentTasks.stream().mapToLong(Task::getMaxPossibleScore).sum();
+        studentDTO.setMaxPossibleScore(maxPossibleScore);
+        studentDTO.setGrade(selectGrade(student.getScore(), maxPossibleScore));
+        return studentDTO;
+    }
 
     @Mapping(source = "quizId", target = "quiz")
     @Mapping(target = "studentAnswers", ignore = true)
@@ -26,4 +43,25 @@ public interface StudentMapper extends EntityMapper<StudentDTO, Student> {
         student.setId(id);
         return student;
     }
+
+    default String selectGrade(Double studentScore, Long maxScore) {
+        if (maxScore == null || studentScore == null) {
+            return "2";
+        }
+        double percentScore = studentScore / maxScore;
+        if (percentScore > 0.9) {
+            return "5";
+        } else if (percentScore > 0.8) {
+            return "4.5";
+        } else if (percentScore > 0.7) {
+            return "4";
+        } else if (percentScore > 0.6) {
+            return "3.5";
+        } else if (percentScore > 0.5) {
+            return "3";
+        } else {
+            return "2";
+        }
+    }
+
 }

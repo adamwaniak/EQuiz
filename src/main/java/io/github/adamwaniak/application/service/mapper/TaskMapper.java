@@ -1,9 +1,9 @@
 package io.github.adamwaniak.application.service.mapper;
 
-import io.github.adamwaniak.application.domain.*;
+import io.github.adamwaniak.application.domain.Task;
 import io.github.adamwaniak.application.service.dto.TaskDTO;
-
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity Task and its DTO TaskDTO.
@@ -12,7 +12,17 @@ import org.mapstruct.*;
 public interface TaskMapper extends EntityMapper<TaskDTO, Task> {
 
     @Mapping(source = "taskSet.id", target = "taskSetId")
-    TaskDTO toDto(Task task);
+    default TaskDTO toDto(Task task) {
+        TaskDTO taskDTO = new TaskDTO();
+        taskDTO.setId(task.getId());
+        taskDTO.setImage(task.getImage());
+        taskDTO.setImageContentType(task.getImageContentType());
+        taskDTO.setQuestion(task.getQuestion());
+        taskDTO.setTaskSetId(task.getTaskSet().getId());
+        taskDTO.setCorrectnessFactor(task.getAllStudentScore() / task.getMaxPossibleScore());
+        return taskDTO;
+    }
+
 
     @Mapping(target = "answers", ignore = true)
     @Mapping(source = "taskSetId", target = "taskSet")
