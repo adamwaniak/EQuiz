@@ -2,6 +2,7 @@ package io.github.adamwaniak.application.service.mapper;
 
 import io.github.adamwaniak.application.domain.Student;
 import io.github.adamwaniak.application.domain.Task;
+import io.github.adamwaniak.application.domain.TaskSet;
 import io.github.adamwaniak.application.service.dto.StudentDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -24,10 +25,10 @@ public interface StudentMapper extends EntityMapper<StudentDTO, Student> {
         studentDTO.setEndDate(student.getEndDate());
         studentDTO.setQuizId(student.getQuiz().getId());
         studentDTO.setScore(student.getScore());
-        Set<Task> studentTasks = student.getStudentAnswers().stream().map(ans -> ans.getTask()).collect(Collectors.toSet());
-        Long maxPossibleScore = studentTasks.stream().mapToLong(Task::getMaxPossibleScore).sum();
-        studentDTO.setMaxPossibleScore(maxPossibleScore);
-        studentDTO.setGrade(selectGrade(student.getScore(), maxPossibleScore));
+        Long maxScoreForTest = (long) student.getQuiz().getTaskSets()
+            .stream().mapToDouble(TaskSet::getMaxPoint).sum();
+        studentDTO.setMaxScoreForTest(maxScoreForTest);
+        studentDTO.setGrade(selectGrade(student.getScore(), maxScoreForTest));
         return studentDTO;
     }
 

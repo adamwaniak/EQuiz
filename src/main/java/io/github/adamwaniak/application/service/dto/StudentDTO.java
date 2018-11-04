@@ -30,7 +30,7 @@ public class StudentDTO implements Serializable {
 
     private Instant endDate;
 
-    private Long maxPossibleScore;
+    private Long maxScoreForTest;
 
     public Long getId() {
         return id;
@@ -90,14 +90,6 @@ public class StudentDTO implements Serializable {
         return this;
     }
 
-    public Long getMaxPossibleScore() {
-        return maxPossibleScore;
-    }
-
-    public void setMaxPossibleScore(Long maxPossibleScore) {
-        this.maxPossibleScore = maxPossibleScore;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -112,6 +104,14 @@ public class StudentDTO implements Serializable {
             return false;
         }
         return Objects.equals(getId(), studentDTO.getId());
+    }
+
+    public Long getMaxScoreForTest() {
+        return maxScoreForTest;
+    }
+
+    public void setMaxScoreForTest(Long maxScoreForTest) {
+        this.maxScoreForTest = maxScoreForTest;
     }
 
     @Override
@@ -129,7 +129,7 @@ public class StudentDTO implements Serializable {
             ", quizId=" + quizId +
             ", startDate=" + startDate +
             ", endDate=" + endDate +
-            ", maxPossibleScore=" + maxPossibleScore +
+            ", maxScoreForTest=" + maxScoreForTest +
             '}';
     }
 }
