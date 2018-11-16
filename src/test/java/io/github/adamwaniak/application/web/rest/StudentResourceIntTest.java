@@ -1,14 +1,12 @@
 package io.github.adamwaniak.application.web.rest;
 
 import io.github.adamwaniak.application.EQuizApp;
-
 import io.github.adamwaniak.application.domain.Student;
 import io.github.adamwaniak.application.repository.StudentRepository;
 import io.github.adamwaniak.application.service.StudentService;
 import io.github.adamwaniak.application.service.dto.StudentDTO;
 import io.github.adamwaniak.application.service.mapper.StudentMapper;
 import io.github.adamwaniak.application.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-
 
 import static io.github.adamwaniak.application.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -57,7 +54,7 @@ public class StudentResourceIntTest {
 
     @Autowired
     private StudentMapper studentMapper;
-    
+
 
     @Autowired
     private StudentService studentService;
@@ -98,8 +95,7 @@ public class StudentResourceIntTest {
     public static Student createEntity(EntityManager em) {
         Student student = new Student()
             .name(DEFAULT_NAME)
-            .score(DEFAULT_SCORE)
-            .grade(DEFAULT_GRADE);
+            .score(DEFAULT_SCORE);
         return student;
     }
 
@@ -126,7 +122,6 @@ public class StudentResourceIntTest {
         Student testStudent = studentList.get(studentList.size() - 1);
         assertThat(testStudent.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testStudent.getScore()).isEqualTo(DEFAULT_SCORE);
-        assertThat(testStudent.getGrade()).isEqualTo(DEFAULT_GRADE);
     }
 
     @Test
@@ -179,11 +174,11 @@ public class StudentResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(student.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].score").value(hasItem(DEFAULT_SCORE.doubleValue())))
-            .andExpect(jsonPath("$.[*].grade").value(hasItem(DEFAULT_GRADE.toString())));
+            .andExpect(jsonPath("$.[*].grade").value(hasItem(DEFAULT_GRADE)));
     }
-    
+
 
     @Test
     @Transactional
@@ -196,9 +191,9 @@ public class StudentResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(student.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.score").value(DEFAULT_SCORE.doubleValue()))
-            .andExpect(jsonPath("$.grade").value(DEFAULT_GRADE.toString()));
+            .andExpect(jsonPath("$.grade").value(DEFAULT_GRADE));
     }
     @Test
     @Transactional
@@ -222,8 +217,7 @@ public class StudentResourceIntTest {
         em.detach(updatedStudent);
         updatedStudent
             .name(UPDATED_NAME)
-            .score(UPDATED_SCORE)
-            .grade(UPDATED_GRADE);
+            .score(UPDATED_SCORE);
         StudentDTO studentDTO = studentMapper.toDto(updatedStudent);
 
         restStudentMockMvc.perform(put("/api/students")
@@ -237,7 +231,6 @@ public class StudentResourceIntTest {
         Student testStudent = studentList.get(studentList.size() - 1);
         assertThat(testStudent.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testStudent.getScore()).isEqualTo(UPDATED_SCORE);
-        assertThat(testStudent.getGrade()).isEqualTo(UPDATED_GRADE);
     }
 
     @Test
@@ -248,7 +241,7 @@ public class StudentResourceIntTest {
         // Create the Student
         StudentDTO studentDTO = studentMapper.toDto(student);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restStudentMockMvc.perform(put("/api/students")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(studentDTO)))

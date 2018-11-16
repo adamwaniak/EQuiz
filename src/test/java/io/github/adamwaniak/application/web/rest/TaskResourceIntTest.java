@@ -1,7 +1,6 @@
 package io.github.adamwaniak.application.web.rest;
 
 import io.github.adamwaniak.application.EQuizApp;
-
 import io.github.adamwaniak.application.domain.Task;
 import io.github.adamwaniak.application.repository.TaskRepository;
 import io.github.adamwaniak.application.service.QuizService;
@@ -10,7 +9,6 @@ import io.github.adamwaniak.application.service.TaskSetService;
 import io.github.adamwaniak.application.service.dto.TaskDTO;
 import io.github.adamwaniak.application.service.mapper.TaskMapper;
 import io.github.adamwaniak.application.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +26,6 @@ import org.springframework.util.Base64Utils;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-
 
 import static io.github.adamwaniak.application.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -109,7 +106,6 @@ public class TaskResourceIntTest {
     public static Task createEntity(EntityManager em) {
         Task task = new Task()
             .question(DEFAULT_QUESTION)
-            .correctnessFactor(DEFAULT_CORRECTNESS_FACTOR)
             .image(DEFAULT_IMAGE)
             .imageContentType(DEFAULT_IMAGE_CONTENT_TYPE);
         return task;
@@ -137,7 +133,6 @@ public class TaskResourceIntTest {
         assertThat(taskList).hasSize(databaseSizeBeforeCreate + 1);
         Task testTask = taskList.get(taskList.size() - 1);
         assertThat(testTask.getQuestion()).isEqualTo(DEFAULT_QUESTION);
-        assertThat(testTask.getCorrectnessFactor()).isEqualTo(DEFAULT_CORRECTNESS_FACTOR);
         assertThat(testTask.getImage()).isEqualTo(DEFAULT_IMAGE);
         assertThat(testTask.getImageContentType()).isEqualTo(DEFAULT_IMAGE_CONTENT_TYPE);
     }
@@ -192,7 +187,7 @@ public class TaskResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(task.getId().intValue())))
-            .andExpect(jsonPath("$.[*].question").value(hasItem(DEFAULT_QUESTION.toString())))
+            .andExpect(jsonPath("$.[*].question").value(hasItem(DEFAULT_QUESTION)))
             .andExpect(jsonPath("$.[*].correctnessFactor").value(hasItem(DEFAULT_CORRECTNESS_FACTOR.doubleValue())))
             .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))));
@@ -210,7 +205,7 @@ public class TaskResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(task.getId().intValue()))
-            .andExpect(jsonPath("$.question").value(DEFAULT_QUESTION.toString()))
+            .andExpect(jsonPath("$.question").value(DEFAULT_QUESTION))
             .andExpect(jsonPath("$.correctnessFactor").value(DEFAULT_CORRECTNESS_FACTOR.doubleValue()))
             .andExpect(jsonPath("$.imageContentType").value(DEFAULT_IMAGE_CONTENT_TYPE))
             .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)));
@@ -237,7 +232,6 @@ public class TaskResourceIntTest {
         em.detach(updatedTask);
         updatedTask
             .question(UPDATED_QUESTION)
-            .correctnessFactor(UPDATED_CORRECTNESS_FACTOR)
             .image(UPDATED_IMAGE)
             .imageContentType(UPDATED_IMAGE_CONTENT_TYPE);
         TaskDTO taskDTO = taskMapper.toDto(updatedTask);
@@ -252,7 +246,6 @@ public class TaskResourceIntTest {
         assertThat(taskList).hasSize(databaseSizeBeforeUpdate);
         Task testTask = taskList.get(taskList.size() - 1);
         assertThat(testTask.getQuestion()).isEqualTo(UPDATED_QUESTION);
-        assertThat(testTask.getCorrectnessFactor()).isEqualTo(UPDATED_CORRECTNESS_FACTOR);
         assertThat(testTask.getImage()).isEqualTo(UPDATED_IMAGE);
         assertThat(testTask.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
     }

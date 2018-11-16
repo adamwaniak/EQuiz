@@ -160,6 +160,14 @@ public class Task implements Serializable {
         return this;
     }
 
+    public Double getCorrectness() {
+        if (allStudentScore == null || maxPossibleScore == null) {
+            return 1.0;
+        } else {
+            return allStudentScore / maxPossibleScore;
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

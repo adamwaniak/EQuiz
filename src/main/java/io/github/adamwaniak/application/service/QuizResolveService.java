@@ -37,6 +37,8 @@ public class QuizResolveService {
 
     private BCryptPasswordEncoder encoder;
 
+    private final Random random = new Random();
+
     public QuizResolveService(QuizRepository quizRepository, TaskSetService taskSetService, BCryptPasswordEncoder encoder,
                               StudentRepository studentRepository, StudentAnswerRepository studentAnswerRepository, StudentAnswerService studentAnswerService) {
         this.quizRepository = quizRepository;
@@ -85,19 +87,47 @@ public class QuizResolveService {
     private Set<TaskForResolveDTO> selectTasksFromTaskSet(TaskSet taskSet, Student student) {
         Set<TaskForResolveDTO> chosenTasks = new HashSet<>();
         List<Task> copyTasks = new ArrayList<>(taskSet.getTasks());
-        for (int i = 0; i < taskSet.getRequiredTaskAmount(); i++) {
-            TaskForResolveDTO taskForResolve = new TaskForResolveDTO();
-            Collections.shuffle(copyTasks);
-            Task task = copyTasks.get(0);
-            copyTasks.remove(0);
-            taskForResolve.setTaskId(task.getId())
-                .setQuestion(task.getQuestion())
-                .setAnswers(createStudentAnswerAndReturnAnswerForResolveDTO(task.getAnswers(), student))
-                .setImage(task.getImage())
-                .setImageContentType(task.getImageContentType());
-            chosenTasks.add(taskForResolve);
+        boolean aiSelection = taskSet.isArtificialSelection();
+        int i = taskSet.getRequiredTaskAmount();
+        while (i > 0) {
+            if (aiSelection) {
+                copyTasks.sort(Comparator.comparingDouble(Task::getCorrectness));
+                int indexOfHardTask = random.nextInt(copyTasks.size() / 2);
+                Task hardTask = copyTasks.get(indexOfHardTask);
+                TaskForResolveDTO taskForResolve = new TaskForResolveDTO();
+                setUpTaskForResolve(taskForResolve, hardTask, student);
+                chosenTasks.add(taskForResolve);
+                i--;
+                if (i > 0) {
+                    int indexOfEasyTask = copyTasks.size() - indexOfHardTask - 1;
+                    Task easyTask = copyTasks.get(indexOfEasyTask);
+                    taskForResolve = new TaskForResolveDTO();
+                    setUpTaskForResolve(taskForResolve, easyTask, student);
+                    chosenTasks.add(taskForResolve);
+                    copyTasks.remove(easyTask);
+                    i--;
+                }
+                copyTasks.remove(hardTask);
+
+            } else {
+                TaskForResolveDTO taskForResolve = new TaskForResolveDTO();
+                Collections.shuffle(copyTasks);
+                Task task = copyTasks.get(0);
+                copyTasks.remove(0);
+                setUpTaskForResolve(taskForResolve, task, student);
+                chosenTasks.add(taskForResolve);
+                i--;
+            }
         }
         return chosenTasks;
+    }
+
+    private void setUpTaskForResolve(TaskForResolveDTO taskForResolve, Task task, Student student) {
+        taskForResolve.setTaskId(task.getId())
+            .setQuestion(task.getQuestion())
+            .setAnswers(createStudentAnswerAndReturnAnswerForResolveDTO(task.getAnswers(), student))
+            .setImage(task.getImage())
+            .setImageContentType(task.getImageContentType());
     }
 
     private Set<AnswerForResolveDTO> createStudentAnswerAndReturnAnswerForResolveDTO(Collection<Answer> answers, Student student) {
@@ -153,7 +183,8 @@ public class QuizResolveService {
                     double scorePerTask = 0;
                     int positiveAnswers = 0;
                     for (Answer answer : task.getAnswers()) {
-                        StudentAnswer studentAnswer = studentAnswersPerTask.stream().filter(sAnswer -> sAnswer.getAnswer().getId() == answer.getId()).findFirst().get();
+                        StudentAnswer studentAnswer = studentAnswersPerTask.stream()
+                            .filter(sAnswer -> sAnswer.getAnswer().getId() == answer.getId()).findFirst().get();
                         if (studentAnswer.getIsChecked() && !answer.getIsCorrect()) {
                             positiveAnswers = 0;
                             break;
