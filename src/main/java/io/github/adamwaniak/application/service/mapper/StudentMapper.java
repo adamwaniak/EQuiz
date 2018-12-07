@@ -1,14 +1,9 @@
 package io.github.adamwaniak.application.service.mapper;
 
 import io.github.adamwaniak.application.domain.Student;
-import io.github.adamwaniak.application.domain.Task;
-import io.github.adamwaniak.application.domain.TaskSet;
 import io.github.adamwaniak.application.service.dto.StudentDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Mapper for the entity Student and its DTO StudentDTO.
@@ -26,7 +21,7 @@ public interface StudentMapper extends EntityMapper<StudentDTO, Student> {
         studentDTO.setQuizId(student.getQuiz().getId());
         studentDTO.setScore(student.getScore());
         Long maxScoreForTest = (long) student.getQuiz().getTaskSets()
-            .stream().mapToDouble(TaskSet::getMaxPoint).sum();
+            .stream().mapToDouble(taskSet -> taskSet.getMaxPoint() * taskSet.getRequiredTaskAmount()).sum();
         studentDTO.setMaxScoreForTest(maxScoreForTest);
         studentDTO.setGrade(selectGrade(student.getScore(), maxScoreForTest));
         return studentDTO;

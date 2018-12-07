@@ -85,6 +85,9 @@ public class QuizResolveService {
     }
 
     private Set<TaskForResolveDTO> selectTasksFromTaskSet(TaskSet taskSet, Student student) {
+        if (taskSet.getRequiredTaskAmount() == taskSet.getTasks().size()) {
+            return mapTaskSetToTaskForResolveDTOSet(taskSet, student);
+        }
         Set<TaskForResolveDTO> chosenTasks = new HashSet<>();
         List<Task> copyTasks = new ArrayList<>(taskSet.getTasks());
         boolean aiSelection = taskSet.isArtificialSelection();
@@ -92,14 +95,14 @@ public class QuizResolveService {
         while (i > 0) {
             if (aiSelection) {
                 copyTasks.sort(Comparator.comparingDouble(Task::getCorrectness));
-                int indexOfHardTask = random.nextInt(copyTasks.size() / 2);
+                int indexOfHardTask = random.nextInt(copyTasks.size() / 2 - 1);
                 Task hardTask = copyTasks.get(indexOfHardTask);
                 TaskForResolveDTO taskForResolve = new TaskForResolveDTO();
                 setUpTaskForResolve(taskForResolve, hardTask, student);
                 chosenTasks.add(taskForResolve);
                 i--;
                 if (i > 0) {
-                    int indexOfEasyTask = copyTasks.size() - indexOfHardTask - 1;
+                    int indexOfEasyTask = copyTasks.size() - indexOfHardTask;
                     Task easyTask = copyTasks.get(indexOfEasyTask);
                     taskForResolve = new TaskForResolveDTO();
                     setUpTaskForResolve(taskForResolve, easyTask, student);
@@ -206,6 +209,14 @@ public class QuizResolveService {
         }
         student.setScore(studentScore);
         studentRepository.save(student);
+    }
+
+    private Set<TaskForResolveDTO> mapTaskSetToTaskForResolveDTOSet(TaskSet taskSet, Student student) {
+        return taskSet.getTasks().stream().map(task -> {
+            TaskForResolveDTO taskForResolveDTO = new TaskForResolveDTO();
+            setUpTaskForResolve(new TaskForResolveDTO(), task, student);
+            return taskForResolveDTO;
+        }).collect(Collectors.toSet());
     }
 
 

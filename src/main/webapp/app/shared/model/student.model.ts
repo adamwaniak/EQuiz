@@ -1,4 +1,4 @@
-import { IStudentAnswer } from 'app/shared/model//student-answer.model';
+import {IStudentAnswer} from 'app/shared/model//student-answer.model';
 
 export interface IStudent {
     id?: number;
@@ -7,6 +7,7 @@ export interface IStudent {
     grade?: string;
     quizId?: number;
     studentAnswers?: IStudentAnswer[];
+    maxScoreForTest?: number;
 }
 
 export class Student implements IStudent {
@@ -16,6 +17,7 @@ export class Student implements IStudent {
         public score?: number,
         public grade?: string,
         public quizId?: number,
-        public studentAnswers?: IStudentAnswer[]
+        public studentAnswers?: IStudentAnswer[],
+        public maxScoreForTest?: number
     ) {}
 }
