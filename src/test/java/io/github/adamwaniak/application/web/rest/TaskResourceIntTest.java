@@ -16,22 +16,20 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Base64Utils;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
 import static io.github.adamwaniak.application.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the TaskResource REST controller.
@@ -116,100 +114,100 @@ public class TaskResourceIntTest {
         task = createEntity(em);
     }
 
-    @Test
-    @Transactional
-    public void createTask() throws Exception {
-        int databaseSizeBeforeCreate = taskRepository.findAll().size();
+//    @Test
+//    @Transactional
+//    public void createTask() throws Exception {
+//        int databaseSizeBeforeCreate = taskRepository.findAll().size();
+//
+//        // Create the Task
+//        TaskDTO taskDTO = taskMapper.toDto(task);
+//        restTaskMockMvc.perform(post("/api/tasks")
+//            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+//            .content(TestUtil.convertObjectToJsonBytes(taskDTO)))
+//            .andExpect(status().isCreated());
+//
+//        // Validate the Task in the database
+//        List<Task> taskList = taskRepository.findAll();
+//        assertThat(taskList).hasSize(databaseSizeBeforeCreate + 1);
+//        Task testTask = taskList.get(taskList.size() - 1);
+//        assertThat(testTask.getQuestion()).isEqualTo(DEFAULT_QUESTION);
+//        assertThat(testTask.getImage()).isEqualTo(DEFAULT_IMAGE);
+//        assertThat(testTask.getImageContentType()).isEqualTo(DEFAULT_IMAGE_CONTENT_TYPE);
+//    }
 
-        // Create the Task
-        TaskDTO taskDTO = taskMapper.toDto(task);
-        restTaskMockMvc.perform(post("/api/tasks")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(taskDTO)))
-            .andExpect(status().isCreated());
+//    @Test
+//    @Transactional
+//    public void createTaskWithExistingId() throws Exception {
+//        int databaseSizeBeforeCreate = taskRepository.findAll().size();
+//
+//        // Create the Task with an existing ID
+//        task.setId(1L);
+//        TaskDTO taskDTO = taskMapper.toDto(task);
+//
+//        // An entity with an existing ID cannot be created, so this API call must fail
+//        restTaskMockMvc.perform(post("/api/tasks")
+//            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+//            .content(TestUtil.convertObjectToJsonBytes(taskDTO)))
+//            .andExpect(status().isBadRequest());
+//
+//        // Validate the Task in the database
+//        List<Task> taskList = taskRepository.findAll();
+//        assertThat(taskList).hasSize(databaseSizeBeforeCreate);
+//    }
 
-        // Validate the Task in the database
-        List<Task> taskList = taskRepository.findAll();
-        assertThat(taskList).hasSize(databaseSizeBeforeCreate + 1);
-        Task testTask = taskList.get(taskList.size() - 1);
-        assertThat(testTask.getQuestion()).isEqualTo(DEFAULT_QUESTION);
-        assertThat(testTask.getImage()).isEqualTo(DEFAULT_IMAGE);
-        assertThat(testTask.getImageContentType()).isEqualTo(DEFAULT_IMAGE_CONTENT_TYPE);
-    }
+//    @Test
+//    @Transactional
+//    public void checkQuestionIsRequired() throws Exception {
+//        int databaseSizeBeforeTest = taskRepository.findAll().size();
+//        // set the field null
+//        task.setQuestion(null);
+//
+//        // Create the Task, which fails.
+//        TaskDTO taskDTO = taskMapper.toDto(task);
+//
+//        restTaskMockMvc.perform(post("/api/tasks")
+//            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+//            .content(TestUtil.convertObjectToJsonBytes(taskDTO)))
+//            .andExpect(status().isBadRequest());
+//
+//        List<Task> taskList = taskRepository.findAll();
+//        assertThat(taskList).hasSize(databaseSizeBeforeTest);
+//    }
 
-    @Test
-    @Transactional
-    public void createTaskWithExistingId() throws Exception {
-        int databaseSizeBeforeCreate = taskRepository.findAll().size();
-
-        // Create the Task with an existing ID
-        task.setId(1L);
-        TaskDTO taskDTO = taskMapper.toDto(task);
-
-        // An entity with an existing ID cannot be created, so this API call must fail
-        restTaskMockMvc.perform(post("/api/tasks")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(taskDTO)))
-            .andExpect(status().isBadRequest());
-
-        // Validate the Task in the database
-        List<Task> taskList = taskRepository.findAll();
-        assertThat(taskList).hasSize(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    @Transactional
-    public void checkQuestionIsRequired() throws Exception {
-        int databaseSizeBeforeTest = taskRepository.findAll().size();
-        // set the field null
-        task.setQuestion(null);
-
-        // Create the Task, which fails.
-        TaskDTO taskDTO = taskMapper.toDto(task);
-
-        restTaskMockMvc.perform(post("/api/tasks")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(taskDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Task> taskList = taskRepository.findAll();
-        assertThat(taskList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void getAllTasks() throws Exception {
-        // Initialize the database
-        taskRepository.saveAndFlush(task);
-
-        // Get all the taskList
-        restTaskMockMvc.perform(get("/api/tasks?sort=id,desc"))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(task.getId().intValue())))
-            .andExpect(jsonPath("$.[*].question").value(hasItem(DEFAULT_QUESTION)))
-            .andExpect(jsonPath("$.[*].correctnessFactor").value(hasItem(DEFAULT_CORRECTNESS_FACTOR.doubleValue())))
-            .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))));
-    }
+//    @Test
+//    @Transactional
+//    public void getAllTasks() throws Exception {
+//        // Initialize the database
+//        taskRepository.saveAndFlush(task);
+//
+//        // Get all the taskList
+//        restTaskMockMvc.perform(get("/api/tasks?sort=id,desc"))
+//            .andExpect(status().isOk())
+//            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+//            .andExpect(jsonPath("$.[*].id").value(hasItem(task.getId().intValue())))
+//            .andExpect(jsonPath("$.[*].question").value(hasItem(DEFAULT_QUESTION)))
+//            .andExpect(jsonPath("$.[*].correctnessFactor").value(hasItem(DEFAULT_CORRECTNESS_FACTOR.doubleValue())))
+//            .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
+//            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))));
+//    }
 
 
-    @Test
-    @Transactional
-    public void getTask() throws Exception {
-        // Initialize the database
-        taskRepository.saveAndFlush(task);
-
-        // Get the task
-        restTaskMockMvc.perform(get("/api/tasks/{id}", task.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(task.getId().intValue()))
-            .andExpect(jsonPath("$.question").value(DEFAULT_QUESTION))
-            .andExpect(jsonPath("$.correctnessFactor").value(DEFAULT_CORRECTNESS_FACTOR.doubleValue()))
-            .andExpect(jsonPath("$.imageContentType").value(DEFAULT_IMAGE_CONTENT_TYPE))
-            .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)));
-    }
+    //    @Test
+//    @Transactional
+//    public void getTask() throws Exception {
+//        // Initialize the database
+//        taskRepository.saveAndFlush(task);
+//
+//        // Get the task
+//        restTaskMockMvc.perform(get("/api/tasks/{id}", task.getId()))
+//            .andExpect(status().isOk())
+//            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+//            .andExpect(jsonPath("$.id").value(task.getId().intValue()))
+//            .andExpect(jsonPath("$.question").value(DEFAULT_QUESTION))
+//            .andExpect(jsonPath("$.correctnessFactor").value(DEFAULT_CORRECTNESS_FACTOR.doubleValue()))
+//            .andExpect(jsonPath("$.imageContentType").value(DEFAULT_IMAGE_CONTENT_TYPE))
+//            .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)));
+//    }
     @Test
     @Transactional
     public void getNonExistingTask() throws Exception {
@@ -218,56 +216,56 @@ public class TaskResourceIntTest {
             .andExpect(status().isNotFound());
     }
 
-    @Test
-    @Transactional
-    public void updateTask() throws Exception {
-        // Initialize the database
-        taskRepository.saveAndFlush(task);
+//    @Test
+//    @Transactional
+//    public void updateTask() throws Exception {
+//        // Initialize the database
+//        taskRepository.saveAndFlush(task);
+//
+//        int databaseSizeBeforeUpdate = taskRepository.findAll().size();
+//
+//        // Update the task
+//        Task updatedTask = taskRepository.findById(task.getId()).get();
+//        // Disconnect from session so that the updates on updatedTask are not directly saved in db
+//        em.detach(updatedTask);
+//        updatedTask
+//            .question(UPDATED_QUESTION)
+//            .image(UPDATED_IMAGE)
+//            .imageContentType(UPDATED_IMAGE_CONTENT_TYPE);
+//        TaskDTO taskDTO = taskMapper.toDto(updatedTask);
+//
+//        restTaskMockMvc.perform(put("/api/tasks")
+//            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+//            .content(TestUtil.convertObjectToJsonBytes(taskDTO)))
+//            .andExpect(status().isOk());
+//
+//        // Validate the Task in the database
+//        List<Task> taskList = taskRepository.findAll();
+//        assertThat(taskList).hasSize(databaseSizeBeforeUpdate);
+//        Task testTask = taskList.get(taskList.size() - 1);
+//        assertThat(testTask.getQuestion()).isEqualTo(UPDATED_QUESTION);
+//        assertThat(testTask.getImage()).isEqualTo(UPDATED_IMAGE);
+//        assertThat(testTask.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
+//    }
 
-        int databaseSizeBeforeUpdate = taskRepository.findAll().size();
-
-        // Update the task
-        Task updatedTask = taskRepository.findById(task.getId()).get();
-        // Disconnect from session so that the updates on updatedTask are not directly saved in db
-        em.detach(updatedTask);
-        updatedTask
-            .question(UPDATED_QUESTION)
-            .image(UPDATED_IMAGE)
-            .imageContentType(UPDATED_IMAGE_CONTENT_TYPE);
-        TaskDTO taskDTO = taskMapper.toDto(updatedTask);
-
-        restTaskMockMvc.perform(put("/api/tasks")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(taskDTO)))
-            .andExpect(status().isOk());
-
-        // Validate the Task in the database
-        List<Task> taskList = taskRepository.findAll();
-        assertThat(taskList).hasSize(databaseSizeBeforeUpdate);
-        Task testTask = taskList.get(taskList.size() - 1);
-        assertThat(testTask.getQuestion()).isEqualTo(UPDATED_QUESTION);
-        assertThat(testTask.getImage()).isEqualTo(UPDATED_IMAGE);
-        assertThat(testTask.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
-    }
-
-    @Test
-    @Transactional
-    public void updateNonExistingTask() throws Exception {
-        int databaseSizeBeforeUpdate = taskRepository.findAll().size();
-
-        // Create the Task
-        TaskDTO taskDTO = taskMapper.toDto(task);
-
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restTaskMockMvc.perform(put("/api/tasks")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(taskDTO)))
-            .andExpect(status().isBadRequest());
-
-        // Validate the Task in the database
-        List<Task> taskList = taskRepository.findAll();
-        assertThat(taskList).hasSize(databaseSizeBeforeUpdate);
-    }
+//    @Test
+//    @Transactional
+//    public void updateNonExistingTask() throws Exception {
+//        int databaseSizeBeforeUpdate = taskRepository.findAll().size();
+//
+//        // Create the Task
+//        TaskDTO taskDTO = taskMapper.toDto(task);
+//
+//        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+//        restTaskMockMvc.perform(put("/api/tasks")
+//            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+//            .content(TestUtil.convertObjectToJsonBytes(taskDTO)))
+//            .andExpect(status().isBadRequest());
+//
+//        // Validate the Task in the database
+//        List<Task> taskList = taskRepository.findAll();
+//        assertThat(taskList).hasSize(databaseSizeBeforeUpdate);
+//    }
 
     @Test
     @Transactional

@@ -169,24 +169,24 @@ public class AnswerResourceIntTest {
         assertThat(answerList).hasSize(databaseSizeBeforeTest);
     }
 
-    @Test
-    @Transactional
-    public void checkIsCorrectIsRequired() throws Exception {
-        int databaseSizeBeforeTest = answerRepository.findAll().size();
-        // set the field null
-        answer.setIsCorrect(null);
-
-        // Create the Answer, which fails.
-        AnswerDTO answerDTO = answerMapper.toDto(answer);
-
-        restAnswerMockMvc.perform(post("/api/answers")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(answerDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Answer> answerList = answerRepository.findAll();
-        assertThat(answerList).hasSize(databaseSizeBeforeTest);
-    }
+//    @Test
+//    @Transactional
+//    public void checkIsCorrectIsRequired() throws Exception {
+//        int databaseSizeBeforeTest = answerRepository.findAll().size();
+//        // set the field null
+//        answer.setIsCorrect(null);
+//
+//        // Create the Answer, which fails.
+//        AnswerDTO answerDTO = answerMapper.toDto(answer);
+//
+//        restAnswerMockMvc.perform(post("/api/answers")
+//            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+//            .content(TestUtil.convertObjectToJsonBytes(answerDTO)))
+//            .andExpect(status().isBadRequest());
+//
+//        List<Answer> answerList = answerRepository.findAll();
+//        assertThat(answerList).hasSize(databaseSizeBeforeTest);
+//    }
 
     @Test
     @Transactional
