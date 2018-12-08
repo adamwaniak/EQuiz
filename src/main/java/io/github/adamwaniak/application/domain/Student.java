@@ -34,10 +34,6 @@ public class Student implements Serializable {
     @Column(name = "score")
     private Double score;
 
-    @Size(min = 0)
-    @Column(name = "grade")
-    private String grade;
-
     private Instant startDate;
 
     private Instant endDate;
@@ -82,19 +78,6 @@ public class Student implements Serializable {
 
     public void setScore(Double score) {
         this.score = score;
-    }
-
-    public String getGrade() {
-        return grade;
-    }
-
-    public Student grade(String grade) {
-        this.grade = grade;
-        return this;
-    }
-
-    public void setGrade(String grade) {
-        this.grade = grade;
     }
 
     public Quiz getQuiz() {
@@ -176,10 +159,13 @@ public class Student implements Serializable {
     @Override
     public String toString() {
         return "Student{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", score=" + getScore() +
-            ", grade='" + getGrade() + "'" +
-            "}";
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", score=" + score +
+            ", startDate=" + startDate +
+            ", endDate=" + endDate +
+            ", quiz=" + quiz +
+            ", studentAnswers=" + studentAnswers +
+            '}';
     }
 }

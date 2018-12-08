@@ -41,7 +41,8 @@ public class TaskService {
     public Task copyTaskForTaskSet(Task task, TaskSet taskSet) {
         Task newTask = new Task();
         newTask.question(task.getQuestion())
-            .correctnessFactor(task.getCorrectnessFactor())
+            .setMaxPossibleScore(task.getMaxPossibleScore())
+            .setAllStudentScore(task.getAllStudentScore())
             .image(task.getImage());
         Set<Answer> answers = new HashSet<>();
         for (Answer answer : task.getAnswers()) {

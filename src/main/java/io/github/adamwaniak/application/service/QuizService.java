@@ -52,6 +52,7 @@ public class QuizService {
         log.debug("Request to save Quiz : {}", quizDTO);
         Quiz quiz = quizMapper.toEntity(quizDTO);
         quiz.setUrl(encoder.encode(quiz.getId() + quiz.getName() + quiz.getOwner()).replace('/', 'a'));
+        quiz.setPassword(encoder.encode(quiz.getPassword()));
         quiz = quizRepository.save(quiz);
         return quizMapper.toDto(quiz);
     }

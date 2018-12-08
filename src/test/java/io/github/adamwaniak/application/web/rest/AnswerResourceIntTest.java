@@ -1,14 +1,12 @@
 package io.github.adamwaniak.application.web.rest;
 
 import io.github.adamwaniak.application.EQuizApp;
-
 import io.github.adamwaniak.application.domain.Answer;
 import io.github.adamwaniak.application.repository.AnswerRepository;
 import io.github.adamwaniak.application.service.AnswerService;
 import io.github.adamwaniak.application.service.dto.AnswerDTO;
 import io.github.adamwaniak.application.service.mapper.AnswerMapper;
 import io.github.adamwaniak.application.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +24,6 @@ import org.springframework.util.Base64Utils;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-
 
 import static io.github.adamwaniak.application.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -60,7 +57,7 @@ public class AnswerResourceIntTest {
 
     @Autowired
     private AnswerMapper answerMapper;
-    
+
 
     @Autowired
     private AnswerService answerService;
@@ -129,7 +126,6 @@ public class AnswerResourceIntTest {
         assertThat(answerList).hasSize(databaseSizeBeforeCreate + 1);
         Answer testAnswer = answerList.get(answerList.size() - 1);
         assertThat(testAnswer.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testAnswer.isIsCorrect()).isEqualTo(DEFAULT_IS_CORRECT);
         assertThat(testAnswer.getImage()).isEqualTo(DEFAULT_IMAGE);
         assertThat(testAnswer.getImageContentType()).isEqualTo(DEFAULT_IMAGE_CONTENT_TYPE);
     }
@@ -173,24 +169,24 @@ public class AnswerResourceIntTest {
         assertThat(answerList).hasSize(databaseSizeBeforeTest);
     }
 
-    @Test
-    @Transactional
-    public void checkIsCorrectIsRequired() throws Exception {
-        int databaseSizeBeforeTest = answerRepository.findAll().size();
-        // set the field null
-        answer.setIsCorrect(null);
-
-        // Create the Answer, which fails.
-        AnswerDTO answerDTO = answerMapper.toDto(answer);
-
-        restAnswerMockMvc.perform(post("/api/answers")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(answerDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Answer> answerList = answerRepository.findAll();
-        assertThat(answerList).hasSize(databaseSizeBeforeTest);
-    }
+//    @Test
+//    @Transactional
+//    public void checkIsCorrectIsRequired() throws Exception {
+//        int databaseSizeBeforeTest = answerRepository.findAll().size();
+//        // set the field null
+//        answer.setIsCorrect(null);
+//
+//        // Create the Answer, which fails.
+//        AnswerDTO answerDTO = answerMapper.toDto(answer);
+//
+//        restAnswerMockMvc.perform(post("/api/answers")
+//            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+//            .content(TestUtil.convertObjectToJsonBytes(answerDTO)))
+//            .andExpect(status().isBadRequest());
+//
+//        List<Answer> answerList = answerRepository.findAll();
+//        assertThat(answerList).hasSize(databaseSizeBeforeTest);
+//    }
 
     @Test
     @Transactional
@@ -203,12 +199,12 @@ public class AnswerResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(answer.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].isCorrect").value(hasItem(DEFAULT_IS_CORRECT.booleanValue())))
             .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))));
     }
-    
+
 
     @Test
     @Transactional
@@ -221,7 +217,7 @@ public class AnswerResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(answer.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.isCorrect").value(DEFAULT_IS_CORRECT.booleanValue()))
             .andExpect(jsonPath("$.imageContentType").value(DEFAULT_IMAGE_CONTENT_TYPE))
             .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)));
@@ -263,7 +259,6 @@ public class AnswerResourceIntTest {
         assertThat(answerList).hasSize(databaseSizeBeforeUpdate);
         Answer testAnswer = answerList.get(answerList.size() - 1);
         assertThat(testAnswer.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testAnswer.isIsCorrect()).isEqualTo(UPDATED_IS_CORRECT);
         assertThat(testAnswer.getImage()).isEqualTo(UPDATED_IMAGE);
         assertThat(testAnswer.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
     }
@@ -276,7 +271,7 @@ public class AnswerResourceIntTest {
         // Create the Answer
         AnswerDTO answerDTO = answerMapper.toDto(answer);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restAnswerMockMvc.perform(put("/api/answers")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(answerDTO)))

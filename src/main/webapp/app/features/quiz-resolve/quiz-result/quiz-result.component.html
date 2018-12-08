@@ -1,6 +1,15 @@
-<p>
-    quiz-result works!
-</p>
-<p>
-    {{student | json}}
-</p>
+<div class="card">
+    <div class="card-header">
+        <h5>Your results</h5>
+    </div>
+    <div class="card-body">
+        <p>
+            Your score: {{student?.score}}/{{student?.maxScoreForTest}}
+        </p>
+        <p>
+            Your grade: {{student?.grade}}
+        </p>
+    </div>
+</div>
+
+

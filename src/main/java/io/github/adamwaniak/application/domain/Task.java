@@ -7,6 +7,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -29,12 +30,9 @@ public class Task implements Serializable {
     @Column(name = "question", nullable = false)
     private String question;
 
-    @Column(name = "correctness_factor")
-    private Double correctnessFactor;
-
     private Double allStudentScore = 0.0;
 
-    private Long studentNumber = 0L;
+    private Long maxPossibleScore = 0L;
 
     @Lob
     @Column(name = "image")
@@ -54,8 +52,8 @@ public class Task implements Serializable {
         allStudentScore += score;
     }
 
-    public void addStudentNumber(Long number) {
-        studentNumber += number;
+    public void addMaxPossibleScore(Long maxScoreForTask) {
+        maxPossibleScore += maxScoreForTask;
     }
 
 
@@ -78,19 +76,6 @@ public class Task implements Serializable {
 
     public void setQuestion(String question) {
         this.question = question;
-    }
-
-    public Double getCorrectnessFactor() {
-        return correctnessFactor;
-    }
-
-    public Task correctnessFactor(Double correctnessFactor) {
-        this.correctnessFactor = correctnessFactor;
-        return this;
-    }
-
-    public void setCorrectnessFactor(Double correctnessFactor) {
-        this.correctnessFactor = correctnessFactor;
     }
 
     public byte[] getImage() {
@@ -161,16 +146,26 @@ public class Task implements Serializable {
         return allStudentScore;
     }
 
-    public void setAllStudentScore(Double allStudentScore) {
+    public Task setAllStudentScore(Double allStudentScore) {
         this.allStudentScore = allStudentScore;
+        return this;
     }
 
-    public Long getStudentNumber() {
-        return studentNumber;
+    public Long getMaxPossibleScore() {
+        return maxPossibleScore;
     }
 
-    public void setStudentNumber(Long studentNumber) {
-        this.studentNumber = studentNumber;
+    public Task setMaxPossibleScore(Long maxPossibleScore) {
+        this.maxPossibleScore = maxPossibleScore;
+        return this;
+    }
+
+    public Double getCorrectness() {
+        if (allStudentScore == null || maxPossibleScore == null) {
+            return 1.0;
+        } else {
+            return allStudentScore / maxPossibleScore;
+        }
     }
 
     @Override
@@ -196,11 +191,14 @@ public class Task implements Serializable {
     @Override
     public String toString() {
         return "Task{" +
-            "id=" + getId() +
-            ", question='" + getQuestion() + "'" +
-            ", correctnessFactor=" + getCorrectnessFactor() +
-            ", image='" + getImage() + "'" +
-            ", imageContentType='" + getImageContentType() + "'" +
-            "}";
+            "id=" + id +
+            ", question='" + question + '\'' +
+            ", allStudentScore=" + allStudentScore +
+            ", maxPossibleScore=" + maxPossibleScore +
+            ", image=" + Arrays.toString(image) +
+            ", imageContentType='" + imageContentType + '\'' +
+            ", answers=" + answers +
+            ", taskSet=" + taskSet +
+            '}';
     }
 }
