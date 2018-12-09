@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
-import { SERVER_API_URL } from 'app/app.constants';
-import { createRequestOption } from 'app/shared';
-import { IStudent } from 'app/shared/model/student.model';
+import {SERVER_API_URL} from 'app/app.constants';
+import {createRequestOption} from 'app/shared';
+import {IStudent} from 'app/shared/model/student.model';
+import {ITask} from 'app/shared/model/task.model';
 
 type EntityResponseType = HttpResponse<IStudent>;
 type EntityArrayResponseType = HttpResponse<IStudent[]>;
@@ -35,4 +36,14 @@ export class StudentService {
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
+
+    findByQuizId(quizId: number, req?: any): Observable<EntityArrayResponseType> {
+        const options = createRequestOption(req);
+        return this.http.get<ITask[]>(`${this.resourceUrl}/by-quiz/${quizId}`, {
+            params: options,
+            observe: 'response'
+        });
+    }
+
+
 }
