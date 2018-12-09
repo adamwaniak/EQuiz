@@ -9,7 +9,6 @@ import {ResultListComponent} from 'app/features/quiz-manager/result/result-list/
 import {IStudent, Student} from 'app/shared/model/student.model';
 import {StudentService} from 'app/features/services/student.service';
 
-
 @Injectable({providedIn: 'root'})
 export class StudentResolve implements Resolve<IStudent> {
     constructor(private service: StudentService) {

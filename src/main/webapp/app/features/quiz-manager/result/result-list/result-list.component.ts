@@ -8,6 +8,7 @@ import {JhiAlertService, JhiEventManager, JhiParseLinks} from 'ng-jhipster';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Principal} from 'app/core';
 import {HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {QuizService} from 'app/features/services/quiz.service';
 
 @Component({
     selector: 'jhi-result-list',
@@ -37,7 +38,7 @@ export class ResultListComponent implements OnInit, OnDestroy {
                 private principal: Principal,
                 private activatedRoute: ActivatedRoute,
                 private router: Router,
-                private eventManager: JhiEventManager) {
+                private eventManager: JhiEventManager, private quizService: QuizService) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.activatedRoute.params.subscribe(quizID => {
             this.quizID = quizID['quiz-id'];
@@ -51,6 +52,7 @@ export class ResultListComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
+        this.quizService.find(this.quizID).subscribe(value => this.quiz = value.body);
         this.studentService
             .findByQuizId(this.quizID, {
                 page: this.page - 1,

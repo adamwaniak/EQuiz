@@ -1,3 +1,69 @@
-<p>
-    {{students | json}}
-</p>
+<h5 class="text-center text-muted" *ngIf="students?.length == 0">No one resolved quiz yet</h5>
+<div *ngIf="students?.length > 0 && quiz">
+    <h5>Results for quiz {{quiz.name}}</h5>
+    <div class="quiz-information-container mb-2">
+        <div class="row">
+            <div class="col">
+                <h5>
+                    <span>Quiz information:</span>
+                </h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <h6>
+                    Start date:
+                    <div class="text-muted">
+                        {{quiz.startDate | date: 'dd.MM.yy, HH:mm'}}
+                    </div>
+                </h6>
+            </div>
+            <div class="col-md-2">
+                <h6>
+                    End date:
+                    <div class="text-muted">
+                        {{quiz.endDate | date: 'dd.MM.yy, HH:mm'}}
+                    </div>
+                </h6>
+            </div>
+            <div class="col-md-2">
+                <h6>
+                    Time length:
+                    <div class="text-muted">
+                        {{quiz.maxTimeInMinutes}} minutes
+                    </div>
+                </h6>
+            </div>
+            <div class="col-md-2">
+                <h6>
+                    Edition:
+                    <div class="text-muted">
+                        {{quiz.edition}}
+                    </div>
+                </h6>
+            </div>
+        </div>
+    </div>
+    <table class="table table-hover table-striped">
+        <tr>
+            <th> Student's name</th>
+            <th> Student's score</th>
+            <th> Student's grade</th>
+        </tr>
+        <tr *ngFor="let student of students">
+            <td>{{student.name}}</td>
+            <td>{{student.score}}/{{student.maxScoreForTest}}</td>
+            <td>{{student.grade}}</td>
+        </tr>
+    </table>
+    <div *ngIf="students && students.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5"
+                            [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5"
+                            [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>
