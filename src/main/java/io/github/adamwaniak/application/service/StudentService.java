@@ -6,12 +6,10 @@ import io.github.adamwaniak.application.service.dto.StudentDTO;
 import io.github.adamwaniak.application.service.mapper.StudentMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import java.util.Optional;
 /**
@@ -80,5 +78,11 @@ public class StudentService {
     public void delete(Long id) {
         log.debug("Request to delete Student : {}", id);
         studentRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<StudentDTO> findByQuizId(Long quizId, Pageable pageable) {
+        return studentRepository.findByQuizId(quizId, pageable)
+            .map(studentMapper::toDto);
     }
 }
