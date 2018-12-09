@@ -13,6 +13,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,7 @@ public class DataLoader implements ApplicationRunner {
     private TaskRepository taskRepository;
     private AnswerRepository answerRepository;
     private BCryptPasswordEncoder encoder;
+    private Random random = new Random();
 
     @Autowired
     public DataLoader(UserRepository userRepository, BCryptPasswordEncoder encoder,
@@ -146,8 +148,10 @@ public class DataLoader implements ApplicationRunner {
             for (long j = 1; j < 6; j++) {
                 Task task = new Task();
                 task.setId(tasksId++);
-                task.question("Do the circumference of the earth is equal to 40075 km?")
-                .taskSet(taskSetRepository.getOne(i));
+                task.question("Do the circumference of the earth is equal to 40075 km?" + tasksId)
+                    .taskSet(taskSetRepository.getOne(i))
+                    .setAllStudentScore((double) random.nextInt(50))
+                    .setMaxPossibleScore(50l);
                 taskRepository.save(task);
             }
         }
