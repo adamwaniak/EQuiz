@@ -85,8 +85,8 @@
                         </h6>
                     </div>
                     <div class="col-xl-3 col-md align-self-center">
-                        <button class="btn btn-outline-primary btn-fixed-width" [disabled]="!quiz.students"
-                                [routerLink]="['#']">
+                        <button class="btn btn-outline-primary btn-fixed-width"
+                                [routerLink]="['/quiz-manager', quiz.id, 'results']">
                             <span>Check results</span>
                         </button>
                     </div>

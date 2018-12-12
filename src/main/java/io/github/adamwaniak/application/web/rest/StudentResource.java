@@ -2,10 +2,10 @@ package io.github.adamwaniak.application.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import io.github.adamwaniak.application.service.StudentService;
+import io.github.adamwaniak.application.service.dto.StudentDTO;
 import io.github.adamwaniak.application.web.rest.errors.BadRequestAlertException;
 import io.github.adamwaniak.application.web.rest.util.HeaderUtil;
 import io.github.adamwaniak.application.web.rest.util.PaginationUtil;
-import io.github.adamwaniak.application.service.dto.StudentDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -67,11 +66,10 @@ public class StudentResource {
      * @return the ResponseEntity with status 200 (OK) and with body the updated studentDTO,
      * or with status 400 (Bad Request) if the studentDTO is not valid,
      * or with status 500 (Internal Server Error) if the studentDTO couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/students")
     @Timed
-    public ResponseEntity<StudentDTO> updateStudent(@Valid @RequestBody StudentDTO studentDTO) throws URISyntaxException {
+    public ResponseEntity<StudentDTO> updateStudent(@Valid @RequestBody StudentDTO studentDTO) {
         log.debug("REST request to update Student : {}", studentDTO);
         if (studentDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -123,5 +121,15 @@ public class StudentResource {
         log.debug("REST request to delete Student : {}", id);
         studentService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+
+    @GetMapping("/students/by-quiz/{quizId}")
+    @Timed
+    public ResponseEntity<List<StudentDTO>> getStudentsByGivenQuiz(@PathVariable Long quizId, Pageable pageable) {
+        log.debug("REST request to get Students for quiz : {}", quizId);
+        Page<StudentDTO> page = studentService.findByQuizId(quizId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/students/by-quiz");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 }

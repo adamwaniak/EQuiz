@@ -95,14 +95,14 @@ public class QuizResolveService {
         while (i > 0) {
             if (aiSelection) {
                 copyTasks.sort(Comparator.comparingDouble(Task::getCorrectness));
-                int indexOfHardTask = random.nextInt(copyTasks.size() / 2 - 1);
+                int indexOfHardTask = random.nextInt(copyTasks.size() / 2);
                 Task hardTask = copyTasks.get(indexOfHardTask);
                 TaskForResolveDTO taskForResolve = new TaskForResolveDTO();
                 setUpTaskForResolve(taskForResolve, hardTask, student);
                 chosenTasks.add(taskForResolve);
                 i--;
                 if (i > 0) {
-                    int indexOfEasyTask = copyTasks.size() - indexOfHardTask;
+                    int indexOfEasyTask = copyTasks.size() - indexOfHardTask - 1;
                     Task easyTask = copyTasks.get(indexOfEasyTask);
                     taskForResolve = new TaskForResolveDTO();
                     setUpTaskForResolve(taskForResolve, easyTask, student);

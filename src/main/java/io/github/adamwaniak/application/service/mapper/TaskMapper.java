@@ -19,7 +19,7 @@ public interface TaskMapper extends EntityMapper<TaskDTO, Task> {
         taskDTO.setImageContentType(task.getImageContentType());
         taskDTO.setQuestion(task.getQuestion());
         taskDTO.setTaskSetId(task.getTaskSet().getId());
-        taskDTO.setCorrectnessFactor(task.getAllStudentScore() / task.getMaxPossibleScore());
+        taskDTO.setCorrectnessFactor(task.getCorrectness());
         return taskDTO;
     }
 

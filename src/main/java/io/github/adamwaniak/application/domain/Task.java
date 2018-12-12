@@ -161,7 +161,7 @@ public class Task implements Serializable {
     }
 
     public Double getCorrectness() {
-        if (allStudentScore == null || maxPossibleScore == null) {
+        if (maxPossibleScore == 0) {
             return 1.0;
         } else {
             return allStudentScore / maxPossibleScore;
